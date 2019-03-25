@@ -1,0 +1,6 @@
+#!/bin/bash
+cd ~/Rail/rail/linux
+source ~/Rail/rail/linux/tablesafe.env
+make athena
+cd ~/Rail/rail/projects/bcm589x/build-output/secuapp/BCM95892/rootfs/usr/bin/
+cp athena ota provision MSRTest SensorTest /var/www/html

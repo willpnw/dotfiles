@@ -1,0 +1,53 @@
+#!/bin/sh -ex
+
+[ $# -eq 1 ] || {
+    echo "USAGE: $0 version"
+    exit 1
+}
+
+VERSION=1-1-1-$1
+PREV_VERSION=1-1-1-$(expr $1 - 1)
+
+RELEASE_DIR=~/release/
+mkdir -p $RELEASE_DIR
+
+BIN=${RELEASE_DIR}rootfs_${VERSION}.bin
+SIG=${RELEASE_DIR}rootfs_${VERSION}.sig
+
+
+SRC=$(ls -lhrt ~/rail/build/images/*img | tail -n 1 | awk '{print $9}')
+cp $SRC $BIN
+
+cd ~/rail/EtsCustom/signature_tools/
+./gensig.sh $BIN > $SIG
+
+cd $RELEASE_DIR
+gzip $BIN
+
+TARBALL=${BIN}.gz
+mountpoint -q /mnt/cdn/ || sudo mount -t nfs4 cdn-qa01.lab.tsafe.systems:/var/www/cdn/qa01/rail /mnt/cdn
+sudo cp $TARBALL /mnt/cdn/rootfs/
+
+cp ~/rail/rail-ux/build-ota-Desktop-Debug/ota ~/release/
+cp ~/rail/rail-ux/build-provision-Desktop-Debug/provision ~/release/
+cp ~/rail/rail-ux/build-athena-Desktop-Debug/athena ~/release/
+
+cd ~/rail
+git log ${PREV_VERSION}..${VERSION} >> ~/release/release_notes_${VERSION}.txt
+
+cd ~/rail/rail-ux
+git log ${PREV_VERSION}..${VERSION} >> ~/release/release_notes_${VERSION}.txt
+
+cd ~/release/
+tar -czvf apps_${VERSION}.tar.gz athena provision ota release_notes_${VERSION}.txt
+
+cd ~/rail-image/desktop
+git pull
+
+cp ${RELEASE_DIR}apps_${VERSION}.tar.gz .
+git add apps_${VERSION}.tar.gz
+git commit -m "$VERSION"
+git push
+
+echo "Successfully released $VERSION"
+

@@ -1,0 +1,8 @@
+#!/bin/bash
+mkdir -p /opt/build
+pushd /opt/build
+kill $(ps aux | grep '[a]thena' | awk '{print $2}')
+touch /opt/rail/rail-ux/athena/qml.qrc
+qmake /opt/rail/rail-ux/athena/athena.pro -r -spec linux-g++-64 CONFIG+=debug CONFIG+=declarative_debug
+make
+popd

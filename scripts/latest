@@ -1,0 +1,18 @@
+#!/bin/sh
+
+getLatest() {
+    cd /mnt/qa/$1
+    local latest=`ls -hrt *.gz | tail -n1`
+    echo $latest
+    cp $latest /var/www/html
+}
+
+getLatest s2bl
+getLatest s2bl-ext
+getLatest uboot
+getLatest uboot-env
+getLatest kernel
+getLatest rootfs
+getLatest ota
+cd /var/www/html
+gunzip -f *.gz

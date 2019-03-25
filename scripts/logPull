@@ -1,0 +1,29 @@
+[ $# -eq 1 ] || {
+    echo "Usage: $0 rail_ip_address"
+    echo "received: $0 $@"
+    exit
+}
+
+ping -c 1 $1 >/dev/null || {
+    exit
+}
+
+ENDPOINT=root@$1
+LOGS=logs_${1}.tar
+
+getit() {
+    local dest=$(basename $1)
+    scp $ENDPOINT:$1 $dest
+    tar -rf $LOGS $dest
+    rm $dest
+}
+
+getit /var/log/athena.log
+getit /var/log/messages
+getit /nvdata/ota.log
+getit /nvdata/restaurant_settings
+getit /nvdata/current_settings
+getit /nvdata/bcm5892-wifi-setup.sh
+getit /nvdata/DimSettings
+
+gzip $LOGS

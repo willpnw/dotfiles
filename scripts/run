@@ -1,0 +1,7 @@
+set -x
+echo "Killing any mem hogs"
+kill $(ps -a | grep "[t]s_main.sh" | awk '{print $1}')
+killall $1
+APP=$1
+chmod +x $APP
+QWS_MOUSE_PROTO=tslib:/dev/input/event0 ./$APP -qws $@ &

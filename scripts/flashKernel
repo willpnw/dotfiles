@@ -1,0 +1,9 @@
+#!/bin/sh
+mkfifo /nvdata/pipe
+nandwrite -p /dev/mtd3 < /nvdata/pipe & pid=$!
+flash_eraseall /dev/mtd3
+img_sha=$(wget -t20 -w5 -c --ca-certificate=/etc/ssl/certs/tsafe-fullchain.crt -O - https://cdn.qa.resource:H67h115b@cdn-qa01.lab.tsafe.systems/rail/kernel/kernel_D1-05-15-089-0-A.gz | gunzip | dd 2>4 | tee /nvdata/pipe |  sha256sum | cut -d ' ' -f1)
+LEN=$(cat 4 | grep bytes | cut -d ' ' -f1)
+SIG=$(jq .otaInfo restaurant_settings | jq '.[] | select(.imageType == "kernel")' | jq -r .signature)
+writesig uimage-next $LEN $SIG
+

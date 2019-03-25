@@ -1,0 +1,41 @@
+#!/bin/sh
+
+set -e
+
+FILE=192.168.0.194/$1
+
+echo "Checking right amount of args were given"
+test $# -eq 1
+
+echo "Killing any mem hogs"
+kill $(ps -a | grep "[a]thena\|[p]rovision\|[o]ta\|[t]s_main.sh" | awk '{print $1}') || :
+
+/etc/bcm5892-sec-setup.sh 2> /dev/null || :
+
+echo "Checking if /nvdata/ota directory exists"
+test -d /nvdata/ota
+
+echo "Checking if /nvdata/uboot-env directory exists"
+test -d /nvdata/uboot-env
+
+echo "Checking if file exists on server"
+wget -S --spider $FILE
+
+CURRENT=$(cat /proc/cmdline | grep -wo ubi.mtd=. | grep -o "[0-9]") || CURRENT=$(cat /proc/cmdline | grep -wo mtdblock. | grep -o "[0-9]")
+case $CURRENT in
+    4)
+        NEXT=-next
+        ROOTFS=/dev/mtd5
+        ;;
+    5)
+        ROOTFS=/dev/mtd4
+        ;;
+    *)
+        echo "Unexpected rootfs"
+        exit 1
+esac
+
+flash_eraseall $ROOTFS
+wget -O - $FILE | gunzip | nandwrite -p $ROOTFS
+/nvdata/ota/ts_setUbootEnv.sh uboot-env${NEXT} /nvdata/uboot-env/uboot-env${NEXT}.bin $(cat /nvdata/uboot-env/uboot-env${NEXT}.sig)
+echo "Go ahead and reboot"

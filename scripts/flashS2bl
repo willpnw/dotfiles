@@ -1,0 +1,34 @@
+#!/bin/sh
+
+set -e
+
+echo "Checking right amount of args were given"
+test $# -eq 1
+
+echo "Killing any mem hogs"
+kill $(ps -a | grep "[a]thena\|[p]rovision\|[o]ta\|[t]s_main.sh" | awk '{print $1}') || :
+
+echo "Bringing down wlan0"
+#ifconfig wlan0 down
+
+echo "Bringing up eth0"
+ifconfig | grep eth0 || /etc/bcm5892-eth-setup.sh
+
+#SERVER=https://cdn.qa.resource:H67h115b@cdn-qa01.lab.tsafe.systems/rail
+SERVER=192.168.0.194
+
+#S2BL=${SERVER}/s2bl/s2bl_$1.gz
+S2BL=${SERVER}/s2bl_$1.gz
+echo "Checking if $S2BL exists on server"
+wget -S --spider --no-check-certificate $S2BL
+
+#S2BL_EXT=${SERVER}/s2bl-ext/s2bl-ext_$1.gz
+S2BL_EXT=${SERVER}/s2bl-ext_$1.gz
+echo "Checking if $S2BL_EXT exists on server"
+wget -S --spider --no-check-certificate $S2BL_EXT
+
+flash_erase /dev/mtd0 0x00000 2
+wget -O - --no-check-certificate $S2BL     | gunzip | nandwrite -p /dev/mtd0
+wget -O - --no-check-certificate $S2BL_EXT | gunzip | nandwrite -p -s 0x20000 /dev/mtd0
+
+echo "s2bl updated"

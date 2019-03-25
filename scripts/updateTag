@@ -1,0 +1,10 @@
+#!/bin/sh
+for t in `git tag | ack 1-06`; do
+    git checkout $t
+    git tag -d $t
+    git push origin :refs/tags/$t
+    git tag -m "$t" $t
+done
+git push --tags
+
+

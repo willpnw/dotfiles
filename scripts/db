@@ -1,0 +1,2 @@
+#!/bin/sh
+git log --left-right --graph --cherry-pick --oneline $1...$2

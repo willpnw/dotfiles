@@ -1,0 +1,20 @@
+#!/bin/sh
+
+LSEP=
+LSEPE=
+RSEP=
+RSEPE=
+
+WIDTH=${1}
+
+SMALL=80
+MEDIUM=140
+
+if [ "$WIDTH" -ge "$SMALL" ]; then
+  UNAME="#[fg=colour252,bg=colour236,nobold,noitalics,nounderscore]$RSEP#[fg=colour16,bg=colour252,bold,noitalics,nounderscore] $(uname -n)"
+fi
+DATE="#[fg=colour236,bg=${date_colour:-default},nobold,noitalics,nounderscore]$RSEP#[fg=colour247,bg=colour236,nobold,noitalics,nounderscore] $(date +'%D')"
+TIME="#[fg=colour241,bg=colour236,nobold,noitalics,nounderscore]$RSEPE#[fg=colour252,bg=colour236,bold,noitalics,nounderscore] $(date +'%l:%M')"
+IP="#[fg=colour241,bg=colour236,nobold,noitalics,nounderscore]$RSEPE#[fg=colour252,bg=colour236,bold,noitalics,nounderscore] $(ifconfig | grep 192 | awk '{print $2}')"
+
+echo "$MPD $DATE $TIME $IP " | sed 's/ *$/ /g'

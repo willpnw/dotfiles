@@ -1,0 +1,42 @@
+title Authentication Sequence
+
+
+Client->Server: Connect
+Server->Client: Send Cert + Random Number
+Client->Client: Verify Cert Against Root CA
+Client->Client: Generates Symmetric Encryption Key
+Client->Client: Encrypt Symmetric Encryption Key\n with Public Encryption Key
+Client->Client: Create PKCS7 cryptogram\n(random number + Symmetric Encryption Key)\n signed w/ Private Signing Key
+Client->Server: Sends signed cryptogram + Cert
+Server->Server: Verify Cert Against Root CA
+Server->Server: Verify Signature of cryptogram
+
+note over Server: Client is now verified180px800
+
+
+note over Server: Following step prevents replay attack
+Server->Server: Verify Random number
+
+
+Server->Server: Decrypt Symmetric Encryption Key
+Server->Server: Calculate KCV of Symmetric Encryption Key
+Server->Server: Create cryptogram containing KCV signed w/ Private Signing Key
+Server->Client: Sends cryptogram w/ signing cert
+Client->Client: Checks Cert
+Client->Client: Verifies signature of cryptogram
+note over Client: Server is now verified
+
+Client->Client: Verifies KCV
+note over Client: Encryption key has now been securely exchanged using mutual authentication
+
+Client->Server: Request payload using Symmetric Encryption Key
+Server->Server: Encrypts payload with Symmetric Encryption Key
+Server->Client: Sends cryptogram
+Client->Client: Verifies/Decrypts payload
+
+Client->Server: Disconnect
+Client->Client: Destroy Symmetric Encryption Key\n and any other artifacts
+Server->Server: Destroy Symmetric Encryption Key\n and any other artifacts
+
+
+

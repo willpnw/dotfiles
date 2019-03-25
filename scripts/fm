@@ -1,0 +1,116 @@
+#!/bin/sh
+
+set -e
+set -o pipefail
+
+echo "Killing any mem hogs"
+kill $(ps -a | grep "[a]thena\|[p]rovision\|[o]ta\|[t]s_main.sh\|[t]s_mfg.sh" | awk '{print $1}') || :
+
+cd /nvdata
+
+QA_ROOT=https://cdn-qa01.lab.tsafe.systems
+QA_USER=bundle.qa.resource
+QA_PSWD=LwVTKb7Ygpwf8F9E
+
+DEV_ROOT=https://cdn-dev01.lab.tsafe.systems
+DEV_USER=bundle.dev.resource
+DEV_PSWD=mrwy88TwHTYfKeWu
+
+if [ $# -ne 1 ]; then
+    echo "USAGE: $0 MANIFEST_ID"
+    echo "Example:"
+    echo "$0 A4-D0-HP-13"
+    exit
+fi
+
+case $(grep -o ubi.mtd=. /proc/cmdline) in
+    ubi.mtd=4)
+        ROOTFS_MTD_NEXT=/dev/mtd5
+        KERNEL_MTD_NEXT=/dev/mtd3
+        NEXT_FLAG=-next
+        ;;
+    ubi.mtd=5)
+        ROOTFS_MTD_NEXT=/dev/mtd4
+        KERNEL_MTD_NEXT=/dev/mtd2
+        NEXT_FLAG=
+        ;;
+    *)
+        echo "Unexpected rootfs"
+        exit 1
+esac
+
+MANIFEST_ID=$1
+if ! MANIFEST=$(wget -O - --no-check-certificate --user=$QA_USER --password=$QA_PSWD $QA_ROOT/rail/manifests/$MANIFEST_ID); then
+    MANIFEST=$(wget -O - --no-check-certificate --user=$DEV_USER --password=$DEV_PSWD $DEV_ROOT/rail/manifests/$MANIFEST_ID)
+fi
+echo "MANIFEST:"
+echo $MANIFEST | jq .
+
+getImage() {
+    local tarball=$(echo $MANIFEST | jq -r .\"$1\")
+    local sig=$(echo $tarball | sed 's/.gz/.sig/')
+    rm -rf $tarball $sig $1
+    local devCmd="wget -O - --no-check-certificate --user=$DEV_USER --password=$DEV_PSWD $DEV_ROOT/rail/$1/$tarball | gunzip "
+    local qaCmd="wget -O - --no-check-certificate --user=$QA_USER --password=$QA_PSWD $QA_ROOT/rail/$1/$tarball | gunzip "
+    case $1 in
+        kernel)
+            flash_eraseall $KERNEL_MTD_NEXT
+            local outCmd="| dd 2>kernelErr | nandwrite -p $KERNEL_MTD_NEXT > /dev/null"
+            ;;
+        rootfs)
+            flash_eraseall $ROOTFS_MTD_NEXT
+            local outCmd="| dd 2>rootfsErr | nandwrite -p $ROOTFS_MTD_NEXT > /dev/null"
+            ;;
+        *)
+            local outCmd="-c > $1"
+            ;;
+    esac
+
+    echo "Checking for $tarball on $QA_ROOT"
+    if eval "$qaCmd $outCmd" ; then
+        wget -O ${1}.sig --no-check-certificate --user=$QA_USER --password=$QA_PSWD $QA_ROOT/rail/$1/$sig
+    else
+        echo "$tarball not found on $QA_ROOT"
+        echo "Checking for $tarball on $DEV_ROOT"
+        if eval "$devCmd $outCmd" ; then
+            wget -O ${1}.sig --no-check-certificate --user=$DEV_USER --password=$DEV_PSWD $DEV_ROOT/rail/$1/$sig
+        else
+            echo "$tarball not found on $QA_ROOT or $DEV_ROOT"
+            exit
+        fi
+    fi
+}
+
+writeSig() {
+    writesig $1 $(ls -l $2 | tr -s ' ' | cut -d ' ' -f5) $(cat $3)
+}
+
+for image in s2bl s2bl-ext uboot-env uboot kernel rootfs; do
+    getImage $image
+done
+
+echo "Flashing s2bl..."
+flash_eraseall /dev/mtd0
+nandwrite -p /dev/mtd0 s2bl
+nandwrite -p -s 0x20000 /dev/mtd0 s2bl-ext
+
+echo "Flashing uboot-env..."
+mv uboot-env tmp
+tar -xvf tmp
+nandwrite -p -s 0x60000 /dev/mtd0 uboot-env/uboot-env${NEXT_FLAG}.bin
+
+echo "Flashing uboot..."
+flash_eraseall /dev/mtd1
+pv -s $(ls -l uboot | tr -s ' ' | cut -d ' ' -f5) uboot | nandwrite -p /dev/mtd1
+
+echo "Writing Signatures..."
+
+writeSig   s2bl                  s2bl                                           s2bl.sig
+writeSig   s2bl-ext              s2bl-ext                                       s2bl-ext.sig
+writeSig   uboot-env${NEXT_FLAG} uboot-env/uboot-env${NEXT_FLAG}.bin            uboot-env/uboot-env${NEXT_FLAG}.sig
+writeSig   uboot                 uboot                                          uboot.sig
+writesig   uimage${NEXT_FLAG}    $(cat kernelErr | grep bytes | cut -d ' ' -f1) $(cat kernel.sig)
+writesig   rootfs${NEXT_FLAG}    $(cat rootfsErr | grep bytes | cut -d ' ' -f1) $(cat rootfs.sig)
+
+rm -rf s2bl* uboot* kernel* rootfs* ota*
+reboot

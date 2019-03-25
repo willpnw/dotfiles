@@ -1,0 +1,14 @@
+#!/bin/sh
+
+FAIL_COUNT=0
+MAX_FAILS=3
+while true; do
+    nslookup $(basename $(jq -r .endpoint /nvdata/etc/tdc.conf)) || FAIL_COUNT=$(($FAIL_COUNT + 1))
+    if [ $FAIL_COUNT -le $MAX_FAILS ]; then
+        sleep 10
+    else
+        /etc/bcm5892-wifi-setup.sh
+        FAIL_COUNT=0
+    fi
+done
+

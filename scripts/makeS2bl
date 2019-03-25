@@ -1,0 +1,7 @@
+cd /opt/rail-stage2/StageII_bl_ref.cs
+make clean_all
+./s2bl_build_d0.sh DEVELOP
+cp signme.bin ../secimage_d0/tools/secimage/sbi_D0_production_pos_cid_0x800001/
+cd  ../secimage_d0/tools/secimage/sbi_D0_production_pos_cid_0x800001/
+./step3.sh signme.bin
+mv signme.bin.signed /tftpboot/

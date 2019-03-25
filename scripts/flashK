@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+FILE=192.168.0.194/$1
+
+echo "Checking right amount of args were given"
+test $# -eq 1
+
+echo "Killing any mem hogs"
+kill $(ps -a | grep "[a]thena\|[p]rovision\|[o]ta\|[t]s_main.sh" | awk '{print $1}') || :
+
+echo "Checking if file exists on server"
+wget -S --spider $FILE
+
+flash_eraseall /dev/mtd2
+flash_eraseall /dev/mtd3
+wget -O - $FILE | gunzip | nandwrite -p /dev/mtd2
+pv -s 4194304  /dev/mtd2 | nandwrite -p /dev/mtd3
+echo "All done "

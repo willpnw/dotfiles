@@ -1,0 +1,4 @@
+#!/bin/sh
+set -x
+cd ~/Rail/rail && make fs
+cd /var/www/html && gzip -f $(ls -hrt | tail -n1)

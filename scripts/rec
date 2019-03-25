@@ -1,0 +1,2 @@
+#!/bin/sh
+ls -tl $1 | head

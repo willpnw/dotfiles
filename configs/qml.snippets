@@ -1,0 +1,42 @@
+# for loop
+snippet for
+	for (var ${2:i} = 0; $2 < ${1:arr}.length; $2 ++) {
+		var ${3:v} = $1[$2];${0:}
+	}
+# TSView
+snippet TSV
+	TSView {
+		title: qsTr("${1:}")
+		showToolButton: ${2:true}
+		showAdBanner: ${3:true}
+		guestView: ${4:true}
+		showCheckPaper: ${5:true}
+# mm
+snippet mm
+	menuModel: ListModel {
+		ListElement{
+			buttonText: "${1:Back}"
+			buttonType: "${2:BACK}"
+		}
+	}
+
+	onMenuButtonClicked: {
+		switch(text){
+			case "$1":{
+				${3:root}.${4:$1}();
+				break;
+			}
+		}
+	}
+# le
+snippet le
+	ListElement{
+		buttonText: "${1:Back}"
+		buttonType: "${2:BACK}"
+	}
+# Log
+snippet cl
+	console.log(${1:});
+# js
+snippet js
+	JSON.stringify(${1:})

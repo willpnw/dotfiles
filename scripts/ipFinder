@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "Scanning..."
+nmap -sP 192.168.14.* | grep -o "192.168.14.[0-9]*"  | sort -t . -k 3,3n -k 4,4n
+#nmap -sP 192.168.28.* | grep -o "192.168.28.[0-9]*"  | sort -t . -k 3,3n -k 4,4n
+

@@ -1,0 +1,89 @@
+#!/bin/sh
+#
+# apps
+#
+# start the applications here
+
+echo entering $0 ...
+
+. /etc/init.d/rc.config
+
+
+case "$1" in
+   start|"")
+       # Manufactuing builds leave a flag to indicate the file system may contain manufacturing artifcats
+       # If this flag is found on a non manufacuting build, perform a factory reset
+       if [ -f /nvdata/FIRST_POST_MFG_BOOT ]; then
+           printf "\n\n\n#########################################\n"
+           echo "#"
+           echo "# FIRST BOOT AFTER MANUFACTUING DETECTED"
+           # During manufacturing they ota to an old prod version that doesn't know about the reset flag, so the reset doesn't occur
+           # Once they ota in the field to a new version, the reset flag is detected and the device is factory reset and deprovisioned = bad user experience
+           # So if the device is was previously provisioned, (has a tdc.conf), remove the reset flaf so it doesn't trip
+           if [ -f /nvdata/etc/tdc.conf ]; then
+               echo "# PREVIOUSLY PROVISIONED, REMOVING/IGNORING"
+               echo "#"
+               printf "#########################################\n\n\n"
+               rm /nvdata/FIRST_POST_MFG_BOOT
+           elif grep -qv ^M /version ; then
+               echo "# PERFORMING FACTORY RESET NOW!!!"
+               echo "#"
+               printf "#########################################\n\n\n"
+               rm -rf /nvdata/*
+               reboot
+               exit
+           fi
+       fi
+
+       . /usr/sbin/ts_common.sh
+       generateSwVersions
+
+      # Start the telnet daemon
+      if [ ! -e /nvdata/NoAccess ]; then
+          if [ -f /usr/sbin/telnetd ]; then
+             telnetd &
+          fi
+      fi
+
+      if [ -f /etc/bcm5892-startlcd-and-touch.sh ]; then
+          source /etc/bcm5892-startlcd-and-touch.sh
+          export TZ=$(cat /etc/TZ)
+
+          if [ -f /nvdata/EMVTest ]; then
+              runnable=emv
+	  elif [ `grep '^M' /version` ]; then
+              runnable=mfg
+          else
+              if [ -f /nvdata/FCCTest -a -x /usr/bin/fcc ]; then
+                runnable=fcc
+              else
+                runnable=athena
+              fi
+          fi
+
+          case "$runnable" in
+              athena)
+                  /bin/nice -n -10 /usr/sbin/ts_main.sh &
+                  ;;
+              emv|fcc)
+                  /bin/nice -n -10 /usr/sbin/ts_cert.sh $runnable &
+                  ;;
+              mfg)
+                  /bin/nice -n -10 /usr/sbin/ts_mfg.sh &
+                  ;;
+              *)
+                  echo "Unknown startup app: $runnable"
+                  ;;
+          esac
+      fi
+      ;;
+   stop)
+      kill $(ps -a | grep "[t]elnetd\|[a]thena\|[p]rovision\|[o]ta\|[t]s_main.sh\|[d]ropbear\|[w]pa\|[t]s_cert.sh" | awk '{print $1}')
+      ;;
+   *)
+      echo "Usage $0 {start|stop}" >&2
+      exit 1
+      ;;
+esac
+
+echo leaving $0 ...

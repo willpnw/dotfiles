@@ -1,0 +1,5 @@
+ killall athena
+ qmake /home/will/Rail/rail/rail-ux/athena/athena/athena.pro -r -spec linux-g++-64 CONFIG+=debug CONFIG+=declarative_debug
+ make -C /home/will/Rail/rail/rail-ux/athena/build-athena-Desktop-Debug
+ tmux split-window -v -p 20 /home/will/Rail/rail/rail-ux/athena/build-athena-Desktop-Debug/athena
+ tmux last-pane

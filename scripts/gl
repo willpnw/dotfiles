@@ -1,0 +1,17 @@
+#!/bin/sh
+sudo mount -t nfs4 cdn-qa01.lab.tsafe.systems:/var/www/cdn/qa01/rail /mnt/cdn
+
+getIt() {
+    cd $1
+    local img=$(ls -t | head -n 1)
+    cp $img /var/www/html/
+    gunzip /var/www/html/$img
+}
+
+getIt /mnt/cdn/rootfs
+getIt /mnt/cdn/kernel
+getIt /mnt/cdn/s2bl
+getIt /mnt/cdn/s2bl-ext
+getIt /mnt/cdn/uboot
+
+

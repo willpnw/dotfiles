@@ -1,0 +1,4 @@
+#!/bin/bash
+find . -name "*.qml" -o -name "*.js" | xargs ack \" | ack -v import | ack -v qsTr | ack -v console | ack -v Chatter | ack -v loadNext
+find . -name "*.qml" -o -name "*.js" | xargs ack \" | ack -v import | ack -v qsTr | ack -v console | ack -v Chatter | ack -v loadNext | wc -l
+

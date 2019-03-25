@@ -1,0 +1,3 @@
+#!/bin/sh
+kill $(ps -a | grep "[a]thena\|[p]rovision\|[o]ta\|[t]s_main.sh" | awk '{print $1}')
+

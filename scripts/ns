@@ -1,0 +1,11 @@
+#!/bin/sh
+
+addStat() {
+    STATS=$(echo $STATS | jq ".\"$1\"=\"$2\"")
+}
+
+STATS={}
+addStat ssid $(iwconfig wlan0 | grep ESSID | cut -d '"' -f2)
+addStat ssid $(iwconfig wlan0 | grep ESSID | cut -d '"' -f2)
+
+echo $STATS | jq .

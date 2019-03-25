@@ -1,0 +1,26 @@
+x 2015-07-06 test
+x 2015-07-06 test2
+x 2015-07-08 test
+x 2015-07-08 Insurance
+x 2015-07-08 verizon
+x 2015-07-08 TSCalculateTip.qml TSCustomTip.qml TSEmailReceipt.qml TSGuestHelpMenu.qml TSOpenTables.qml TSOrderDetails.qml TSOrderSummary.qml TSPassRail.qml TSPayByCash.qml TSPayByCredit.qml TSPayByOther.qml TSPayByPayPal.qml TSPaymentReceipt.qml TSPaymentSummary.qml TSPrinterList.qml TSPrivacyPolicy.qml TSSelectPaymentPath.qml TSSelectSplitType.qml TSServerLogin.qml TSSplashScreen.qml TSSplitByAmount.qml TSSplitByItem.qml TSSplitEquallyBalance.qml TSSplitEqually.qml TSSurveyQuestion.qml TSTableDetails.qml TSThankYou.qml TSTipReport.qml TSTransactionDetails.qml TSTransactionReport.qml TSWaitStaffMenu.qml TSWifiConfig.qml
+x 2015-07-08 -rwxrwx--- 1 root vboxsf 7496 Jul 7 15:10 TSCalculateTip.qml -rwxrwx--- 1 root vboxsf 3653 Jul 7 13:46 TSCustomTip.qml -rwxrwx--- 1 root vboxsf 6930 Jul 2 10:08 TSEmailReceipt.qml -rwxrwx--- 1 root vboxsf 2000 Jul 7 16:22 TSGuestHelpMenu.qml -rwxrwx--- 1 root vboxsf 2370 Jul 7 17:19 TSOpenTables.qml -rwxrwx--- 1 root vboxsf 6601 Jul 2 10:08 TSOrderDetails.qml -rwxrwx--- 1 root vboxsf 4061 Jul 2 10:08 TSOrderSummary.qml -rwxrwx--- 1 root vboxsf 2168 Jul 2 10:08 TSPassRail.qml -rwxrwx--- 1 root vboxsf 3422 Jul 2 10:08 TSPayByCash.qml -rwxrwx--- 1 root vboxsf 8210 Jul 2 12:06 TSPayByCredit.qml -rwxrwx--- 1 root vboxsf 3545 Jul 6 15:50 TSPayByOther.qml -rwxrwx--- 1 root vboxsf 1969 Jul 2 10:08 TSPayByPayPal.qml -rwxrwx--- 1 root vboxsf 4464 Jul 2 10:08 TSPaymentReceipt.qml -rwxrwx--- 1 root vboxsf 3312 Jul 6 17:51 TSPaymentSummary.qml -rwxrwx--- 1 root vboxsf 3092 Jul 6 17:51 TSPrinterList.qml -rwxrwx--- 1 root vboxsf 1741 Jul 2 10:08 TSPrivacyPolicy.qml -rwxrwx--- 1 root vboxsf 1515 Jul 7 15:55 TSSelectPaymentPath.qml -rwxrwx--- 1 root vboxsf 2274 Jul 7 13:27 TSSelectSplitType.qml -rwxrwx--- 1 root vboxsf 2054 Jul 2 10:08 TSServerLogin.qml -rwxrwx--- 1 root vboxsf 1919 Jul 2 10:08 TSSplashScreen.qml -rwxrwx--- 1 root vboxsf 4312 Jul 2 10:08 TSSplitByAmount.qml -rwxrwx--- 1 root vboxsf 7759 Jul 2 10:08 TSSplitByItem.qml -rwxrwx--- 1 root vboxsf 2252 Jul 2 10:08 TSSplitEquallyBalance.qml -rwxrwx--- 1 root vboxsf 3318 Jul 2 10:08 TSSplitEqually.qml -rwxrwx--- 1 root vboxsf 5050 Jul 2 10:08 TSSurveyQuestion.qml -rwxrwx--- 1 root vboxsf 6805 Jul 2 10:08 TSTableDetails.qml -rwxrwx--- 1 root vboxsf 1874 Jul 2 10:08 TSThankYou.qml -rwxrwx--- 1 root vboxsf 5192 Jul 2 10:08 TSTipReport.qml -rwxrwx--- 1 root vboxsf 6071 Jul 6 16:00 TSTransactionDetails.qml -rwxrwx--- 1 root vboxsf 2270 Jul 6 16:41 TSTransactionReport.qml -rwxrwx--- 1 root vboxsf 1660 Jul 2 11:57 TSWaitStaffMenu.qml -rwxrwx--- 1 root vboxsf 13192 Jul 7 15:13 TSWifiConfig.qml
+x 2015-07-08 main.qml qml.qrc TSCalculateTip.qml TSCustomTip.qml TSEmailReceipt.qml TSGuestHelpMenu.qml TSOpenTables.qml TSOrderDetails.qml TSOrderSummary.qml TSPassRail.qml TSPayByCash.qml TSPayByCredit.qml TSPayByOther.qml TSPayByPayPal.qml TSPaymentReceipt.qml TSPaymentSummary.qml TSPrinterList.qml TSPrivacyPolicy.qml TSSelectPaymentPath.qml TSSelectSplitType.qml TSServerLogin.qml TSSplashScreen.qml TSSplitByAmount.qml TSSplitByItem.qml TSSplitEquallyBalance.qml TSSplitEqually.qml TSSurveyQuestion.qml TSTableDetails.qml TSThankYou.qml TSTipReport.qml TSTransactionDetails.qml TSTransactionReport.qml TSWaitStaffMenu.qml TSWifiConfig.qml
+x 2015-07-08 mai .qml qml.qrc TSCalculateTip.qml TSCustomTip.qml TSEmailReceipt.qml TSGuestHelpMe u.qml TSOpe Tables.qml TSOrderDetails.qml TSOrderSummary.qml TSPassRail.qml TSPayByCash.qml TSPayByCredit.qml TSPayByOther.qml TSPayByPayPal.qml TSPayme tReceipt.qml TSPayme tSummary.qml TSPri terList.qml TSPrivacyPolicy.qml TSSelectPayme tPath.qml TSSelectSplitType.qml TSServerLogi .qml TSSplashScree .qml TSSplitByAmou t.qml TSSplitByItem.qml TSSplitEquallyBala ce.qml TSSplitEqually.qml TSSurveyQuestio .qml TSTableDetails.qml TSTha kYou.qml TSTipReport.qml TSTra sactio Details.qml TSTra sactio Report.qml TSWaitStaffMe u.qml TSWifiCo fig.qml 
+x 2015-07-08 main.qml
+x 2015-07-08 qml.qrc
+x 2015-07-08 TSCalculateTip.qml
+x 2015-07-08 TSCustomTip.qml
+x 2015-07-08 TSGuestHelpMenu.qml
+x 2015-07-08 TSOpenTables.qml
+x 2015-07-08 TSOrderDetails.qml
+x 2015-07-08 TSOrderSummary.qml
+x 2015-07-08 TSPassRail.qml
+x 2015-07-08 TSPayByCash.qml
+x 2015-07-08 TSPayByOther.qml
+x 2015-07-08 TSPayByPayPal.qml
+x 2015-07-08 TSSelectPaymentPath.qml
+x 2015-07-08 TSSelectSplitType.qml
+x 2015-07-08 TSThankYou.qml
+x 2015-07-08 TSSplashScreen.qml
+x 2015-07-09 TSServerLogin.qml

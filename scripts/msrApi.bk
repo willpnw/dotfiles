@@ -1,0 +1,91 @@
+#!/bin/sh
+
+post() {
+    echo $1 > /dev/MAGNETIC_READER
+}
+
+get() {
+    post $1
+    # hexdump outputs data as follows, where the first column is the row identifier
+    #0000000 0069 ae00 3a72 700b 9014
+    #000000a
+    #
+    # Just grab the 4 character output
+    local tmp=$(cat /dev/MAGNETIC_READER | hexdump | grep -o " ....")
+    # Data comes out in reverse order, so reverse it to correct it and trim the white space
+    echo $tmp | awk '{ for (i=NF; i>0; i--) printf("%s ",$i); }' | tr -d ' '
+}
+
+mfgMode() {
+    sleep 1
+    rmmod bcm589x_magnetic_reader
+    sleep 1
+    insmod /lib/modules/2.6.32.9/BROADCOM/bcm589x_magnetic_reader.ko s_fMfgrMode=1
+    sleep 1
+}
+
+resetMsr() {
+    # reset the reader
+    sleep 10
+    post 0200
+    mfgMode
+    sleep 10
+}
+
+case $1 in
+    mfgMode)
+        mfgMode
+        ;;
+    ksn)
+        get 0900
+        ;;
+    token)
+        get 1900
+        ;;
+    updateFw)
+        set -x
+        exec > /nvdata/log/msrFw.log 2>&1
+        preloadCmd=$2
+        fwFile=$3
+
+        # send the preload command before updating the fw
+        post $preloadCmd
+        sleep 30
+
+        # update the fw
+        while read line; do
+            sleep 1
+            post $line
+        done < $fwFile
+
+        # reset the reader
+        resetMsr
+        ;;
+
+    version)
+        # query the version
+        # To get the firmware part number it's 00 01 00 command.
+        # firmware must be C01 or above for unmask
+        get 000100
+        ;;
+
+    unmaskStatus)
+        # query if the unmask code is set
+        # The return will indicate if masking is enabled
+        # 00 not masked
+        # 01 masked
+        get 00016E
+        ;;
+
+    unmask)
+        unmaskCmd=$2
+
+        # unmask the service code
+        post $unmaskCmd
+
+        # reset the reader
+        resetMsr
+        ;;
+    *)
+        echo "Usage: $0 {mfgMode|ksn|token|updateFw <PRELOAD_CMD> <FW_FILE>|version|unmask <UNMASK_CODE>|unmaskStatus}"
+esac

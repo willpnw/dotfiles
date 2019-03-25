@@ -1,0 +1,55 @@
+#!/usr/bin/bash
+
+set -e
+rm -f {client,server,tsafe}*
+
+CA=tsafeCA
+CA_KEY=$CA.priv.pem
+CA_PUB_KEY=$CA.pub.pem
+CA_CERT=$CA.pem
+
+
+genCa() {
+    openssl genrsa -out $CA_KEY
+    openssl rsa -in $CA_KEY -pubout -out $CA_PUB_KEY
+    openssl req -x509 -new -nodes -key $CA_KEY -sha256 -out $CA_CERT -subj "/C=US/ST=Washington/L=[]/O=TableSafe/OU=[]/CN=tablesfe.com"
+}
+
+genKeyCert() {
+    local privKey=$1.priv.pem
+    local pubKey=$1.pub.pem
+    case $1 in
+        *Encrypt) local keySize=3072 ;;
+        *Sign)    local keySize=2048 ;;
+    esac
+    openssl genrsa -out $privKey $keySize
+    openssl rsa -in $privKey -pubout -out $pubKey
+    openssl req -new -key $privKey -out $1.csr -subj "/C=US/ST=Washington/L=[]/O=$1/OU=[]/CN=$1.com"
+    openssl x509 -req -in $1.csr -CA $CA_CERT -CAkey $CA_KEY -CAcreateserial -out $1.crt
+}
+
+genKeyFile() {
+    local keyFile=$1KeyFile
+    # encrypt key
+    local exp=`openssl rsa -in $1Encrypt.priv.pem -noout -text | grep -A 26 privateExponent | grep -v ^p.* | sed 's/[: ]//g' | tr -d '\n' | sed 's/^00//'`
+    echo 'ENCR' > $keyFile
+    echo $exp >> $keyFile
+    echo $exp | sha256sum | cut -b1-6 >> $keyFile
+
+    # sign key
+    local exp=`openssl rsa -in $1Sign.priv.pem -noout -text | grep -A 18 privateExponent | grep -v ^p.* | sed 's/[: ]//g' | tr -d '\n' | sed 's/^00//'`
+    echo 'SIGN' >> $keyFile
+    echo $exp >> $keyFile
+    echo $exp | sha256sum | cut -b1-6 >> $keyFile
+}
+
+genCa
+for device in client server
+do
+    for useCase in Sign Encrypt
+    do
+        genKeyCert $device$useCase
+    done
+    genKeyFile $device
+    tar -czf $device.tgz $device* tsafe*
+done

@@ -1,0 +1,34 @@
+#!/bin/bash
+set -e
+cd ~/Rail/rail/linux
+source tablesafe.env
+case $1 in
+    m)
+        cd ~/Rail/rail/rail-ux
+        make clean mutualAuthTest && cp /home/will/Rail/rail-ux/build-mutualAuthTest-bcm-arm/mutualAuthTest /srv/http/
+        ;;
+    a)
+        cd ~/Rail/rail/rail-ux
+        make athena && cp /home/will/Rail/rail-ux/build-athena-bcm-arm/athena /srv/http/
+        ;;
+    d)
+        cd ~/Rail/rail/rail-ux
+        make driverstest && cp /home/will/Rail/rail/rail-ux/build-driverstest-bcm-arm/DriversTest /srv/http/
+        ;;
+    o)
+        cd ~/Rail/rail/rail-ux/ota/ota
+        PLATFORM=A5 make && cp /home/will/Rail/rail/rail-ux/build-ota-bcm-arm/output/ota.tar /srv/http
+        ;;
+    n)
+        cd ~/Rail/rail/rail-ux
+        make networktest && cp /home/will/Rail/rail/rail-ux/build-networktest-bcm-arm/NetworkTest /srv/http/
+        ;;
+    p)
+        cd ~/Rail/rail/rail-ux
+        make provision && cp /home/will/Rail/rail/rail-ux/build-provision-bcm-arm/provision /srv/http/
+        ;;
+    s)
+        cd ~/Rail/rail/rail-ux
+        make splash
+        ;;
+esac
