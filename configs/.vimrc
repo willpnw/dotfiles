@@ -232,7 +232,7 @@ set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 set laststatus=2
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gl :Glog<CR>
-nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gs :Gstatus<CR><C-w>15-
 nnoremap <leader>gb :Gblame<CR>
 
 "---------------------------------------
@@ -417,8 +417,8 @@ nnoremap <leader>fp :Files ~/devprojects/phoenix<cr>
 :nnoremap <leader>ec :e %:p:r.scss<cr>
 
 "-- FOLDING --
-set foldmethod=syntax "syntax highlighting items specify folds
-"set foldcolumn=1 "defines 1 col at window left, to indicate folding
-let javaScript_fold=1 "activate folding by js syntax
-set foldlevelstart=1 "start file with all folds opened
+"set foldmethod=syntax "syntax highlighting items specify folds
+""set foldcolumn=1 "defines 1 col at window left, to indicate folding
+"let javaScript_fold=1 "activate folding by js syntax
+"set foldlevelstart=1 "start file with all folds opened
 

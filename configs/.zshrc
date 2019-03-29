@@ -198,6 +198,10 @@ alias pdsq="cd ~/devprojects/phoenix-data-service/src && nodemon server.js -c ~/
 alias pdss="cd ~/devprojects/phoenix-data-service/src && nodemon server.js -c ~/devprojects/config_stg.yaml"
 alias pho="cd ~/devprojects/phoenix/src && npm start"
 
+
+# docker aliases
+alias dka='docker kill $(docker ps -q)'
+
 setopt rm_star_silent
 
 # typos
@@ -330,4 +334,12 @@ killL() {
         echo $pid | xargs kill -${1:-9}
     fi
     tmux source ~/.tmux.conf
+}
+
+lscan() {
+    if [ $# -ne 1 ]; then
+        echo "Need one arg, got $#"
+        return 1
+    fi
+    cat $1 | fzf
 }
