@@ -54,6 +54,7 @@ Plug 'mattn/emmet-vim'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'pbogut/fzf-mru.vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -107,10 +108,6 @@ cnoremap w!! w !sudo tee % >/dev/null
 " Leader
 let mapleader=","
 
-" Enter
-nnoremap M  o<esc>k
-nnoremap L  O<esc>j
-
 "" CtrlP
 "let g:ctrlp_cmd = 'CtrlPMRU'
 "nnoremap <leader>vp  :vsp<CR>:CtrlP<CR>
@@ -136,10 +133,6 @@ vnoremap <leader>rAf "hy:bufdo %s?\V<C-r>h??g<left><left>
 " Edit/Source vimrc
 :nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 :nnoremap <leader>sv :w<CR>:source $MYVIMRC<cr>
-
-" show line number
-:nnoremap <leader>nu :set invnumber<CR>
-:nnoremap <leader>nr :set invrelativenumber<CR>
 
 " Remap default commands mode change commands
 nnoremap <space> :
@@ -348,7 +341,10 @@ nnoremap <leader>df da{2dd
 
 :nnoremap <leader>ss r[a"<esc>ea"]<esc>
 
-nnoremap <leader>tic :set ignorecase!<cr>
+nnoremap ]ic :set noignorecase<cr>
+nnoremap [ic :set ignorecase<cr>
+nnoremap yic :set ignorecase!<cr>
+
 nnoremap <leader>k :bn<cr>
 nnoremap <leader>j :bp<cr>
 nnoremap <f5> :!runAthena<cr><cr>
@@ -398,16 +394,7 @@ runtime macros/matchit.vim
 
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-nnoremap <c-p> :History<cr>
-nnoremap <c-f> :Files ~/devprojects<cr>
-
-nnoremap <leader>fr :History<cr>
-nnoremap <leader>fh :Files<cr>
-nnoremap <leader>ft :Files<space>
-nnoremap <leader>fs :Files ~/devprojects/phoenix-data-service<cr>
-nnoremap <leader>fp :Files ~/devprojects/phoenix<cr>
-
-
+nnoremap <c-p> :FZFMru<cr>
 
 "
 " Shortcuts for switching between files in angular
