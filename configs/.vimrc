@@ -12,7 +12,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Lokaltog/vim-easymotion'
 Plug 'peterhoeg/vim-qml'
 "Plug 'Valloric/YouCompleteMe', { 'tag': '9448748e804a01561f814be49c0b449a9332de1b', 'do': './install.py' }
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
@@ -21,7 +20,6 @@ Plug 'vim-scripts/a.vim'
 Plug 'mhinz/vim-startify'
 Plug 'mileszs/ack.vim'
 Plug 'Raimondi/delimitMate'
-Plug 'svermeulen/vim-easyclip'
 Plug 'tpope/vim-repeat'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -55,6 +53,10 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'pbogut/fzf-mru.vim'
+Plug 'svermeulen/vim-cutlass'
+Plug 'svermeulen/vim-yoink'
+Plug 'svermeulen/vim-subversive'
+Plug 'ludovicchabant/vim-gutentags'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -64,11 +66,15 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 let g:deoplete#enable_at_startup = 1
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 
 " Initialize plugin system
 call plug#end()
 
 syntax on
+
+set path+=**
 
 "---------------------------------------
 " Sets
@@ -85,7 +91,7 @@ set showcmd
 set incsearch
 set expandtab
 set scrolloff=8
-set diffopt+=iwhite
+"set diffopt+=iwhite
 set invnumber
 set invrelativenumber
 set number
@@ -112,9 +118,10 @@ let mapleader=","
 "let g:ctrlp_cmd = 'CtrlPMRU'
 "nnoremap <leader>vp  :vsp<CR>:CtrlP<CR>
 "nnoremap <leader>hp  :sp<CR>:CtrlP<CR>
-"nnoremap <leader>tb :TagbarToggle<CR>
+nnoremap <leader>tb :TagbarToggle<CR>
 "nnoremap <leader>gt :!gentags<cr><cr>
 
+set tags=./tags,tags;
 " Y
 nnoremap Y v$hy
 
@@ -216,7 +223,7 @@ nnoremap <leader>t= :Tab /\(=\)\@<!=\([>=]\)\@!<CR>
 "---------------------------------------
 " Airline
 "---------------------------------------
-let g:airline_theme='tender'
+"let g:airline_theme='tender'
 let g:airline_powerline_fonts = 1
 set guifont=Sauce_Code_Powerline:h9:cANSI
 set encoding=utf-8
@@ -235,15 +242,6 @@ autocmd QuickFixCmdPost *grep* cwindow
 autocmd QuickFixCmdPost *log* cwindow
 
 "---------------------------------------
-" Easy Motion
-"---------------------------------------
-"map <Leader> <Plug>(easymotion-prefix)
-"nmap <Leader>s <Plug>(easymotion-s)
-let g:EasyMotion_smartcase = 1
-"map <Leader>j <Plug>(easymotion-j)
-"map <Leader>k <Plug>(easymotion-k)
-
-"---------------------------------------
 " YouCompleteMe
 "---------------------------------------
 "let g:ycm_show_diagnostics_ui = 1
@@ -251,7 +249,6 @@ let g:EasyMotion_smartcase = 1
 "---------------------------------------
 " Ctags
 "---------------------------------------
-set tags+=/media/sf_share/dev/tags
 
 "---------------------------------------
 " a.vim
@@ -278,11 +275,6 @@ vnoremap ack "hy:Ack! -Qi "<C-r>h"
 "  endif
 "endfunction
 "au BufEnter /* call LoadCscope()
-
-"---------------------------------------
-" EasyClip
-"---------------------------------------
-let g:EasyClipAutoFormat = 1
 
 "---------------------------------------
 " Color
@@ -354,6 +346,7 @@ nnoremap <f5> :!runAthena<cr><cr>
 "
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx'
 au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
+let g:closetag_close_shortcut = '<leader>>'
 
 " filenames like *.xml, *.xhtml, ...
 " This will make the list of non-closing tags self-closing in the specified files.
@@ -394,7 +387,12 @@ runtime macros/matchit.vim
 
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-nnoremap <c-p> :FZFMru<cr>
+nnoremap <c-p>r :FZFMru<cr>
+nnoremap <c-p>f :Files<cr>
+nnoremap <c-p>x :Files ~/devprojects/phoenix/src/code<cr>
+nnoremap <c-p>d :Files ~/devprojects/phoenix-data-service/src/<cr>
+nnoremap <c-p>b :Buffers<cr>
+nnoremap <c-p>t :Tags<cr>
 
 "
 " Shortcuts for switching between files in angular
@@ -403,9 +401,28 @@ nnoremap <c-p> :FZFMru<cr>
 :nnoremap <leader>et :e %:p:r.ts<cr>
 :nnoremap <leader>ec :e %:p:r.scss<cr>
 
-"-- FOLDING --
+""-- FOLDING --
 "set foldmethod=syntax "syntax highlighting items specify folds
 ""set foldcolumn=1 "defines 1 col at window left, to indicate folding
 "let javaScript_fold=1 "activate folding by js syntax
 "set foldlevelstart=1 "start file with all folds opened
+"
+set wildignore+=**/node_modules/** 
 
+let g:yoinkIncludeDeleteOperations = 1
+
+nmap <c-n> <plug>(YoinkPostPasteSwapBack)
+nmap <c-m> <plug>(YoinkPostPasteSwapForward)
+
+nmap p <plug>(YoinkPaste_p)
+nmap P <plug>(YoinkPaste_P)
+
+nnoremap m d
+xnoremap m d
+
+nnoremap mm dd
+nnoremap M D
+
+xmap s <plug>(SubversiveSubstitute)
+xmap p <plug>(SubversiveSubstitute)
+xmap P <plug>(SubversiveSubstitute)

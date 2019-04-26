@@ -336,10 +336,24 @@ killL() {
     tmux source ~/.tmux.conf
 }
 
-lscan() {
+lines() {
     if [ $# -ne 1 ]; then
         echo "Need one arg, got $#"
         return 1
     fi
-    cat $1 | fzf
+    echo "looking for $1"
+    tmux bind -n C-j run "tmux send-keys C-j"
+    tmux bind -n C-k run "tmux send-keys C-k"
+    local res=$(ag $1 | fzf)
+    local filepath=$(echo $res | cut -d ':' -f1)
+    local lineNumber=$(echo $res | cut -d ':' -f2)
+    [[ -n "$filepath" ]] && ${EDITOR:-vim} +${lineNumber} ${filepath}
+    tmux source ~/.tmux.conf
+}
+
+railError() {
+    tmux bind -n C-j run "tmux send-keys C-j"
+    tmux bind -n C-k run "tmux send-keys C-k"
+    sshpass -p 'T@ble$@fe' scp root@192.168.125.10:/nvdata/log/$1 /tmp/ && cat /tmp/$1 | fzf
+    tmux source ~/.tmux.conf
 }
