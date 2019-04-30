@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 cd ~/Rail/rail
 if [[ "$(git describe --abbrev=0)" > "1-07-27-086" ]]; then
@@ -10,6 +10,12 @@ if [[ "$(git describe --abbrev=0)" > "1-07-27-086" ]]; then
             ;;
         p)
             TOOLCHAIN=codeSourcery PLATFORM=A6 VARIANT=F make rail-ux.provision && cp /home/will/Rail/rail-ux/build-provision-bcm-arm/provision /srv/http/
+            ;;
+        c)
+            TOOLCHAIN=codeSourcery PLATFORM=A6 VARIANT=F make rail-ux.chatterclient && cp /home/will/Rail/rail-ux/build-chatterclient-bcm-arm/ChatterClient /srv/http/
+            ;;
+        s)
+            TOOLCHAIN=codeSourcery PLATFORM=A6 VARIANT=F make rail-ux.chatterserver && cp /home/will/Rail/rail-ux/build-chatterserver-bcm-arm/ChatterServer /srv/http/
             ;;
         *)
             echo "Unsupported"
