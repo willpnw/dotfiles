@@ -5,6 +5,27 @@ cd ~/Rail/rail
 if [[ "$(git describe --abbrev=0)" > "1-07-27-086" ]]; then
     echo "Builing with linaro"
     case $1 in
+        o)
+            TOOLCHAIN=codeSourcery PLATFORM=A6 VARIANT=F make rail-ux.ota && cp /home/will/Rail/rail-ux/build-ota-bcm-arm/ota /srv/http/
+            WORKSPACE=/home/will/Rail
+            KEY_TYPE=0
+            OTA_OUT_PATH=$WORKSPACE/rail/projects/bcm589x/build-output/secuapp/BCM95892/rootfs/usr/bin/ota
+            cd $WORKSPACE/rail
+            RAIL_GDESCRIBE=$(git describe --long --dirty)
+            cd $WORKSPACE/rail/rail-ux
+            UX_GDESCRIBE=$(git describe --long --dirty)
+            OTA_VERSION=0$(git describe --dirty)-${KEY_TYPE}-A
+            OTA_TS_VERSION=ts:0:${KEY_TYPE}:A:g:rail:${RAIL_GDESCRIBE}:ux:${UX_GDESCRIBE}:
+            OTA_OUT_DIR=$WORKSPACE/rail/build/images/ota
+            mkdir -p $OTA_OUT_DIR
+            mv $OTA_OUT_PATH $OTA_OUT_DIR
+            cp $WORKSPACE/rail/rail-ux/ota/ota/ota.sh $OTA_OUT_DIR
+            echo $OTA_TS_VERSION > $OTA_OUT_DIR/tsVersion # Newer version
+            echo $OTA_VERSION    > $OTA_OUT_DIR/version   # Maintained for backwards compatibility
+            cd $WORKSPACE/rail/build/images/
+            tar -cvf ota.tar ota
+            cp ota.tar /srv/http
+            ;;
         a)
             TOOLCHAIN=codeSourcery PLATFORM=A6 VARIANT=F make rail-ux.athena && cp /home/will/Rail/rail-ux/build-athena-bcm-arm/athena /srv/http/
             ;;
@@ -12,7 +33,7 @@ if [[ "$(git describe --abbrev=0)" > "1-07-27-086" ]]; then
             TOOLCHAIN=codeSourcery PLATFORM=A6 VARIANT=F make rail-ux.provision && cp /home/will/Rail/rail-ux/build-provision-bcm-arm/provision /srv/http/
             ;;
         c)
-            TOOLCHAIN=codeSourcery PLATFORM=A6 VARIANT=F make rail-ux.chatterclient && cp /home/will/Rail/rail-ux/build-chatterclient-bcm-arm/ChatterClient /srv/http/
+            TOOLCHAIN=codeSourcery PLATFORM=A6 VARIANT=F make rail-ux.chatterconsumer && cp /home/will/Rail/rail-ux/build-chatterconsumer-bcm-arm/ChatterConsumer /srv/http/
             ;;
         s)
             TOOLCHAIN=codeSourcery PLATFORM=A6 VARIANT=F make rail-ux.chatterserver && cp /home/will/Rail/rail-ux/build-chatterserver-bcm-arm/ChatterServer /srv/http/

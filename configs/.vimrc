@@ -387,12 +387,12 @@ runtime macros/matchit.vim
 
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-nnoremap <c-p>r :FZFMru<cr>
-nnoremap <c-p>f :Files<cr>
-nnoremap <c-p>x :Files ~/devprojects/phoenix/src/code<cr>
-nnoremap <c-p>d :Files ~/devprojects/phoenix-data-service/src/<cr>
-nnoremap <c-p>b :Buffers<cr>
-nnoremap <c-p>t :Tags<cr>
+nnoremap <c-p> :FZFMru<cr>
+nnoremap <c-g>f :Files<cr>
+nnoremap <c-g>x :Files ~/devprojects/phoenix/src/code<cr>
+nnoremap <c-g>d :Files ~/devprojects/phoenix-data-service/src/<cr>
+nnoremap <c-g>b :Buffers<cr>
+nnoremap <c-g>t :Tags<cr>
 
 "
 " Shortcuts for switching between files in angular
