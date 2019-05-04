@@ -200,7 +200,8 @@ nnoremap <leader>fw :FixWhitespace<CR>gg=G''
 "---------------------------------------
 " NERDTree
 "---------------------------------------
-nnoremap <leader>nt :NERDTreeToggle<CR>
+nnoremap <leader>nt :NERDTreeFind<CR>
+
 autocmd StdinReadPre * let s:std_in=1
 
 function! MaybeFiles()
@@ -210,7 +211,9 @@ function! MaybeFiles()
 endfunction
 au VimEnter * call MaybeFiles()
 
-let g:NERDTreeWinSize=40
+let g:NERDTreeWinSize=30
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
 
 "---------------------------------------
 " Tabular
@@ -407,7 +410,7 @@ nnoremap <c-g>t :Tags<cr>
 "let javaScript_fold=1 "activate folding by js syntax
 "set foldlevelstart=1 "start file with all folds opened
 "
-set wildignore+=**/node_modules/** 
+set wildignore+=**/node_modules/**
 
 let g:yoinkIncludeDeleteOperations = 1
 
@@ -426,3 +429,23 @@ nnoremap M D
 xmap s <plug>(SubversiveSubstitute)
 xmap p <plug>(SubversiveSubstitute)
 xmap P <plug>(SubversiveSubstitute)
+
+
+
+"noremap <leader>z <c-w>_ \| <c-w>\|
+"noremap <leader><space> <c-w>=
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <leader><space> :ZoomToggle<CR>
+
