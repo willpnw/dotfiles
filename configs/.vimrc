@@ -36,7 +36,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'pangloss/vim-javascript'
 Plug 'airblade/vim-gitgutter'
 Plug 'rking/ag.vim'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'mtth/scratch.vim'
 Plug 'kablamo/vim-git-log'
 Plug 'digitaltoad/vim-pug'
@@ -44,7 +43,6 @@ Plug 'alvan/vim-closetag'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'posva/vim-vue'
-Plug 'burnettk/vim-angular'
 Plug 'leafgarland/typescript-vim'
 Plug 'justinmk/vim-sneak'
 Plug 'jacoborus/tender.vim'
@@ -311,19 +309,6 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=42
 "---------------------------------------
 autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 
-
-
-let g:multi_cursor_use_default_mapping=0
-" Default mapping
-let g:multi_cursor_next_key='<C-w>'
-let g:multi_cursor_prev_key='<C-e>'
-let g:multi_cursor_skip_key='<C-r>'
-let g:multi_cursor_quit_key='<Esc>'
-
-
-
-
-
 " Shortcuts
 nnoremap <leader>l oconsole.log(JSON.stringify(, null, 2))<esc>2Bba
 vnoremap <leader>l yoconsole.log(JSON.stringify(, null, 2))<esc>F(;a"", <esc>2hPf(p
@@ -432,8 +417,6 @@ xmap P <plug>(SubversiveSubstitute)
 
 
 
-"noremap <leader>z <c-w>_ \| <c-w>\|
-"noremap <leader><space> <c-w>=
 " Zoom / Restore window.
 function! s:ZoomToggle() abort
     if exists('t:zoomed') && t:zoomed
@@ -449,3 +432,4 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <leader><space> :ZoomToggle<CR>
 
+autocmd InsertLeave * write
