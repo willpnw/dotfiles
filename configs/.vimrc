@@ -21,8 +21,6 @@ Plug 'mhinz/vim-startify'
 Plug 'mileszs/ack.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-repeat'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 Plug 'sjl/gundo.vim'
 Plug 'tpope/vim-eunuch'
@@ -55,6 +53,7 @@ Plug 'svermeulen/vim-cutlass'
 Plug 'svermeulen/vim-yoink'
 Plug 'svermeulen/vim-subversive'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'vim-scripts/vim-auto-save'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -148,13 +147,15 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+inoremap <C-j> <c-o>gj
+inoremap <C-j> <c-o>gj
+inoremap <C-k> <c-o>gk
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+
+
 " Make cw consistent with dw, yw, vw
 onoremap w :execute 'normal! '.v:count1.'w'<CR>
-
-" smash escape
-inoremap jk <esc>
-cnoremap jk <esc>
-vnoremap v <esc>
 
 " Midscreen serch results
 :nnoremap n nzz
@@ -285,14 +286,6 @@ set t_Co=256
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
 colorscheme tender
-
-"---------------------------------------
-" Ultislips
-"---------------------------------------
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsEditSplit="vertical"
 
 "---------------------------------------
 " vim-indent-guides
@@ -432,4 +425,4 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <leader><space> :ZoomToggle<CR>
 
-autocmd InsertLeave * write
+let g:auto_save = 1
