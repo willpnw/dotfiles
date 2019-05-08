@@ -25,7 +25,7 @@ case $(uname -s) in
             "Arch Linux"|"Antergos Linux")
                 alias vi="vim"
                 alias in="sudo pacman -Syu"
-                alias aur="yaourt"
+                alias yay="yay -S"
                 ;;
         esac
         ;;
@@ -217,7 +217,6 @@ dexec() {
 bindkey -v
 bindkey -M viins '^r' history-incremental-search-backward
 bindkey -M vicmd '^r' history-incremental-search-backward
-bindkey -M viins 'jk' vi-cmd-mode
 
 allTheThings() {
     for dir in /home/will/Rail/rail-stage2 /home/will/Rail/rail-stage2-ext /home/will/Rail/rail-uboot-env/ /home/will/Rail/rail-uboot_2015/ /home/will/Rail/rail/ /home/will/Rail/rail/rail-ux; do

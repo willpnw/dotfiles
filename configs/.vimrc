@@ -54,6 +54,7 @@ Plug 'svermeulen/vim-yoink'
 Plug 'svermeulen/vim-subversive'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'vim-scripts/vim-auto-save'
+Plug 'sickill/vim-pasta'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
