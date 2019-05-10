@@ -199,7 +199,6 @@ alias pdsq="cd ~/devprojects/phoenix-data-service/src && nodemon server.js -c ~/
 alias pdss="cd ~/devprojects/phoenix-data-service/src && nodemon server.js -c ~/devprojects/config_stg.yaml"
 alias pho="cd ~/devprojects/phoenix/src && npm start"
 
-
 # docker aliases
 alias dka='docker kill $(docker ps -q)'
 
@@ -351,9 +350,7 @@ lines() {
     tmux source ~/.tmux.conf
 }
 
-railError() {
-    tmux bind -n C-j run "tmux send-keys C-j"
-    tmux bind -n C-k run "tmux send-keys C-k"
-    sshpass -p 'T@ble$@fe' scp root@192.168.125.10:/nvdata/log/$1 /tmp/ && cat /tmp/$1 | fzf
-    tmux source ~/.tmux.conf
+railTerm() {
+    set -x
+    sshpass -p 'T@ble$@fe' ssh root@192.168.$1
 }
