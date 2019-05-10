@@ -188,6 +188,7 @@ alias gdsc="git describe"
 alias gdscl="git describe --long"
 alias gllr="git log --left-right --graph --cherry-pick --oneline"
 alias glro="git log --right-only --no-merges --cherry-pick --oneline"
+alias gsp="git show -p"
 
 alias du="du -h --max-depth=1"
 
@@ -258,7 +259,7 @@ e() {
 r() {
     tmux bind -n C-j run "tmux send-keys C-j"
     tmux bind -n C-k run "tmux send-keys C-k"
-    print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/\([0-9]\| \|\*\)\+//')
+    print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | cut -d ' ' -f2-)
     tmux source ~/.tmux.conf
 }
 
