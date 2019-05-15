@@ -47,10 +47,8 @@ Plug 'jacoborus/tender.vim'
 Plug 'mattn/emmet-vim'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'pbogut/fzf-mru.vim'
 Plug 'svermeulen/vim-cutlass'
-Plug 'svermeulen/vim-yoink'
 Plug 'svermeulen/vim-subversive'
 Plug 'ludovicchabant/vim-gutentags'
 "Plug 'vim-scripts/vim-auto-save'
@@ -58,11 +56,13 @@ Plug 'ludovicchabant/vim-gutentags'
 "Plug 'takac/vim-hardtime'
 
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'svermeulen/vim-yoink'
 else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+  "Plug 'Shougo/deoplete.nvim'
+  "Plug 'roxma/nvim-yarp'
+  "Plug 'roxma/vim-hug-neovim-rpc'
 endif
 let g:deoplete#enable_at_startup = 1
 Plug 'Shougo/neosnippet.vim'
