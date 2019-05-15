@@ -53,8 +53,9 @@ Plug 'svermeulen/vim-cutlass'
 Plug 'svermeulen/vim-yoink'
 Plug 'svermeulen/vim-subversive'
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'vim-scripts/vim-auto-save'
-Plug 'sickill/vim-pasta'
+"Plug 'vim-scripts/vim-auto-save'
+"Plug 'sickill/vim-pasta'
+Plug 'takac/vim-hardtime'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -371,7 +372,7 @@ runtime macros/matchit.vim
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 nnoremap <c-p> :FZFMru<cr>
 nnoremap <c-g>f :Files<cr>
-nnoremap <c-g>x :Files ~/devprojects/phoenix/src/code<cr>
+nnoremap <c-g>p :Files ~/devprojects/phoenix/src/code<cr>
 nnoremap <c-g>d :Files ~/devprojects/phoenix-data-service/src/<cr>
 nnoremap <c-g>b :Buffers<cr>
 nnoremap <c-g>t :Tags<cr>
@@ -410,6 +411,7 @@ xmap p <plug>(SubversiveSubstitute)
 xmap P <plug>(SubversiveSubstitute)
 
 
+
 " Zoom / Restore window.
 function! s:ZoomToggle() abort
     if exists('t:zoomed') && t:zoomed
@@ -426,3 +428,10 @@ command! ZoomToggle call s:ZoomToggle()
 nnoremap <leader><space> :ZoomToggle<CR>
 
 let g:auto_save = 1
+
+
+let g:hardtime_default_on = 1
+
+nnoremap <leader>q :q<CR>
+nnoremap <leader>x :x<CR>
+nnoremap <leader>w :w<CR>

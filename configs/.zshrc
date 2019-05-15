@@ -194,7 +194,7 @@ alias du="du -h --max-depth=1"
 
 alias aloha="rdesktop -g 1440x900 -P -z -x l -u 1234 -p ViableW@re 192.168.15.244:3389"
 
-alias pdsl="cd ~/devprojects/phoenix-data-service/src && nodemon server.js -c ~/devprojects/phoenix-data-service/config_local.yaml"
+alias pdsl="cd ~/devprojects/phoenix-data-service/src && nodemon server.js -c ~/devprojects/phoenix-data-service/src/config.yaml"
 alias pdsq="cd ~/devprojects/phoenix-data-service/src && nodemon server.js -c ~/devprojects/config_qa.yaml"
 alias pdss="cd ~/devprojects/phoenix-data-service/src && nodemon server.js -c ~/devprojects/config_stg.yaml"
 alias pho="cd ~/devprojects/phoenix/src && npm start"
