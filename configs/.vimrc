@@ -55,7 +55,7 @@ Plug 'svermeulen/vim-subversive'
 Plug 'ludovicchabant/vim-gutentags'
 "Plug 'vim-scripts/vim-auto-save'
 "Plug 'sickill/vim-pasta'
-Plug 'takac/vim-hardtime'
+"Plug 'takac/vim-hardtime'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -433,5 +433,5 @@ let g:auto_save = 1
 let g:hardtime_default_on = 1
 
 nnoremap <leader>q :q<CR>
-nnoremap <leader>x :x<CR>
-nnoremap <leader>w :w<CR>
+nnoremap <leader>x :xa<CR>
+nnoremap <leader>w :wa<CR>
