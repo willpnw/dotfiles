@@ -54,6 +54,7 @@ Plug 'ludovicchabant/vim-gutentags'
 "Plug 'vim-scripts/vim-auto-save'
 "Plug 'sickill/vim-pasta'
 "Plug 'takac/vim-hardtime'
+Plug 'vimwiki/vimwiki'
 
 if has('nvim')
     Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
