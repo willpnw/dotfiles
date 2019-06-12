@@ -100,6 +100,7 @@ set nowrap
 set autochdir
 set t_ut=
 set noswapfile
+set nomodeline
 
 " No more ex mode
 noremap q: <Nop>
@@ -395,8 +396,8 @@ set wildignore+=**/node_modules/**
 
 let g:yoinkIncludeDeleteOperations = 1
 
-nmap <c-n> <plug>(YoinkPostPasteSwapBack)
-nmap <c-m> <plug>(YoinkPostPasteSwapForward)
+"nmap <c-n> <plug>(YoinkPostPasteSwapBack)
+"nmap <c-m> <plug>(YoinkPostPasteSwapForward)
 
 nmap p <plug>(YoinkPaste_p)
 nmap P <plug>(YoinkPaste_P)
