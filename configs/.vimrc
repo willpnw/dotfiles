@@ -80,7 +80,8 @@ set path+=**
 "---------------------------------------
 " Sets
 "---------------------------------------
-set clipboard=unnamedplus
+"set clipboard=unnamed
+set clipboard+=unnamedplus
 set hidden
 set autoindent
 set smartindent

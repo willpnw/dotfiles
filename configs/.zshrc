@@ -354,3 +354,5 @@ railTerm() {
     set -x
     sshpass -p 'T@ble$@fe' ssh root@192.168.$1
 }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
