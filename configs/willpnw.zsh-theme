@@ -119,7 +119,7 @@ _1RIGHT="[%*] "
 bureau_precmd () {
   _1SPACES=`get_space $_1LEFT $_1RIGHT`
   print
-  print -rP "$_1LEFT$_1SPACES$_1RIGHT"
+  print -rP "$_1LEFT$_1SPACES"
 }
 
 setopt prompt_subst

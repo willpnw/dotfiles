@@ -10,6 +10,7 @@ Plug 'godlygeek/tabular'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'peterhoeg/vim-qml'
@@ -45,16 +46,16 @@ Plug 'leafgarland/typescript-vim'
 Plug 'justinmk/vim-sneak'
 Plug 'jacoborus/tender.vim'
 Plug 'mattn/emmet-vim'
-Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
 Plug 'svermeulen/vim-cutlass'
 Plug 'svermeulen/vim-subversive'
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 "Plug 'vim-scripts/vim-auto-save'
 "Plug 'sickill/vim-pasta'
 "Plug 'takac/vim-hardtime'
-Plug 'vimwiki/vimwiki'
+"Plug 'vimwiki/vimwiki'
 
 if has('nvim')
     Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
@@ -372,12 +373,7 @@ runtime macros/matchit.vim
 
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-nnoremap <c-p> :FZFMru<cr>
-nnoremap <c-g>f :Files<cr>
-nnoremap <c-g>p :Files ~/devprojects/phoenix/src/code<cr>
-nnoremap <c-g>d :Files ~/devprojects/phoenix-data-service/src/<cr>
-nnoremap <c-g>b :Buffers<cr>
-nnoremap <c-g>t :Tags<cr>
+nnoremap <c-p> :Files ~/dev-projects/sonosite-x-porte-app/<CR>
 
 "
 " Shortcuts for switching between files in angular
@@ -437,3 +433,4 @@ let g:hardtime_default_on = 1
 nnoremap <leader>q :q<CR>
 nnoremap <leader>x :xa<CR>
 nnoremap <leader>w :wa<CR>
+au BufRead,BufNewFile *.xaml setfiletype xml

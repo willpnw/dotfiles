@@ -22,7 +22,7 @@ case $(uname -s) in
                 alias nt="tmux split-window vim"
                 alias vi="/usr/bin/vim.gtk"
                 ;;
-            "Arch Linux"|"Antergos Linux")
+            "Arch Linux"|"Antergos Linux"|"Manjaro Linux")
                 alias vi="vim"
                 alias in="sudo pacman -Syu"
                 alias yay="yay -S"
