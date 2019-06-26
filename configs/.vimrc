@@ -435,3 +435,17 @@ nnoremap <leader>q :q<CR>
 nnoremap <leader>x :xa<CR>
 nnoremap <leader>w :wa<CR>
 au BufRead,BufNewFile *.xaml setfiletype xml
+
+
+
+function! s:fzf_next(idx)
+    let commands = ['Files ~/dev-projects/sonosite-x-porte-app/', 'History', 'Buffers']
+    execute commands[a:idx]
+    let next = (a:idx + 1) % len(commands)
+    let previous = (a:idx - 1) % len(commands)
+    execute 'tnoremap <buffer> <silent> <c-f> <c-\><c-n>:close<cr>:sleep 100m<cr>:call <sid>fzf_next('.next.')<cr>'
+    execute 'tnoremap <buffer> <silent> <c-b> <c-\><c-n>:close<cr>:sleep 100m<cr>:call <sid>fzf_next('.previous.')<cr>'
+endfunction
+
+command! Cycle call <sid>fzf_next(0)
+nnoremap <c-p> :Cycle<CR>
