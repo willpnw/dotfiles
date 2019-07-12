@@ -16,7 +16,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'peterhoeg/vim-qml'
 "Plug 'Valloric/YouCompleteMe', { 'tag': '9448748e804a01561f814be49c0b449a9332de1b', 'do': './install.py' }
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'chazy/cscope_maps'
+"Plug 'chazy/cscope_maps'
 Plug 'vim-scripts/a.vim'
 Plug 'mhinz/vim-startify'
 Plug 'mileszs/ack.vim'
@@ -51,7 +51,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
 Plug 'svermeulen/vim-cutlass'
 Plug 'svermeulen/vim-subversive'
-"Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
 "Plug 'vim-scripts/vim-auto-save'
 "Plug 'sickill/vim-pasta'
 "Plug 'takac/vim-hardtime'
@@ -99,10 +99,11 @@ set invrelativenumber
 set number
 set ambiwidth=double
 set nowrap
-set autochdir
+"set autochdir
 set t_ut=
 set noswapfile
 set nomodeline
+set nocscopeverbose
 
 " No more ex mode
 noremap q: <Nop>
@@ -136,9 +137,9 @@ nnoremap Y v$hy
 
 " Serach/Replace
 vnoremap <leader>ra "hy:%s/<C-r>h//gc<left><left><left>
-vnoremap <leader>raf "hy:%s?\V<C-r>h??g<left><left>
-vnoremap <leader>rA "hy:bufdo %s?\V<C-r>h??gc<left><left><left>
-vnoremap <leader>rAf "hy:bufdo %s?\V<C-r>h??g<left><left>
+vnoremap <leader>rA "hy:%s?\V<C-r>h??g<left><left>
+vnoremap <leader>ri "hy:bufdo %Subvert?\V<C-r>h??gc<left><left><left>
+vnoremap <leader>rIf "hy:bufdo %Subvert?\V<C-r>h??g<left><left>
 
 " Edit/Source vimrc
 :nnoremap <leader>ev :vsplit ~/.vimrc<cr>
@@ -200,7 +201,7 @@ let g:rbpt_colorpairs = [
 "---------------------------------------
 " FixWhiteSpace
 "---------------------------------------
-nnoremap <leader>fw :FixWhitespace<CR>gg=G''
+nnoremap <leader>f :FixWhitespace<CR>gg=G''
 
 "---------------------------------------
 " NERDTree
@@ -211,7 +212,7 @@ autocmd StdinReadPre * let s:std_in=1
 
 function! MaybeFiles()
     :if argc() == 0
-    :    History
+    :    Cycle
     :endif
 endfunction
 au VimEnter * call MaybeFiles()
@@ -268,21 +269,6 @@ nnoremap <C-c> :A<CR>
 "---------------------------------------
 nnoremap ack :Ack! -Qi ""<left>
 vnoremap ack "hy:Ack! -Qi "<C-r>h"
-
-"---------------------------------------
-" Cscope
-"---------------------------------------
-"cs add $CSCOPE_DB
-"function! LoadCscope()
-"  let db = findfile("cscope.out", ".;")
-"  if (!empty(db))
-"    let path = strpart(db, 0, match(db, "/cscope.out$"))
-"    set nocscopeverbose " suppress 'duplicate connection' error
-"    exe "cs add " . db . " " . path
-"    set cscopeverbose
-"  endif
-"endfunction
-"au BufEnter /* call LoadCscope()
 
 "---------------------------------------
 " Color
@@ -449,3 +435,44 @@ endfunction
 
 command! Cycle call <sid>fzf_next(0)
 nnoremap <c-p> :Cycle<CR>
+
+if has("cscope")
+
+    """"""""""""" Standard cscope/vim boilerplate
+
+    " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+    "set cscopetag
+
+    " check cscope for definition of a symbol before checking ctags: set to 1
+    " if you want the reverse search order.
+    set csto=0
+
+    " add any cscope database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out  
+    " else add the database pointed to by environment variable 
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+
+    " show msg when any other cscope db added
+    set cscopeverbose  
+
+    " cscope maps
+    "   's'   symbol: find all references to the token under cursor
+    "   'g'   global: find global definition(s) of the token under cursor
+    "   'c'   calls:  find all calls to the function name under cursor
+    "   't'   text:   find all instances of the text under cursor
+    "   'e'   egrep:  egrep search for the word under cursor
+    "   'f'   file:   open the filename under cursor
+    "   'i'   includes: find files that include the filename under cursor
+    "   'd'   called: find functions that function under cursor calls
+    nnoremap <C-g>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-g>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-g>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-g>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-g>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-g>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nnoremap <C-g>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nnoremap <C-g>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+endif

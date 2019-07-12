@@ -4,9 +4,7 @@
 # Path to your oh-my-zsh installation.
 case $(uname -s) in
     Linux)
-        fr() {
-            ack -l $1 | xargs sed -i "s/$1/$2/g"
-        }
+        SED_INLINE="sed -i"
         alias udb="sudo updatedb"
         alias ls='ls --color=auto'
         export ZSH=/home/will/.oh-my-zsh
@@ -30,9 +28,7 @@ case $(uname -s) in
         esac
         ;;
     Darwin*)
-        fr() {
-            ack -l $1 | xargs sed -i -e "s/$1/$2/g"
-        }
+        SED_INLINE="sed -i -e"
         export ZSH=/Users/will/.oh-my-zsh
         alias vi="nvim"
         alias in="brew install"
@@ -44,6 +40,7 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=1.5
 unalias vi
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+export CSCOPE_EDITOR=vim
 
 export KEYTIMEOUT=
 export PATH="/opt/gcc-linaro-arm-none-eabi-4.8-2014.04_linux/bin:/home/will/Rail/rail-buildtools32/CodeSourcery/Sourcery_G++_Lite/bin/:$HOME/.dotfiles/scripts:$HOME/.local/bin:$PATH"
@@ -229,8 +226,16 @@ allTheThings() {
 alias att=allTheThings
 
 rn() {
-    for f in `ls | ack $1`; do
+    for f in `fd $1`; do
         mv $f $(echo $f | sed "s/$1/$2/g")
+    done
+}
+
+fr() {
+    echo "Find/Rename $1 $2"
+    for f in `ag -sl $1`; do
+        echo $f
+        eval $SED_INLINE "s/$1/$2/g" $f
     done
 }
 
@@ -258,7 +263,7 @@ e() {
 r() {
     tmux bind -n C-j run "tmux send-keys C-j"
     tmux bind -n C-k run "tmux send-keys C-k"
-    print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | cut -d ' ' -f2-)
+    print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | cut -d ' ' -f3-)
     tmux source ~/.tmux.conf
 }
 

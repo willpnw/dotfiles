@@ -27,6 +27,7 @@
     scrollback_infinite = True
     scrollbar_position = hidden
     show_titlebar = False
+    use_system_font = False
   [[3024 Night]]
     background_color = "#090300"
     cursor_color = "#a5a2a2"
