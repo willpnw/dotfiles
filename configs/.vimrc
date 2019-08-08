@@ -35,7 +35,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'pangloss/vim-javascript'
 Plug 'airblade/vim-gitgutter'
 Plug 'rking/ag.vim'
-Plug 'mtth/scratch.vim'
+"Plug 'mtth/scratch.vim'
 Plug 'kablamo/vim-git-log'
 Plug 'digitaltoad/vim-pug'
 Plug 'alvan/vim-closetag'
@@ -52,13 +52,14 @@ Plug 'pbogut/fzf-mru.vim'
 Plug 'svermeulen/vim-cutlass'
 Plug 'svermeulen/vim-subversive'
 Plug 'ludovicchabant/vim-gutentags'
-"Plug 'vim-scripts/vim-auto-save'
+Plug 'vim-scripts/vim-auto-save'
 "Plug 'sickill/vim-pasta'
 "Plug 'takac/vim-hardtime'
 "Plug 'vimwiki/vimwiki'
 
 if has('nvim')
     Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+    Plug 'zchee/deoplete-clang'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'svermeulen/vim-yoink'
 else
@@ -104,6 +105,7 @@ set t_ut=
 set noswapfile
 set nomodeline
 set nocscopeverbose
+set completeopt-=preview
 
 " No more ex mode
 noremap q: <Nop>
@@ -138,8 +140,10 @@ nnoremap Y v$hy
 " Serach/Replace
 vnoremap <leader>ra "hy:%s/<C-r>h//gc<left><left><left>
 vnoremap <leader>rA "hy:%s?\V<C-r>h??g<left><left>
-vnoremap <leader>ri "hy:bufdo %Subvert?\V<C-r>h??gc<left><left><left>
-vnoremap <leader>rIf "hy:bufdo %Subvert?\V<C-r>h??g<left><left>
+vnoremap <leader>ri "hy:%Subvert?<C-r>h??gc<left><left><left>
+vnoremap <leader>rI "hy:bufdo %Subvert?<C-r>h??gc<left><left><left>
+
+vnoremap <leader>s :Subvert//g<left><left>
 
 " Edit/Source vimrc
 :nnoremap <leader>ev :vsplit ~/.vimrc<cr>
@@ -225,6 +229,7 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 " Tabular
 "---------------------------------------
 nnoremap <leader>t :Tab /
+nnoremap <leader>t: :Tab /:<CR>
 nnoremap <leader>t, :Tab /,\zs/l0c1<CR>
 nnoremap <leader>t( :Tab /(/l0c0<CR>
 nnoremap <leader>t= :Tab /\(=\)\@<!=\([>=]\)\@!<CR>
@@ -258,7 +263,7 @@ autocmd QuickFixCmdPost *log* cwindow
 "---------------------------------------
 " Ctags
 "---------------------------------------
-
+nnoremap <C-g> <C-]>
 "---------------------------------------
 " a.vim
 "---------------------------------------
@@ -304,15 +309,14 @@ nnoremap <leader>{ A<space>{<CR>}<esc>O
 
 nnoremap <leader>df da{2dd
 
-:nnoremap <leader>ss r[a"<esc>ea"]<esc>
-
-nnoremap ]ic :set noignorecase<cr>
-nnoremap [ic :set ignorecase<cr>
+nnoremap [ic :set noignorecase<cr>
+nnoremap ]ic :set ignorecase<cr>
 nnoremap yic :set ignorecase!<cr>
 
 nnoremap <leader>k :bn<cr>
 nnoremap <leader>j :bp<cr>
-nnoremap <f5> :!runAthena<cr><cr>
+nnoremap <leader>K :bl<cr>
+nnoremap <leader>J :bf<cr>
 
 " filenames like *.xml, *.html, *.xhtml, ...
 " These are the file extensions where this plugin is enabled.
@@ -435,6 +439,7 @@ endfunction
 
 command! Cycle call <sid>fzf_next(0)
 nnoremap <c-p> :Cycle<CR>
+nnoremap <leader>b :Buffers<CR>
 
 if has("cscope")
 
@@ -476,3 +481,8 @@ if has("cscope")
     nnoremap <C-g>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
     nnoremap <C-g>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
+
+
+
+noremap <leader>eq :let @q='<C-R><C-R>q'
+

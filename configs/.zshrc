@@ -175,6 +175,7 @@ alias gaa="git add --all"
 alias gd="clear; git diff -w"
 alias gdc="git diff --cached"
 alias gdt="git difftool -y"
+alias gmt="git mergetool -y"
 alias gdtc="git difftool -y --cached"
 alias gl="git log"
 alias gstash="git stash"
@@ -186,6 +187,7 @@ alias gdscl="git describe --long"
 alias gllr="git log --left-right --graph --cherry-pick --oneline"
 alias glro="git log --right-only --no-merges --cherry-pick --oneline"
 alias gsp="git show -p"
+alias gsu="git submodule update"
 
 alias du="du -h --max-depth=1"
 
@@ -227,12 +229,13 @@ alias att=allTheThings
 
 rn() {
     for f in `fd $1`; do
-        mv $f $(echo $f | sed "s/$1/$2/g")
+        NEW=$(echo $f | sed "s/$1/$2/g")
+        echo "$f -> $NEW"
+        mv $f $NEW
     done
 }
 
 fr() {
-    echo "Find/Rename $1 $2"
     for f in `ag -sl $1`; do
         echo $f
         eval $SED_INLINE "s/$1/$2/g" $f
@@ -361,3 +364,11 @@ railTerm() {
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+cf() {
+    cd /home/will/dev-projects/sonosite-x-porte-app
+    for f in `gs --porcelain | ag "^(M|A).*(cpp|h)$" | awk '{print $2}'`; do
+        echo $f
+        clang-format $f > tmp && mv tmp $f
+    done
+}
