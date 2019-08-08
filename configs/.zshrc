@@ -43,7 +43,6 @@ export EDITOR="$VISUAL"
 export CSCOPE_EDITOR=vim
 
 export KEYTIMEOUT=
-export PATH="/opt/gcc-linaro-arm-none-eabi-4.8-2014.04_linux/bin:/home/will/Rail/rail-buildtools32/CodeSourcery/Sourcery_G++_Lite/bin/:$HOME/.dotfiles/scripts:$HOME/.local/bin:$PATH"
 #source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -136,26 +135,10 @@ alias jen03="ssh wpatterson@jen03"
 alias work="ssh will@192.168.0.164"
 
 # directory jumps
-alias rail='cd ~/Rail/rail'
-alias linux='cd ~/Rail/rail/linux'
-alias sbin='cd ~/Rail/rail/linux/target/fs/common/usr/sbin'
-alias ath='cd ~/Rail/rail/rail-ux/athena/athena'
-alias scr='cd ~/Rail/rail/rail-ux/common/scripts'
-alias pro='cd ~/Rail/rail/rail-ux/provision/provision'
-alias com='cd ~/Rail/rail/rail-ux/common'
 alias dev='cd ~/devprojects'
-alias tc='cd ~/devprojects/timber/timber-client/src/app/'
-
-# minicom
-alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0 -t screen-256color -c on"
-alias mc2="sudo minicom -C /tmp/minilog1 -D /dev/ttyUSB1 -t screen-256color -c on"
-
-alias scrn="sudo screen /dev/ttyUSB0 115200 -ixon -ixoff"
-alias scrn2="sudo screen /dev/ttyUSB1 115200 -ixon -ixoff"
 
 # commands
 alias c="clear"
-alias sig="cd ~/Rail/rail-buildtools32/signature_tools"
 alias n="nvim"
 
  #git commands
@@ -191,13 +174,6 @@ alias gsu="git submodule update"
 
 alias du="du -h --max-depth=1"
 
-alias aloha="rdesktop -g 1440x900 -P -z -x l -u 1234 -p ViableW@re 192.168.15.244:3389"
-
-alias pdsl="cd ~/devprojects/phoenix-data-service/src && nodemon server.js -c ~/devprojects/phoenix-data-service/src/config.yaml"
-alias pdsq="cd ~/devprojects/phoenix-data-service/src && nodemon server.js -c ~/devprojects/config_qa.yaml"
-alias pdss="cd ~/devprojects/phoenix-data-service/src && nodemon server.js -c ~/devprojects/config_stg.yaml"
-alias pho="cd ~/devprojects/phoenix/src && npm start"
-
 # docker aliases
 alias dka='docker kill $(docker ps -q)'
 
@@ -216,16 +192,6 @@ dexec() {
 bindkey -v
 bindkey -M viins '^r' history-incremental-search-backward
 bindkey -M vicmd '^r' history-incremental-search-backward
-
-allTheThings() {
-    for dir in /home/will/Rail/rail-stage2 /home/will/Rail/rail-stage2-ext /home/will/Rail/rail-uboot-env/ /home/will/Rail/rail-uboot_2015/ /home/will/Rail/rail/ /home/will/Rail/rail/rail-ux; do
-        echo -n "`basename $dir`: "
-        pushd $dir > /dev/null
-        $@
-        popd > /dev/null
-    done
-}
-alias att=allTheThings
 
 rn() {
     for f in `fd $1`; do
@@ -358,13 +324,9 @@ lines() {
     tmux source ~/.tmux.conf
 }
 
-railTerm() {
-    set -x
-    sshpass -p 'T@ble$@fe' ssh root@192.168.$1
-}
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# clang format
 cf() {
     cd /home/will/dev-projects/sonosite-x-porte-app
     for f in `gs --porcelain | ag "^(M|A).*(cpp|h)$" | awk '{print $2}'`; do
