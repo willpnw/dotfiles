@@ -1,0 +1,8 @@
+Base/existing properties (color: “blue”)
+Custom/new properties (property int myText: 10)
+Signal declaration
+Signal handlers (onXChanged)
+JS functions
+Animations
+Non-visual children
+Visual Children

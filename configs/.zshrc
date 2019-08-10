@@ -309,7 +309,7 @@ killL() {
     tmux source ~/.tmux.conf
 }
 
-lines() {
+agl() {
     if [ $# -ne 1 ]; then
         echo "Need one arg, got $#"
         return 1
