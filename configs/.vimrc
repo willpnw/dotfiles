@@ -49,9 +49,9 @@ Plug 'mattn/emmet-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
-Plug 'svermeulen/vim-cutlass'
-Plug 'svermeulen/vim-subversive'
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'svermeulen/vim-cutlass'
+"Plug 'svermeulen/vim-subversive'
+"Plug 'ludovicchabant/vim-gutentags'
 Plug 'vim-scripts/vim-auto-save'
 "Plug 'sickill/vim-pasta'
 "Plug 'takac/vim-hardtime'
@@ -61,7 +61,7 @@ if has('nvim')
     Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
     Plug 'zchee/deoplete-clang'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'svermeulen/vim-yoink'
+    "Plug 'svermeulen/vim-yoink'
 else
   "Plug 'Shougo/deoplete.nvim'
   "Plug 'roxma/nvim-yarp'
@@ -82,7 +82,7 @@ set path+=**
 " Sets
 "---------------------------------------
 "set clipboard=unnamed
-set clipboard+=unnamedplus
+"set clipboard+=unnamedplus
 set hidden
 set autoindent
 set smartindent
@@ -386,8 +386,8 @@ let g:yoinkIncludeDeleteOperations = 1
 "nmap <c-n> <plug>(YoinkPostPasteSwapBack)
 "nmap <c-m> <plug>(YoinkPostPasteSwapForward)
 
-nmap p <plug>(YoinkPaste_p)
-nmap P <plug>(YoinkPaste_P)
+"nmap p <plug>(YoinkPaste_p)
+"nmap P <plug>(YoinkPaste_P)
 
 nnoremap m d
 xnoremap m d
