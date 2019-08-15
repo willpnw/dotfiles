@@ -12,12 +12,10 @@ case $(uname -s) in
             Fedora)
                 alias in="sudo dnf install -y"
                 alias vi="vimx"
-                alias nt="tmux split-window vimx"
                 ;;
             Ubuntu)
                 alias ack="ack-grep"
                 alias in="sudo apt-get install -y"
-                alias nt="tmux split-window vim"
                 alias vi="/usr/bin/vim.gtk"
                 ;;
             "Arch Linux"|"Antergos Linux"|"Manjaro Linux")
@@ -214,31 +212,20 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 
 j() {
   [ $# -gt 0 ] && _z "$*" && return
-  tmux bind -n C-j run "tmux send-keys C-j"
-  tmux bind -n C-k run "tmux send-keys C-k"
   cd "$(_z -l 2>&1 | fzf --height 20% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
-  tmux source ~/.tmux.conf
 }
 
 e() {
-    tmux bind -n C-j run "tmux send-keys C-j"
-    tmux bind -n C-k run "tmux send-keys C-k"
     local files
     IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0))
     [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
-    tmux source ~/.tmux.conf
 }
 
 r() {
-    tmux bind -n C-j run "tmux send-keys C-j"
-    tmux bind -n C-k run "tmux send-keys C-k"
     print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | cut -d ' ' -f3-)
-    tmux source ~/.tmux.conf
 }
 
 k() {
-    tmux bind -n C-j run "tmux send-keys C-j"
-    tmux bind -n C-k run "tmux send-keys C-k"
     local pid
     pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
 
@@ -246,7 +233,6 @@ k() {
     then
         echo $pid | xargs kill -${1:-9}
     fi
-    tmux source ~/.tmux.conf
 }
 
 dstop() {
@@ -263,10 +249,7 @@ dstart() {
 }
 
 alist() {
-    tmux bind -n C-j run "tmux send-keys C-j"
-    tmux bind -n C-k run "tmux send-keys C-k"
     print -z $(alias | sed 's/=/?/' | column -t -s '?' | fzf -q "$1" | cut -d ' ' -f1)
-    tmux source ~/.tmux.conf
 }
 
 loc() {
@@ -275,12 +258,9 @@ loc() {
         return 1
     fi
     echo "looking for $1"
-    tmux bind -n C-j run "tmux send-keys C-j"
-    tmux bind -n C-k run "tmux send-keys C-k"
     local filepath=$(locate $1 | fzf)
     echo $filepath
     print -z "cd $(dirname $filepath)"
-    tmux source ~/.tmux.conf
 }
 
 loce() {
@@ -289,16 +269,11 @@ loce() {
         return 1
     fi
     echo "looking for $1"
-    tmux bind -n C-j run "tmux send-keys C-j"
-    tmux bind -n C-k run "tmux send-keys C-k"
     local filepath=$(locate $1 | fzf)
     [[ -n "$filepath" ]] && ${EDITOR:-vim} "${filepath}"
-    tmux source ~/.tmux.conf
 }
 
 killL() {
-    tmux bind -n C-j run "tmux send-keys C-j"
-    tmux bind -n C-k run "tmux send-keys C-k"
     local pid
     sudo whoami > /dev/null
     pid=$(sudo netstat -ltnp  | grep tcp | awk '{print $4, $7}' | sed 's|.*:\(.*\) \(.*\)/\(.*\)|\3 \1 \2|' | column -t | fzf | awk '{print $3}')
@@ -306,7 +281,6 @@ killL() {
     then
         echo $pid | xargs kill -${1:-9}
     fi
-    tmux source ~/.tmux.conf
 }
 
 agl() {
@@ -315,13 +289,10 @@ agl() {
         return 1
     fi
     echo "looking for $1"
-    tmux bind -n C-j run "tmux send-keys C-j"
-    tmux bind -n C-k run "tmux send-keys C-k"
     local res=$(ag $1 | fzf)
     local filepath=$(echo $res | cut -d ':' -f1)
     local lineNumber=$(echo $res | cut -d ':' -f2)
     [[ -n "$filepath" ]] && ${EDITOR:-vim} +${lineNumber} ${filepath}
-    tmux source ~/.tmux.conf
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

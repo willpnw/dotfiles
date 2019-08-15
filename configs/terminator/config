@@ -1,5 +1,4 @@
 [global_config]
-  borderless = True
   enabled_plugins = APTURLHandler, LaunchpadBugURLHandler
   inactive_color_offset = 1.0
   tab_position = hidden
@@ -21,7 +20,7 @@
     background_color = "#2d2d2d"
     background_darkness = 0.9
     cursor_color = "#9fda9c"
-    font = Monospace 9
+    font = Monospace 10
     foreground_color = "#888a85"
     palette = "#000000:#c75646:#8eb33b:#d0b03c:#72b3cc:#c8a0d1:#218693:#b0b0b0:#5d5d5d:#e09690:#cdee69:#ffe377:#9cd9f0:#fbb1f9:#77dfd8:#f7f7f7"
     scrollback_infinite = True

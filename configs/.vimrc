@@ -16,7 +16,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'peterhoeg/vim-qml'
 "Plug 'Valloric/YouCompleteMe', { 'tag': '9448748e804a01561f814be49c0b449a9332de1b', 'do': './install.py' }
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-"Plug 'chazy/cscope_maps'
+Plug 'chazy/cscope_maps'
 Plug 'vim-scripts/a.vim'
 Plug 'mhinz/vim-startify'
 Plug 'mileszs/ack.vim'
@@ -35,7 +35,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'pangloss/vim-javascript'
 Plug 'airblade/vim-gitgutter'
 Plug 'rking/ag.vim'
-"Plug 'mtth/scratch.vim'
 Plug 'kablamo/vim-git-log'
 Plug 'digitaltoad/vim-pug'
 Plug 'alvan/vim-closetag'
@@ -49,27 +48,27 @@ Plug 'mattn/emmet-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
-"Plug 'svermeulen/vim-cutlass'
-"Plug 'svermeulen/vim-subversive'
-"Plug 'ludovicchabant/vim-gutentags'
+Plug 'svermeulen/vim-cutlass'
+Plug 'svermeulen/vim-subversive'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'vim-scripts/vim-auto-save'
 "Plug 'sickill/vim-pasta'
 "Plug 'takac/vim-hardtime'
 "Plug 'vimwiki/vimwiki'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 
 if has('nvim')
     Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
     Plug 'zchee/deoplete-clang'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    "Plug 'svermeulen/vim-yoink'
+    Plug 'svermeulen/vim-yoink'
 else
   "Plug 'Shougo/deoplete.nvim'
   "Plug 'roxma/nvim-yarp'
   "Plug 'roxma/vim-hug-neovim-rpc'
 endif
 let g:deoplete#enable_at_startup = 1
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
 
 " Initialize plugin system
 call plug#end()
@@ -82,7 +81,7 @@ set path+=**
 " Sets
 "---------------------------------------
 "set clipboard=unnamed
-"set clipboard+=unnamedplus
+set clipboard+=unnamedplus
 set hidden
 set autoindent
 set smartindent
@@ -153,10 +152,10 @@ vnoremap <leader>s :Subvert//g<left><left>
 nnoremap <space> :
 
 " JKLH Navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nnoremap <Down> <C-W><C-J>
+nnoremap <UP> <C-W><C-K>
+nnoremap <Right> <C-W><C-L>
+nnoremap <Left> <C-W><C-H>
 
 inoremap <C-j> <c-o>gj
 inoremap <C-j> <c-o>gj
@@ -216,7 +215,7 @@ autocmd StdinReadPre * let s:std_in=1
 
 function! MaybeFiles()
     :if argc() == 0
-    :    Cycle
+    :    call <sid>fzf_next(1)
     :endif
 endfunction
 au VimEnter * call MaybeFiles()
@@ -485,4 +484,7 @@ endif
 
 
 noremap <leader>eq :let @q='<C-R><C-R>q'
+noremap <leader>m :cd /home/will/dev-projects/build-sonosite-x-porte-app-Desktop_Qt_5_11_3_GCC_64bit-Debug<CR> :make<CR>
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
 
