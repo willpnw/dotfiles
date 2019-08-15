@@ -126,12 +126,6 @@ source $ZSH/oh-my-zsh.sh
 # reload zshrc
 alias rerc="source ~/.zshrc"
 
-# jenkins
-alias jen01="ssh wpatterson@jen01"
-alias jen02="ssh wpatterson@jen02"
-alias jen03="ssh wpatterson@jen03"
-alias work="ssh will@192.168.0.164"
-
 # directory jumps
 alias dev='cd ~/devprojects'
 
@@ -222,7 +216,7 @@ e() {
 }
 
 r() {
-    print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | cut -d ' ' -f3-)
+    print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | tr -s ' ' | cut -d ' ' -f3-)
 }
 
 k() {
@@ -304,4 +298,10 @@ cf() {
         echo $f
         clang-format $f > tmp && mv tmp $f
     done
+}
+
+work() {
+    xrandr --output DP1-2 --auto --right-of eDP1
+    xrandr --output DP1-1-8 --auto --right-of DP1-2
+    xrandr --output DP1-1-8 --rotate right
 }
