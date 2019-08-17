@@ -64,9 +64,9 @@ if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'svermeulen/vim-yoink'
 else
-  "Plug 'Shougo/deoplete.nvim'
-  "Plug 'roxma/nvim-yarp'
-  "Plug 'roxma/vim-hug-neovim-rpc'
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
 let g:deoplete#enable_at_startup = 1
 
@@ -143,6 +143,7 @@ vnoremap <leader>ri "hy:%Subvert?<C-r>h??gc<left><left><left>
 vnoremap <leader>rI "hy:bufdo %Subvert?<C-r>h??gc<left><left><left>
 
 vnoremap <leader>s :Subvert//g<left><left>
+vnoremap <leader>ag "hy:Ag <C-r>h /home/will/dev-projects/sonosite-x-porte-app<cr>
 
 " Edit/Source vimrc
 :nnoremap <leader>ev :vsplit ~/.vimrc<cr>
@@ -210,6 +211,9 @@ nnoremap <leader>f :FixWhitespace<CR>gg=G''
 " NERDTree
 "---------------------------------------
 nnoremap <leader>nt :NERDTreeFind<CR>
+let NERDTreeQuitOnOpen = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 
 autocmd StdinReadPre * let s:std_in=1
 
@@ -382,11 +386,11 @@ set wildignore+=**/node_modules/**
 
 let g:yoinkIncludeDeleteOperations = 1
 
-"nmap <c-n> <plug>(YoinkPostPasteSwapBack)
-"nmap <c-m> <plug>(YoinkPostPasteSwapForward)
+nmap <c-n> <plug>(YoinkPostPasteSwapBack)
+nmap <c-m> <plug>(YoinkPostPasteSwapForward)
 
-"nmap p <plug>(YoinkPaste_p)
-"nmap P <plug>(YoinkPaste_P)
+nmap p <plug>(YoinkPaste_p)
+nmap P <plug>(YoinkPaste_P)
 
 nnoremap m d
 xnoremap m d

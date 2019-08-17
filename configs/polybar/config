@@ -1,0 +1,6 @@
+[bar/top]
+modules-center = date
+
+[module/date]
+type = internal/date
+date = %b %d %l:%M
