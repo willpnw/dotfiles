@@ -1,0 +1,11 @@
+#!/bin/bash
+
+for monitor in $(xrandr | ag " connected " | ag -v primary | cut -d ' ' -f1)
+do
+    if echo $monitor | ag HDMI; then
+        position=left
+    else
+        position=right
+    fi
+    xrandr --output $monitor --auto --$position-of eDP1
+done

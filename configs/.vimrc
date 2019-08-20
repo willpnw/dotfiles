@@ -1,7 +1,7 @@
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
 
- "My Bundles here:
+"My Bundles here:
 Plug 'tomasr/molokai'
 Plug 'scrooloose/nerdtree'
 "Plug 'ctrlpvim/ctrlp.vim'
@@ -57,16 +57,18 @@ Plug 'vim-scripts/vim-auto-save'
 "Plug 'vimwiki/vimwiki'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
+Plug 'francoiscabrol/ranger.vim'
 
 if has('nvim')
     Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
     Plug 'zchee/deoplete-clang'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'svermeulen/vim-yoink'
+    Plug 'rbgrouleff/bclose.vim'
 else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
 endif
 let g:deoplete#enable_at_startup = 1
 
@@ -97,7 +99,7 @@ set scrolloff=8
 set invnumber
 set invrelativenumber
 set number
-set ambiwidth=double
+"set ambiwidth=double
 set nowrap
 "set autochdir
 set t_ut=
@@ -111,7 +113,7 @@ noremap q: <Nop>
 nnoremap Q <nop>
 
 "Save a file after having opened it
-cnoremap w!! w !sudo tee % >/dev/null
+"cnoremap w!! w !sudo tee % >/dev/null
 
 "" Save all buffers
 ":nnoremap sa :wa<CR>
@@ -210,7 +212,7 @@ nnoremap <leader>f :FixWhitespace<CR>gg=G''
 "---------------------------------------
 " NERDTree
 "---------------------------------------
-nnoremap <leader>nt :NERDTreeFind<CR>
+nnoremap <leader>nt :Ranger<CR>
 let NERDTreeQuitOnOpen = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
@@ -457,14 +459,14 @@ if has("cscope")
 
     " add any cscope database in current directory
     if filereadable("cscope.out")
-        cs add cscope.out  
-    " else add the database pointed to by environment variable 
+        cs add cscope.out
+        " else add the database pointed to by environment variable
     elseif $CSCOPE_DB != ""
         cs add $CSCOPE_DB
     endif
 
     " show msg when any other cscope db added
-    set cscopeverbose  
+    set cscopeverbose
 
     " cscope maps
     "   's'   symbol: find all references to the token under cursor
@@ -492,3 +494,4 @@ noremap <leader>m :cd /home/will/dev-projects/build-sonosite-x-porte-app-Desktop
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
+let g:ranger_map_keys = 0
