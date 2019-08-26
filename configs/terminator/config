@@ -19,6 +19,7 @@
   [[default]]
     background_color = "#2d2d2d"
     background_darkness = 0.9
+    background_type = transparent
     cursor_color = "#9fda9c"
     font = Monospace 10
     foreground_color = "#888a85"

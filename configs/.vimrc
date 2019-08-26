@@ -58,6 +58,8 @@ Plug 'vim-scripts/vim-auto-save'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'francoiscabrol/ranger.vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'bfrg/vim-cpp-modern'
 
 if has('nvim')
     Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
@@ -139,13 +141,10 @@ nnoremap Y v$hy
 " nnoremap < <<
 
 " Serach/Replace
-vnoremap <leader>ra "hy:%s/<C-r>h//gc<left><left><left>
-vnoremap <leader>rA "hy:%s?\V<C-r>h??g<left><left>
-vnoremap <leader>ri "hy:%Subvert?<C-r>h??gc<left><left><left>
-vnoremap <leader>rI "hy:bufdo %Subvert?<C-r>h??gc<left><left><left>
+vnoremap <leader>r "hy:%Subvert?<C-r>h??gc<left><left><left>
 
+nnoremap <leader>s :Subvert//g<left><left>
 vnoremap <leader>s :Subvert//g<left><left>
-vnoremap <leader>ag "hy:Ag <C-r>h /home/will/dev-projects/sonosite-x-porte-app<cr>
 
 " Edit/Source vimrc
 :nnoremap <leader>ev :vsplit ~/.vimrc<cr>
@@ -369,8 +368,6 @@ runtime macros/matchit.vim
 
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-nnoremap <c-p> :Files ~/dev-projects/sonosite-x-porte-app/<CR>
-
 "
 " Shortcuts for switching between files in angular
 "
@@ -434,7 +431,7 @@ au BufRead,BufNewFile *.xaml setfiletype xml
 
 
 function! s:fzf_next(idx)
-    let commands = ['Files ~/dev-projects/sonosite-x-porte-app/', 'History', 'Buffers']
+    let commands = ['Files ~/dev-projects/mturbo-linux-port/', 'History', 'Buffers']
     execute commands[a:idx]
     let next = (a:idx + 1) % len(commands)
     let previous = (a:idx - 1) % len(commands)

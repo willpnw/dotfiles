@@ -294,8 +294,7 @@ agl() {
 # clang format
 cf() {
     cd /home/will/dev-projects/sonosite-x-porte-app
-    for f in `gs --porcelain | ag "^(M|A).*(cpp|h)$" | awk '{print $2}'`; do
-        echo $f
+    for f in $(fd . iomanager/ui/qt -e cpp -e h); do
         clang-format $f > tmp && mv tmp $f
     done
 }
