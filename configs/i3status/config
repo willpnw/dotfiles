@@ -7,78 +7,98 @@
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
-        colors = true
+    colors = true
         interval = 5
         color_good = "#2AA198"
         color_bad = "#586E75"
         color_degraded = "#DC322F"
 }
 
+order += "conky addr"
+conky addr {
+    format = 'IP [\?color=orange {addr eno2}]'
+}
+
+# display memory, memperc, membar + thresholds
+order += "conky memory"
+conky memory {
+    format = 'M: [\?color=memperc {memperc}% \[{membar}\]]'
+        thresholds = [
+        (0, 'darkgray'), (0.001, 'good'), (50, 'degraded'),
+        (75, 'orange'), (85, 'bad')
+        ]
+}
+
+# start with a preferable setup
+#order += "xrandr"
+#xrandr {
+#    force_on_start = "eDP1+1-1-8+DP1-2"
+#}
+
 # order += "ipv6"
 order += "cpu_usage"
 order += "disk /"
 # order += "disk /home"
-order += "ethernet _first_"
-order += "wireless _first_"
-order += "battery all"
+#order += "ethernet _first_"
+#order += "wireless _first_"
+order += "battery_level"
 # order += "load"
-order += "memory"
 order += "tztime local"
 
 cpu_usage {
-        format = " cpu  %usage "
-}
-
-load {
-        format = " load %1min "
-        # max_threshold = 0.3
+    format = " cpu %usage "
 }
 
 disk "/" {
-        # format = " hdd %avail "
-        format = " ⛁ %avail "
+    format = " ⛁ %avail "
 }
 
 ethernet _first_ {
 # if you use %speed, i3status requires root privileges
-        format_up = "E: %ip %speed "
+    format_up = "E: %ip %speed "
         format_down = "E: Down "
 }
 
 wireless _first_ {
 # if you use %speed, i3status requires root privileges
-        #format_up = "%ip"
-        #format_down = " no wifi "
-        format_up = "%ip %quality %bitrate"
+#format_up = "%ip"
+#format_down = " no wifi "
+    format_up = "%ip %quality %bitrate"
         format_down = "W: Down"
 }
 
 battery all {
-        # format = "%status %percentage %remaining %emptytime"
-        format = " %status %percentage"
+# format = "%status %percentage %remaining %emptytime"
+    format = " %status %percentage "
         format_down = "No battery"
         last_full_capacity = true
         integer_battery_capacity = true
-        # status_chr = ""
+# status_chr = ""
         status_chr = "⚡"
-        # status_bat = "bat"
-        # status_bat = "☉"
+# status_bat = "bat"
+# status_bat = "☉"
         status_bat = ""
-        # status_unk = "?"
+# status_unk = "?"
         status_unk = ""
-        # status_full = ""
+# status_full = ""
         status_full = ""
         low_threshold = 15
         threshold_type = time
 }
 
-memory {
-        format = "%used / %available"
-        threshold_degraded = "1G"
-        format_degraded = "MEMORY < %available"
+battery_level{
+    cache_timeout = 10
+        format_notify_charging = "charging"
+        format_notify_discharging = "discharging {percent}"
+        hide_when_full = False
+        hide_seconds = True
+        notification = True
+        notify_low_level = True
+        blocks = ""
+        charging_character = "⚡"
+        format = " {percent} {icon} {time_remaining}"
 }
 
 tztime local {
-        # format = "%Y-%m-%d %H:%M:%S"
-        format = "%b %d %l:%M "
+    format = "%b %d %l:%M "
 }

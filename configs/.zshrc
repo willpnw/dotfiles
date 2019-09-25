@@ -39,6 +39,7 @@ unalias vi
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export CSCOPE_EDITOR=vim
+export PATH=$PATH:~/.gem/ruby/2.6.0/bin
 
 export KEYTIMEOUT=
 #source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -127,7 +128,7 @@ source $ZSH/oh-my-zsh.sh
 alias rerc="source ~/.zshrc"
 
 # directory jumps
-alias dev='cd ~/devprojects'
+alias dev='cd ~/dev-projects'
 
 # commands
 alias c="clear"
@@ -219,6 +220,12 @@ r() {
     print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | tr -s ' ' | cut -d ' ' -f3-)
 }
 
+m() {
+    cd /home/will/dev-projects/mturbo-linux-port
+    cmake -DCMAKE_BUILD_TYPE=Release -DCI_BUILD=ON && make -j4
+    -
+}
+
 k() {
     local pid
     pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
@@ -302,5 +309,4 @@ cf() {
 work() {
     xrandr --output DP1-2 --auto --right-of eDP1
     xrandr --output DP1-1-8 --auto --right-of DP1-2
-    xrandr --output DP1-1-8 --rotate right
 }

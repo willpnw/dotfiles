@@ -1,10 +1,32 @@
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+"call plug#begin('~/.local/share/nvim/plugged')
 call plug#begin('~/.vim/plugged')
+"
+"
+let g:ycm_show_diagnostics_ui=1
+let g:ycm_complete_in_comments=1
+let g:ycm_complete_in_strings=1
+let g:ycm_echo_current_diagnostic=0
+let g:ycm_enable_diagnostic_highlighting=0
+let g:ycm_enable_diagnostic_signs=0
+let g:ycm_confirm_extra_conf=0
+let g:ycm_auto_trigger=1
+let g:ycm_keep_logfiles=0
+let g:ycm_cache_omnifunc=1
+let g:ycm_goto_buffer_command = 'new-or-existing-tab'
+let g:ycm_open_loclist_on_ycm_diags = 1
+let g:ycm_min_num_of_chars_for_completion = 1
+let g:ycm_use_clangd = 1
+let g:ycm_clangd_uses_ycmd_caching = 1
+"let g:ycm_clangd_args = ['--background-index', '--all-scopes-completion', '--suggest-missing-includes']
+
+let g:ycm_key_list_select_completion = []
+let g:ycm_key_list_previous_completion = []
 
 "My Bundles here:
 Plug 'tomasr/molokai'
 Plug 'scrooloose/nerdtree'
-"Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'godlygeek/tabular'
 Plug 'bronson/vim-trailing-whitespace'
@@ -16,6 +38,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'peterhoeg/vim-qml'
 "Plug 'Valloric/YouCompleteMe', { 'tag': '9448748e804a01561f814be49c0b449a9332de1b', 'do': './install.py' }
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'ycm-core/youcompleteme', { 'do': 'TERM=xterm ./install.py --clangd-completer' }
 Plug 'chazy/cscope_maps'
 Plug 'vim-scripts/a.vim'
 Plug 'mhinz/vim-startify'
@@ -25,9 +48,10 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'sjl/gundo.vim'
 Plug 'tpope/vim-eunuch'
-"Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
+Plug 'neomake/neomake'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'kchmck/vim-coffee-script'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -55,24 +79,24 @@ Plug 'vim-scripts/vim-auto-save'
 "Plug 'sickill/vim-pasta'
 "Plug 'takac/vim-hardtime'
 "Plug 'vimwiki/vimwiki'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+"Plug 'Shougo/neosnippet.vim'
+"Plug 'Shougo/neosnippet-snippets'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'bfrg/vim-cpp-modern'
 
 if has('nvim')
-    Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-    Plug 'zchee/deoplete-clang'
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    "Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+    ""Plug 'deoplete-plugins/deoplete-clang'
+    "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'svermeulen/vim-yoink'
     Plug 'rbgrouleff/bclose.vim'
 else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
+    "Plug 'Shougo/deoplete.nvim'
+    "Plug 'roxma/nvim-yarp'
+    "Plug 'roxma/vim-hug-neovim-rpc'
 endif
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
 
 " Initialize plugin system
 call plug#end()
@@ -89,7 +113,7 @@ set clipboard+=unnamedplus
 set hidden
 set autoindent
 set smartindent
-set tabstop=2
+"set tabstop=2
 set shiftwidth=2
 set backspace=indent,eol,start
 set ignorecase
@@ -267,7 +291,7 @@ autocmd QuickFixCmdPost *log* cwindow
 "---------------------------------------
 " Ctags
 "---------------------------------------
-nnoremap <C-g> <C-]>
+"nnoremap <C-g> <C-]>
 "---------------------------------------
 " a.vim
 "---------------------------------------
@@ -429,6 +453,9 @@ nnoremap <leader>w :wa<CR>
 au BufRead,BufNewFile *.xaml setfiletype xml
 
 
+filetype plugin indent on
+
+
 
 function! s:fzf_next(idx)
     let commands = ['Files ~/dev-projects/mturbo-linux-port/', 'History', 'Buffers']
@@ -487,8 +514,19 @@ endif
 
 
 noremap <leader>eq :let @q='<C-R><C-R>q'
-noremap <leader>m :cd /home/will/dev-projects/build-sonosite-x-porte-app-Desktop_Qt_5_11_3_GCC_64bit-Debug<CR> :make<CR>
+noremap <leader>m :cd /home/will/dev-projects/mturbo-linux-port<CR>:make -j4<cr>
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
 let g:ranger_map_keys = 0
+
+autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+:set cscopequickfix=""
+
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so.8'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/8.0.1/include/'
+let g:deoplete#sources#clang#clang_complete_database = '/home/will/dev-projects/mturbo-linux-port'
+
+call neomake#configure#automake('w')
+
+let g:indent_guides_enable_on_vim_startup = 1
