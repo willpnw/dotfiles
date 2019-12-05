@@ -92,9 +92,9 @@ ZSH_THEME="willpnw"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-git
-z
-history
+    git
+    z
+    history
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -134,38 +134,42 @@ alias dev='cd ~/dev-projects'
 alias c="clear"
 alias n="nvim"
 
- #git commands
-alias gc="git commit"
-alias gco="git checkout"
-alias gcm="git commit -m"
-alias gca="git commit --amend --no-edit"
-alias gs="git status"
-alias gpull="git pull"
-alias gpush="git push"
-alias gpf="git push -f"
-alias grs="git reset"
-alias grs1="git reset HEAD~1"
-alias gb="git branch"
-alias gau="git add -u"
-alias gaa="git add --all"
-alias gd="clear; git diff -w"
-alias gdc="git diff --cached"
-alias gdt="git difftool -y"
-alias gmt="git mergetool -y"
-alias gdtc="git difftool -y --cached"
-alias gl="git log"
-alias gstash="git stash"
-alias gclean="git clean -fd"
-alias gshow="git difftool HEAD~1 HEAD"
-alias gbdr="git push origin --delete"
-alias gdsc="git describe"
-alias gdscl="git describe --long"
-alias gllr="git log --left-right --graph --cherry-pick --oneline"
-alias glro="git log --right-only --no-merges --cherry-pick --oneline"
-alias gsp="git show -p"
-alias gsu="git submodule update"
+alias d="docker"
 
-alias du="du -h --max-depth=1"
+ #git commands
+ alias gc="git commit"
+ alias gco="git checkout"
+ alias gcm="git commit -m"
+ alias gca="git commit --amend --no-edit"
+ alias gss="git status -s"
+ alias gs="git status"
+ alias gpull="git pull"
+ alias gpush="git push"
+ alias gpf="git push -f"
+ alias grs="git reset"
+ alias grs1="git reset HEAD~1"
+ alias gb="git branch"
+ alias gau="git add -u"
+ alias gaa="git add --all"
+ alias gd="clear; git diff -w"
+ alias gdc="git diff --cached"
+ alias gdt="git difftool -y"
+ alias gmt="git mergetool -y"
+ alias gdtc="git difftool -y --cached"
+ alias gl="git log"
+ alias gstash="git stash"
+ alias gclean="git clean -fd"
+ alias gshow="git difftool HEAD~1 HEAD"
+ alias gbdr="git push origin --delete"
+ alias gdsc="git describe"
+ alias gdscl="git describe --long"
+ alias gllr="git log --left-right --graph --cherry-pick --oneline"
+ alias glro="git log --right-only --no-merges --cherry-pick --oneline"
+ alias gsp="git show -p"
+ alias gsu="git submodule update"
+ alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0 -t screen-256color -c on"
+
+ alias du="du -h --max-depth=1"
 
 # docker aliases
 alias dka='docker kill $(docker ps -q)'
@@ -206,8 +210,8 @@ export FZF_DEFAULT_OPTS='--bind tab:down,shift-tab:up'
 export FZF_DEFAULT_COMMAND='fd --type f'
 
 j() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf --height 20% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+    [ $# -gt 0 ] && _z "$*" && return
+    cd "$(_z -l 2>&1 | fzf --height 20% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
 }
 
 e() {
@@ -221,7 +225,7 @@ r() {
 }
 
 m() {
-    cd /home/will/dev-projects/mturbo-linux-port
+    cd /home/will/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo
     cmake -DCMAKE_BUILD_TYPE=Release -DCI_BUILD=ON && make -j4
     -
 }
@@ -237,16 +241,16 @@ k() {
 }
 
 dstop() {
-  local cid
-  cid=$(docker ps | sed 1d | fzf -q "$1" | awk '{print $1}')
-  [ -n "$cid" ] && docker stop "$cid"
+    local cid
+    cid=$(docker ps | sed 1d | fzf -q "$1" | awk '{print $1}')
+    [ -n "$cid" ] && docker stop "$cid"
 }
 
 dstart() {
-  local cid
-  cid=$(docker ps -a | sed 1d | fzf -1 -q "$1" | awk '{print $1}')
+    local cid
+    cid=$(docker ps -a | sed 1d | fzf -1 -q "$1" | awk '{print $1}')
 
-  [ -n "$cid" ] && docker start "$cid" && docker attach "$cid"
+    [ -n "$cid" ] && docker start "$cid" && docker attach "$cid"
 }
 
 alist() {
@@ -309,4 +313,18 @@ cf() {
 work() {
     xrandr --output DP1-2 --auto --right-of eDP1
     xrandr --output DP1-1-8 --auto --right-of DP1-2
+}
+
+gprune() {
+    for branch in $(git branch); do
+        read -q "REPLY?Remove $branch ?"
+        echo ""
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+            git branch -D $branch
+            echo "Removed"
+        else
+            echo "Saved"
+        fi
+    done
 }

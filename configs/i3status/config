@@ -16,7 +16,7 @@ general {
 
 order += "conky addr"
 conky addr {
-    format = 'IP [\?color=orange {addr eno2}]'
+    format = 'IP [\?color=orange {addr ens1u2u4}]'
 }
 
 # display memory, memperc, membar + thresholds
@@ -32,7 +32,7 @@ conky memory {
 # start with a preferable setup
 #order += "xrandr"
 #xrandr {
-#    force_on_start = "eDP1+1-1-8+DP1-2"
+#    force_on_start = "eDP1+DP1-1-8+DP1-2"
 #}
 
 # order += "ipv6"

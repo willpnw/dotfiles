@@ -87,10 +87,10 @@ bindsym $mod+Left move workspace to output left
 bindsym $mod+Right move workspace to output right
 
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod+Shift+h move left 250px
+bindsym $mod+Shift+j move down 250px
+bindsym $mod+Shift+k move up 250px
+bindsym $mod+Shift+l move right 250px
 
 # alternatively, you can use the cursor keys:
 #bindsym $mod+Shift+Left move left
@@ -120,7 +120,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+space floating toggle
 
 # change focus between tiling / floating windows
 #bindsym $mod+space focus mode_toggle
@@ -222,6 +222,7 @@ for_window [class="Xfburn"] floating enable
 for_window [class="xporteapp"] floating enable
 for_window [class="Eog"] floating enable
 for_window [class="Bcompare"] floating enable
+for_window [class="Gitk"] floating enable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -260,10 +261,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
+        bindsym j resize shrink height 5 px or 5 ppt
         bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym semicolon resize grow width 5 px or 5 ppt
+        bindsym h resize shrink width 5 px or 5 ppt
+        bindsym l resize grow width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -277,7 +278,7 @@ mode "resize" {
 }
 
 # Lock screen
-bindsym $mod+9 exec --no-startup-id blurlock
+bindsym $mod+9 exec --no-startup-id willpnw-lock
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -291,10 +292,10 @@ exec --no-startup-id clipit
 # exec_always --no-startup-id sbxkb
 #exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
-exec --no-startup-id xautolock -time 10 -locker blurlock
+exec --no-startup-id xautolock -time 10 -locker willpnw-lock
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
-exec_always --no-startup-id ~/.config/polybar/launch.sh &
+#exec_always --no-startup-id ~/.config/polybar/launch.sh &
 exec_always --no-startup-id xmodmap -e "clear lock" #disable caps lock switch
 exec_always --no-startup-id xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape
 
@@ -334,7 +335,7 @@ set_from_resource $term_color15    color15
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
-    i3bar_command i3bar
+    i3bar_command i3bar -t
     status_command py3status
     position top
 
@@ -350,9 +351,9 @@ bar {
     strip_workspace_numbers yes
 
     colors {
-        background #222D31
-        statusline #81a2be
-        separator  #454947
+        background #00000000
+        statusline #FFFFFFFF
+        #separator  #454947
 
 #                      border  backgr. text
         focused_workspace  #F9FAF9 #16a085 #292F34
@@ -381,7 +382,7 @@ bindsym $mod+m bar mode toggle
 #############################
 
 # Set inner/outer gaps
-gaps inner 0
+gaps inner 10
 gaps outer 0
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
@@ -432,3 +433,5 @@ mode "$mode_gaps_outer" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
+
+exec_always --no-startup-id ~/.screenlayout.sh

@@ -26,7 +26,7 @@ let g:ycm_key_list_previous_completion = []
 "My Bundles here:
 Plug 'tomasr/molokai'
 Plug 'scrooloose/nerdtree'
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'godlygeek/tabular'
 Plug 'bronson/vim-trailing-whitespace'
@@ -39,7 +39,7 @@ Plug 'peterhoeg/vim-qml'
 "Plug 'Valloric/YouCompleteMe', { 'tag': '9448748e804a01561f814be49c0b449a9332de1b', 'do': './install.py' }
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'ycm-core/youcompleteme', { 'do': 'TERM=xterm ./install.py --clangd-completer' }
-Plug 'chazy/cscope_maps'
+"Plug 'chazy/cscope_maps'
 Plug 'vim-scripts/a.vim'
 Plug 'mhinz/vim-startify'
 Plug 'mileszs/ack.vim'
@@ -84,6 +84,9 @@ Plug 'vim-scripts/vim-auto-save'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'bfrg/vim-cpp-modern'
+Plug 'vim-utils/vim-vertical-move'
+Plug 'psliwka/vim-smoothie'
+
 
 if has('nvim')
     "Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
@@ -373,10 +376,10 @@ let g:closetag_close_shortcut = '<leader>>'
 "---------------------------------------
 " vim-gitgutter
 "---------------------------------------
-nmap <Leader>ha <Plug>GitGutterStageHunk
-nmap <Leader>hr <Plug>GitGutterUndoHunk
-nmap <Leader>hn <Plug>GitGutterNextHunk
-nmap <Leader>hp <Plug>GitGutterPrevHunk
+nmap <Leader>ha <Plug>(GitGutterStageHunk)
+nmap <Leader>hr <Plug>(GitGutterUndoHunk)
+nmap <Leader>hn <Plug>(GitGutterNextHunk)
+nmap <Leader>hp <Plug>(GitGutterPrevHunk)
 
 nmap <Leader>gn :GundoToggle<CR>
 
@@ -458,7 +461,7 @@ filetype plugin indent on
 
 
 function! s:fzf_next(idx)
-    let commands = ['Files ~/dev-projects/mturbo-linux-port/', 'History', 'Buffers']
+    let commands = ['Files ~/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo', 'History', 'Buffers']
     execute commands[a:idx]
     let next = (a:idx + 1) % len(commands)
     let previous = (a:idx - 1) % len(commands)
@@ -529,4 +532,10 @@ let g:deoplete#sources#clang#clang_complete_database = '/home/will/dev-projects/
 
 call neomake#configure#automake('w')
 
-let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_enable_on_vim_startup = 1
+
+
+
+
+nmap } ]v
+xmap } ]v
