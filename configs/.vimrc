@@ -170,6 +170,8 @@ nnoremap Y v$hy
 " Serach/Replace
 vnoremap <leader>r "hy:%Subvert?<C-r>h??gc<left><left><left>
 
+nnoremap <leader>r :Ranger<CR>
+
 nnoremap <leader>s :Subvert//g<left><left>
 vnoremap <leader>s :Subvert//g<left><left>
 
@@ -238,7 +240,7 @@ nnoremap <leader>f :FixWhitespace<CR>gg=G''
 "---------------------------------------
 " NERDTree
 "---------------------------------------
-nnoremap <leader>nt :Ranger<CR>
+nnoremap <leader>n :NERDTreeFind<CR>
 let NERDTreeQuitOnOpen = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
