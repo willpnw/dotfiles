@@ -59,7 +59,7 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 #bindsym $mod+b exec chromium
 bindsym $mod+F3 exec pcmanfm
-#bindsym $mod+f exec terminator -e ranger
+bindsym $mod+f exec terminator -e ranger
 bindsym $mod+Shift+F3 exec gksu pcmanfm
 bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill compton
@@ -112,7 +112,7 @@ bindsym $mod+o split v;exec terminator
 bindsym $mod+q split toggle
 
 # toggle fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym $mod+space fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -120,7 +120,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+space floating toggle
+bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
 #bindsym $mod+space focus mode_toggle
@@ -433,3 +433,6 @@ mode "$mode_gaps_outer" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
+
+exec xmodmap -e 'clear Lock' #ensures you're not stuck in CAPS on mode
+exec xmodmap -e 'keycode 0x42=Escape' #remaps the keyboard so CAPS LOCK=ESC

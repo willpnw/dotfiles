@@ -74,7 +74,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
 Plug 'svermeulen/vim-cutlass'
 Plug 'svermeulen/vim-subversive'
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 Plug 'vim-scripts/vim-auto-save'
 "Plug 'sickill/vim-pasta'
 "Plug 'takac/vim-hardtime'
@@ -86,6 +86,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'bfrg/vim-cpp-modern'
 Plug 'vim-utils/vim-vertical-move'
 Plug 'psliwka/vim-smoothie'
+Plug 'brookhong/cscope.vim'
 
 
 if has('nvim')
@@ -472,7 +473,7 @@ function! s:fzf_next(idx)
 endfunction
 
 command! Cycle call <sid>fzf_next(0)
-nnoremap <c-p> :Cycle<CR>
+nnoremap <c-p> :History<CR>
 nnoremap <leader>b :Buffers<CR>
 
 if has("cscope")
@@ -537,7 +538,33 @@ call neomake#configure#automake('w')
 "let g:indent_guides_enable_on_vim_startup = 1
 
 
+:set mouse=a
 
 
 nmap } ]v
 xmap } ]v
+
+
+
+
+
+
+
+nnoremap <leader>sa :call CscopeFindInteractive(expand('<cword>'))<CR>
+nnoremap <leader>sl :call ToggleLocationList()<CR>
+" s: Find this C symbol
+nnoremap  <leader>ss :call CscopeFind('s', expand('<cword>'))<CR>
+" g: Find this definition
+nnoremap  <leader>sg :call CscopeFind('g', expand('<cword>'))<CR>
+" d: Find functions called by this function
+nnoremap  <leader>sd :call CscopeFind('d', expand('<cword>'))<CR>
+" c: Find functions calling this function
+nnoremap  <leader>sc :call CscopeFind('c', expand('<cword>'))<CR>
+" t: Find this text string
+nnoremap  <leader>st :call CscopeFind('t', expand('<cword>'))<CR>
+" e: Find this egrep pattern
+nnoremap  <leader>se :call CscopeFind('e', expand('<cword>'))<CR>
+" f: Find this file
+nnoremap  <leader>sf :call CscopeFind('f', expand('<cword>'))<CR>
+" i: Find files #including this file
+nnoremap  <leader>si :call CscopeFind('i', expand('<cword>'))<CR>

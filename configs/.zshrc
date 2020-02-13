@@ -39,7 +39,7 @@ unalias vi
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export CSCOPE_EDITOR=vim
-export PATH=$PATH:~/.gem/ruby/2.6.0/bin
+export PATH=$PATH:~/.gem/ruby/2.6.0/bin:/home/will/dotfiles/scripts
 
 export KEYTIMEOUT=
 #source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -143,6 +143,7 @@ alias d="docker"
  alias gca="git commit --amend --no-edit"
  alias gss="git status -s"
  alias gs="git status"
+ alias gsno="git status --untracked-files=no"
  alias gpull="git pull"
  alias gpush="git push"
  alias gpf="git push -f"
@@ -167,7 +168,9 @@ alias d="docker"
  alias glro="git log --right-only --no-merges --cherry-pick --oneline"
  alias gsp="git show -p"
  alias gsu="git submodule update"
- alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0 -t screen-256color -c on"
+ #alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0 -t screen-256color -c on"
+ alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0"
+ alias mc2="sudo minicom -C /tmp/minilog1 -D /dev/ttyUSB1 -t screen-256color -c on"
 
  alias du="du -h --max-depth=1"
 
@@ -209,10 +212,10 @@ fr() {
 export FZF_DEFAULT_OPTS='--bind tab:down,shift-tab:up'
 export FZF_DEFAULT_COMMAND='fd --type f'
 
-j() {
-    [ $# -gt 0 ] && _z "$*" && return
-    cd "$(_z -l 2>&1 | fzf --height 20% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
-}
+#j() {
+#    [ $# -gt 0 ] && _z "$*" && return
+#    cd "$(_z -l 2>&1 | fzf --height 20% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+#}
 
 e() {
     local files
@@ -221,7 +224,8 @@ e() {
 }
 
 r() {
-    print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | tr -s ' ' | cut -d ' ' -f3-)
+    print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | tr -s ' ' | cut -d ' ' -f2-)
+    #print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | tr -s ' ' )
 }
 
 m() {
@@ -299,6 +303,8 @@ agl() {
     local lineNumber=$(echo $res | cut -d ':' -f2)
     [[ -n "$filepath" ]] && ${EDITOR:-vim} +${lineNumber} ${filepath}
 }
+
+source /etc/profile.d/autojump.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

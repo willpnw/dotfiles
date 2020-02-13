@@ -14,9 +14,14 @@ general {
         color_degraded = "#DC322F"
 }
 
-order += "conky addr"
-conky addr {
-    format = 'IP [\?color=orange {addr ens1u2u4}]'
+order += "conky eth"
+conky eth {
+    format = 'ETH [\?color=orange {addr ens1u2u4}]'
+}
+
+order += "conky wifi"
+conky wifi {
+    format = 'WIFI [\?color=orange {addr wlo1}]'
 }
 
 # display memory, memperc, membar + thresholds

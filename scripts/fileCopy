@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+    echo "USAGE: $0 src dest"
+    exit 1
+fi
+
+SRC=$1
+DEST=$2
+
+while true; do
+    if [ -f $SRC ] && ! cmp -s $SRC $DEST; then
+        cp  $SRC $DEST
+        echo "$SRC -> $DEST"
+        date
+    fi
+    inotifywait -qq -e close_write -e create $(dirname $SRC)
+done
