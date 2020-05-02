@@ -132,6 +132,7 @@ alias dev='cd ~/dev-projects'
 
 # commands
 alias c="clear"
+alias x="exit"
 alias n="nvim"
 
 alias d="docker"
@@ -168,6 +169,11 @@ alias d="docker"
  alias glro="git log --right-only --no-merges --cherry-pick --oneline"
  alias gsp="git show -p"
  alias gsu="git submodule update"
+ alias gsm="git ls-files -m"
+ alias gsd="git ls-files -d"
+
+
+
  #alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0 -t screen-256color -c on"
  alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0"
  alias mc2="sudo minicom -C /tmp/minilog1 -D /dev/ttyUSB1 -t screen-256color -c on"

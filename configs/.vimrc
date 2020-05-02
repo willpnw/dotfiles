@@ -87,6 +87,8 @@ Plug 'bfrg/vim-cpp-modern'
 Plug 'vim-utils/vim-vertical-move'
 Plug 'psliwka/vim-smoothie'
 Plug 'brookhong/cscope.vim'
+Plug 'kergoth/vim-bitbake'
+Plug 'Yggdroot/indentLine'
 
 
 if has('nvim')
@@ -123,7 +125,8 @@ set backspace=indent,eol,start
 set ignorecase
 set showcmd
 set incsearch
-set expandtab
+"set expandtab
+set noexpandtab
 set scrolloff=8
 "set diffopt+=iwhite
 set invnumber
@@ -167,6 +170,9 @@ nnoremap Y v$hy
 " vnoremap < <gv
 " nnoremap > >>
 " nnoremap < <<
+"
+" Ag
+vnoremap <leader>a "hy:Ag <C-r>h<CR>
 
 " Serach/Replace
 vnoremap <leader>r "hy:%Subvert?<C-r>h??gc<left><left><left>
@@ -250,7 +256,7 @@ autocmd StdinReadPre * let s:std_in=1
 
 function! MaybeFiles()
     :if argc() == 0
-    :    call <sid>fzf_next(1)
+    :    call <sid>fzf_next(0)
     :endif
 endfunction
 au VimEnter * call MaybeFiles()
@@ -336,12 +342,9 @@ autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 " Shortcuts
 nnoremap <leader>l oconsole.log(JSON.stringify(, null, 2))<esc>2Bba
 vnoremap <leader>l yoconsole.log(JSON.stringify(, null, 2))<esc>F(;a"", <esc>2hPf(p
-vnoremap <leader>a yoalert(JSON.stringify(, null, 2))<esc>F(p
 
 nnoremap <leader>{ A<space>{<CR>}<esc>O
 "nnoremap <leader>f Afunction(status, response)<space>{<CR>});<esc>O
-
-nnoremap <leader>df da{2dd
 
 nnoremap [ic :set noignorecase<cr>
 nnoremap ]ic :set ignorecase<cr>
@@ -464,7 +467,8 @@ filetype plugin indent on
 
 
 function! s:fzf_next(idx)
-    let commands = ['Files ~/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo', 'History', 'Buffers']
+    "let commands = ['Files ~/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo', 'History', 'Buffers']
+    let commands = ['History', 'Files ~/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46', 'Buffers']
     execute commands[a:idx]
     let next = (a:idx + 1) % len(commands)
     let previous = (a:idx - 1) % len(commands)
@@ -473,7 +477,7 @@ function! s:fzf_next(idx)
 endfunction
 
 command! Cycle call <sid>fzf_next(0)
-nnoremap <c-p> :History<CR>
+nnoremap <c-p> :Cycle<CR>
 nnoremap <leader>b :Buffers<CR>
 
 if has("cscope")
@@ -568,3 +572,27 @@ nnoremap  <leader>se :call CscopeFind('e', expand('<cword>'))<CR>
 nnoremap  <leader>sf :call CscopeFind('f', expand('<cword>'))<CR>
 " i: Find files #including this file
 nnoremap  <leader>si :call CscopeFind('i', expand('<cword>'))<CR>
+
+
+
+
+" For debugging drivers
+nnoremap  <leader>dbg :%s/^{$/{ printk("dbg: %s (%d) %s(...)\\n", __FILE__, __LINE__, __func__);/g
+nnoremap <leader>p oprintk("dbg: %s (%d) %s\n", __FILE__, __LINE__, __func__);<esc>
+vnoremap <leader>p yoprintk("dbg: %s (%d) %s:  - (0x%0x)\n", __FILE__, __LINE__, __func__, );<esc>6BhP$BP
+
+
+
+let g:gutentags_add_default_project_roots = 0
+let g:gutentags_project_root  = ['package.json', '.git', '.hg', '.svn']
+let g:gutentags_cache_dir = expand('~/.gutentags_cache')
+let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
+let g:gutentags_ctags_extra_args = ['--tag-relative=yes', '--fields=+ailmnS']
+let g:gutentags_ctags_exclude = [ '*.git', '*.svn', '*.hg', 'cache', 'build', 'dist', 'bin', 'node_modules', 'bower_components', '*-lock.json',  '*.lock', '*.min.*', '*.bak', '*.zip', '*.pyc', '*.class', '*.sln', '*.csproj', '*.csproj.user', '*.tmp', '*.cache', '*.vscode', '*.pdb', '*.exe', '*.dll', '*.bin', '*.mp3', '*.ogg', '*.flac', '*.swp', '*.swo', '.DS_Store', '*.plist', '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png', '*.svg', '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2', '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx', '*.xls']
+
+
+

@@ -11,8 +11,7 @@ DEST=$2
 while true; do
     if [ -f $SRC ] && ! cmp -s $SRC $DEST; then
         cp  $SRC $DEST
-        echo "$SRC -> $DEST"
-        date
+        echo "[$(date "+%m/%d-%T")] cp $SRC -> $DEST"
     fi
     inotifywait -qq -e close_write -e create $(dirname $SRC)
 done
