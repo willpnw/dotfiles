@@ -1,108 +1,143 @@
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 "call plug#begin('~/.local/share/nvim/plugged')
 call plug#begin('~/.vim/plugged')
-"
-"
-let g:ycm_show_diagnostics_ui=1
-let g:ycm_complete_in_comments=1
-let g:ycm_complete_in_strings=1
-let g:ycm_echo_current_diagnostic=0
-let g:ycm_enable_diagnostic_highlighting=0
-let g:ycm_enable_diagnostic_signs=0
-let g:ycm_confirm_extra_conf=0
-let g:ycm_auto_trigger=1
-let g:ycm_keep_logfiles=0
-let g:ycm_cache_omnifunc=1
-let g:ycm_goto_buffer_command = 'new-or-existing-tab'
-let g:ycm_open_loclist_on_ycm_diags = 1
-let g:ycm_min_num_of_chars_for_completion = 1
-let g:ycm_use_clangd = 1
-let g:ycm_clangd_uses_ycmd_caching = 1
-"let g:ycm_clangd_args = ['--background-index', '--all-scopes-completion', '--suggest-missing-includes']
 
-let g:ycm_key_list_select_completion = []
-let g:ycm_key_list_previous_completion = []
-
-"My Bundles here:
-Plug 'tomasr/molokai'
-Plug 'scrooloose/nerdtree'
-"Plug 'ctrlpvim/ctrlp.vim'
-Plug 'kien/rainbow_parentheses.vim'
-Plug 'godlygeek/tabular'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-abolish'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'peterhoeg/vim-qml'
-"Plug 'Valloric/YouCompleteMe', { 'tag': '9448748e804a01561f814be49c0b449a9332de1b', 'do': './install.py' }
-"Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'ycm-core/youcompleteme', { 'do': 'TERM=xterm ./install.py --clangd-completer' }
-"Plug 'chazy/cscope_maps'
-Plug 'vim-scripts/a.vim'
-Plug 'mhinz/vim-startify'
-Plug 'mileszs/ack.vim'
-Plug 'Raimondi/delimitMate'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'sjl/gundo.vim'
-Plug 'tpope/vim-eunuch'
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-Plug 'majutsushi/tagbar'
-Plug 'scrooloose/syntastic'
-Plug 'neomake/neomake'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'kchmck/vim-coffee-script'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'scrooloose/nerdcommenter'
-Plug 'pangloss/vim-javascript'
-Plug 'airblade/vim-gitgutter'
+" ==============================================================
+" searching
+" ==============================================================
 Plug 'rking/ag.vim'
-Plug 'kablamo/vim-git-log'
-Plug 'digitaltoad/vim-pug'
-Plug 'alvan/vim-closetag'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'posva/vim-vue'
-Plug 'leafgarland/typescript-vim'
+
+" ==============================================================
+" movement
+" ==============================================================
 Plug 'justinmk/vim-sneak'
+Plug 'psliwka/vim-smoothie'
+Plug 'vim-utils/vim-vertical-move'
+Plug 'christoomey/vim-tmux-navigator'
+
+
+" ==============================================================
+" tags
+" ==============================================================
+Plug 'brookhong/cscope.vim'
+
+" ==============================================================
+" themes
+" ==============================================================
 Plug 'jacoborus/tender.vim'
+Plug 'tomasr/molokai'
+
+" ==============================================================
+" improve use/readability/formatting
+" ==============================================================
+Plug 'Raimondi/delimitMate'
+Plug 'Yggdroot/indentLine'
+Plug 'airblade/vim-gitgutter'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'godlygeek/tabular'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/syntastic'
+Plug 'vim-scripts/vim-auto-save'
+
+" ==============================================================
+" handy mappings
+" ==============================================================
+Plug 'alvan/vim-closetag'
 Plug 'mattn/emmet-vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'pbogut/fzf-mru.vim'
 Plug 'svermeulen/vim-cutlass'
 Plug 'svermeulen/vim-subversive'
-"Plug 'ludovicchabant/vim-gutentags'
-Plug 'vim-scripts/vim-auto-save'
-"Plug 'sickill/vim-pasta'
-"Plug 'takac/vim-hardtime'
-"Plug 'vimwiki/vimwiki'
-"Plug 'Shougo/neosnippet.vim'
-"Plug 'Shougo/neosnippet-snippets'
-Plug 'francoiscabrol/ranger.vim'
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'bfrg/vim-cpp-modern'
-Plug 'vim-utils/vim-vertical-move'
-Plug 'psliwka/vim-smoothie'
-Plug 'brookhong/cscope.vim'
-Plug 'kergoth/vim-bitbake'
-Plug 'Yggdroot/indentLine'
-
-
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
 if has('nvim')
     "Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
     ""Plug 'deoplete-plugins/deoplete-clang'
     "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'svermeulen/vim-yoink'
-    Plug 'rbgrouleff/bclose.vim'
+    "Plug 'rbgrouleff/bclose.vim'
 else
     "Plug 'Shougo/deoplete.nvim'
     "Plug 'roxma/nvim-yarp'
     "Plug 'roxma/vim-hug-neovim-rpc'
 endif
 "let g:deoplete#enable_at_startup = 1
+
+" ==============================================================
+" tools
+" ==============================================================
+Plug 'francoiscabrol/ranger.vim'
+Plug 'kablamo/vim-git-log'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'sjl/gundo.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'idanarye/vim-merginal'
+"Plug 'jeetsukumaran/vim-buffergator'
+Plug 'bsdelf/bufferhint'
+    nnoremap - :call bufferhint#Popup()<CR>
+    nnoremap \ :call bufferhint#LoadPrevious()<CR>
+
+" ==============================================================
+" status line
+" ==============================================================
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" ==============================================================
+" build tools
+" ==============================================================
+Plug 'neomake/neomake'
+
+" ==============================================================
+" Syntax highlighting
+" ==============================================================
+Plug 'bfrg/vim-cpp-modern'
+Plug 'digitaltoad/vim-pug'
+Plug 'kchmck/vim-coffee-script'
+Plug 'kergoth/vim-bitbake'
+Plug 'leafgarland/typescript-vim'
+Plug 'mxw/vim-jsx'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'pangloss/vim-javascript'
+Plug 'peterhoeg/vim-qml'
+Plug 'posva/vim-vue'
+
+" ==============================================================
+" completion
+" ==============================================================
+"Plug 'Valloric/YouCompleteMe', { 'tag': '9448748e804a01561f814be49c0b449a9332de1b', 'do': './install.py' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+Plug 'ycm-core/youcompleteme', { 'do': 'TERM=xterm ./install.py --clangd-completer' }
+    let g:ycm_show_diagnostics_ui=1
+    let g:ycm_complete_in_comments=1
+    let g:ycm_complete_in_strings=1
+    let g:ycm_echo_current_diagnostic=0
+    let g:ycm_enable_diagnostic_highlighting=0
+    let g:ycm_enable_diagnostic_signs=0
+    let g:ycm_confirm_extra_conf=0
+    let g:ycm_auto_trigger=1
+    let g:ycm_keep_logfiles=0
+    let g:ycm_cache_omnifunc=1
+    let g:ycm_goto_buffer_command = 'new-or-existing-tab'
+    let g:ycm_open_loclist_on_ycm_diags = 1
+    let g:ycm_min_num_of_chars_for_completion = 1
+    let g:ycm_use_clangd = 1
+    let g:ycm_clangd_uses_ycmd_caching = 1
+    "let g:ycm_clangd_args = ['--background-index', '--all-scopes-completion', '--suggest-missing-includes']
+
+    let g:ycm_key_list_select_completion = []
+    let g:ycm_key_list_previous_completion = []
+
+" ==============================================================
+" fuzzy file finder
+" ==============================================================
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'pbogut/fzf-mru.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -111,9 +146,9 @@ syntax on
 
 set path+=**
 
-"---------------------------------------
-" Sets
-"---------------------------------------
+" ==============================================================
+" sets
+" ==============================================================
 "set clipboard=unnamed
 set clipboard+=unnamedplus
 set hidden
@@ -337,14 +372,17 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=42
 "---------------------------------------
 " vim-coffee-script
 "---------------------------------------
-autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
+"autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 
 " Shortcuts
 nnoremap <leader>l oconsole.log(JSON.stringify(, null, 2))<esc>2Bba
 vnoremap <leader>l yoconsole.log(JSON.stringify(, null, 2))<esc>F(;a"", <esc>2hPf(p
 
 nnoremap <leader>{ A<space>{<CR>}<esc>O
-"nnoremap <leader>f Afunction(status, response)<space>{<CR>});<esc>O
+
+map gn :bn<cr>
+map gp :bp<cr>
+map gd :bd<cr>
 
 nnoremap [ic :set noignorecase<cr>
 nnoremap ]ic :set ignorecase<cr>
@@ -401,12 +439,13 @@ runtime macros/matchit.vim
 
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
 "
 " Shortcuts for switching between files in angular
 "
-:nnoremap <leader>eh :e %:p:r.html<cr>
-:nnoremap <leader>et :e %:p:r.ts<cr>
-:nnoremap <leader>ec :e %:p:r.scss<cr>
+":nnoremap <leader>eh :e %:p:r.html<cr>
+":nnoremap <leader>et :e %:p:r.ts<cr>
+":nnoremap <leader>ec :e %:p:r.scss<cr>
 
 ""-- FOLDING --
 "set foldmethod=syntax "syntax highlighting items specify folds
@@ -433,8 +472,6 @@ nnoremap M D
 xmap s <plug>(SubversiveSubstitute)
 xmap p <plug>(SubversiveSubstitute)
 xmap P <plug>(SubversiveSubstitute)
-
-
 
 " Zoom / Restore window.
 function! s:ZoomToggle() abort
@@ -464,8 +501,6 @@ au BufRead,BufNewFile *.xaml setfiletype xml
 
 filetype plugin indent on
 
-
-
 function! s:fzf_next(idx)
     "let commands = ['Files ~/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo', 'History', 'Buffers']
     let commands = ['History', 'Files ~/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46', 'Buffers']
@@ -478,7 +513,7 @@ endfunction
 
 command! Cycle call <sid>fzf_next(0)
 nnoremap <c-p> :Cycle<CR>
-nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>y :Buffers<CR>
 
 if has("cscope")
 
@@ -522,9 +557,27 @@ if has("cscope")
 endif
 
 
-
+" edit q macro
 noremap <leader>eq :let @q='<C-R><C-R>q'
-noremap <leader>m :cd /home/will/dev-projects/mturbo-linux-port<CR>:make -j4<cr>
+
+function MakeRailImage(platform)
+    execute 'cd /home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46'
+    execute 'make tablesafe_defconfig'
+    execute '!rm arch/arm/boot/dts/*.dtb'
+	execute 'make tablesafe-rail_A' . a:platform . '.dtb'
+    execute 'make -j12'
+endfunction
+
+nnoremap <leader>0 :call MakeRailImage("10")<CR>
+nnoremap <leader>1 :call MakeRailImage("11")<CR>
+
+" make sonsosite
+"noremap <leader>m :cd /home/will/dev-projects/mturbo-linux-port<CR>:make -j4<cr>
+"noremap <leader>z :cd /home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46<CR>:make tablesafe_defconfig<CR>:make -j12<CR>
+"noremap <leader>10 :cd /home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46<CR>:!rm arch/arm/boot/dts/*.dtb<CR>:make tablesafe-rail_A10.dtb<CR>
+"noremap <leader>11 :cd /home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46<CR>:!rm arch/arm/boot/dts/*.dtb<CR>:make tablesafe-rail_A11.dtb<CR>
+
+" ?
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
@@ -533,27 +586,23 @@ let g:ranger_map_keys = 0
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 :set cscopequickfix=""
 
+" deoplete variables
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so.8'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/8.0.1/include/'
 let g:deoplete#sources#clang#clang_complete_database = '/home/will/dev-projects/mturbo-linux-port'
 
 call neomake#configure#automake('w')
 
-"let g:indent_guides_enable_on_vim_startup = 1
-
-
+" enable mouse support
 :set mouse=a
 
-
+" move vertiacally
 nmap } ]v
 xmap } ]v
 
-
-
-
-
-
-
+" ==============================================================
+" csope mappings
+" ==============================================================
 nnoremap <leader>sa :call CscopeFindInteractive(expand('<cword>'))<CR>
 nnoremap <leader>sl :call ToggleLocationList()<CR>
 " s: Find this C symbol
@@ -574,25 +623,16 @@ nnoremap  <leader>sf :call CscopeFind('f', expand('<cword>'))<CR>
 nnoremap  <leader>si :call CscopeFind('i', expand('<cword>'))<CR>
 
 
-
-
+" ==============================================================
 " For debugging drivers
-nnoremap  <leader>dbg :%s/^{$/{ printk("dbg: %s (%d) %s(...)\\n", __FILE__, __LINE__, __func__);/g
-nnoremap <leader>p oprintk("dbg: %s (%d) %s\n", __FILE__, __LINE__, __func__);<esc>
-vnoremap <leader>p yoprintk("dbg: %s (%d) %s:  - (0x%0x)\n", __FILE__, __LINE__, __func__, );<esc>6BhP$BP
+" ==============================================================
+nnoremap  <leader>dbk :%s/^{$/{ printk("dbg: %s (%d) %s(...)\\n", __FILE__, __LINE__, __func__);/g
+nnoremap  <leader>dbf :%s/^{$/{ printf("dbg: %s (%d) %s(...)\\n", __FILE__, __LINE__, __func__);/g
+nnoremap <leader>pk oprintk("dbg: %s (%d) %s\n", __FILE__, __LINE__, __func__);<esc>
+vnoremap <leader>pk yoprintk("dbg: %s (%d) %s:  - (%d)\n", __FILE__, __LINE__, __func__, );<esc>6BhP$BP
+nnoremap <leader>pf oprintf("dbg: %s (%d) %s\n", __FILE__, __LINE__, __func__);<esc>
+vnoremap <leader>pf yoprintf("dbg: %s (%d) %s:  - (%d)\n", __FILE__, __LINE__, __func__, );<esc>6BhP$BP
+nnoremap <leader>dbd :%s/\s*print[kf]("dbg:.*//g
 
 
-
-let g:gutentags_add_default_project_roots = 0
-let g:gutentags_project_root  = ['package.json', '.git', '.hg', '.svn']
-let g:gutentags_cache_dir = expand('~/.gutentags_cache')
-let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
-let g:gutentags_generate_on_new = 1
-let g:gutentags_generate_on_missing = 1
-let g:gutentags_generate_on_write = 1
-let g:gutentags_generate_on_empty_buffer = 0
-let g:gutentags_ctags_extra_args = ['--tag-relative=yes', '--fields=+ailmnS']
-let g:gutentags_ctags_exclude = [ '*.git', '*.svn', '*.hg', 'cache', 'build', 'dist', 'bin', 'node_modules', 'bower_components', '*-lock.json',  '*.lock', '*.min.*', '*.bak', '*.zip', '*.pyc', '*.class', '*.sln', '*.csproj', '*.csproj.user', '*.tmp', '*.cache', '*.vscode', '*.pdb', '*.exe', '*.dll', '*.bin', '*.mp3', '*.ogg', '*.flac', '*.swp', '*.swo', '.DS_Store', '*.plist', '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png', '*.svg', '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2', '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx', '*.xls']
-
-
-
+set noexpandtab

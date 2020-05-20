@@ -1,0 +1,17 @@
+#!/bin/sh
+
+YOCTO_IMAGES_DIR=/home/will/dev-projects/tablesafe/rail-reve/ts-yocto/devops-rail/rail/yocto/build/tmp-glibc/deploy/images
+LINUX_BOOT_DIR=/home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46/arch/arm/boot
+TFTP_DIR=/srv/tftp
+
+srcToDest() {
+    /home/will/dotfiles/scripts/fileCopy ${1} ${2} &
+}
+
+srcToDest ${LINUX_BOOT_DIR}/zImage ${TFTP_DIR}/zImage
+#bcm958300k.dtb
+for dtb in tablesafe-rail_A10.dtb tablesafe-rail_A11.dtb; do
+    srcToDest ${LINUX_BOOT_DIR}/dts/${dtb} /srv/tftp/zImage.dtb &
+done
+
+srcToDest ${YOCTO_IMAGES_DIR}/tablesafe-a10/u-boot-dtb.img ${TFTP_DIR}/uboot
