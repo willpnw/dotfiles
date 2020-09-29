@@ -141,48 +141,48 @@ alias n="nvim"
 
 alias d="docker"
 
- #git commands
- alias gc="git commit"
- alias gco="git checkout"
- alias gcm="git commit -m"
- alias gca="git commit --amend --no-edit"
- alias gss="git status -s"
- alias gs="git status"
- alias gsno="git status --untracked-files=no"
- alias gpull="git pull"
- alias gpush="git push"
- alias gpf="git push -f"
- alias grs="git reset"
- alias grs1="git reset HEAD~1"
- alias gb="git branch"
- alias gau="git add -u"
- alias gaa="git add --all"
- alias gd="clear; git diff -w"
- alias gdc="git diff --cached"
- alias gdt="git difftool -y"
- alias gmt="git mergetool -y"
- alias gdtc="git difftool -y --cached"
- alias gl="git log"
- alias gstash="git stash"
- alias gclean="git clean -fd"
- alias gshow="git difftool HEAD~1 HEAD"
- alias gbdr="git push origin --delete"
- alias gdsc="git describe"
- alias gdscl="git describe --long"
- alias gllr="git log --left-right --graph --cherry-pick --oneline"
- alias glro="git log --right-only --no-merges --cherry-pick --oneline"
- alias gsp="git show -p"
- alias gsu="git submodule update"
- alias gsm="git ls-files -m"
- alias gsd="git ls-files -d"
+#git commands
+alias gc="git commit"
+alias gco="git checkout"
+alias gcm="git commit -m"
+alias gca="git commit --amend --no-edit"
+alias gss="git status -s"
+alias gs="git status"
+alias gsno="git status --untracked-files=no"
+alias gpull="git pull"
+alias gpush="git push"
+alias gpf="git push -f"
+alias grs="git reset"
+alias grs1="git reset HEAD~1"
+alias gb="git branch"
+alias gau="git add -u"
+alias gaa="git add --all"
+alias gd="clear; git diff -w"
+alias gdc="git diff --cached"
+alias gdt="git difftool -y"
+alias gmt="git mergetool -y"
+alias gdtc="git difftool -y --cached"
+alias gl="git log"
+alias gstash="git stash"
+alias gclean="git clean -fd"
+alias gshow="git difftool HEAD~1 HEAD"
+alias gbdr="git push origin --delete"
+alias gdsc="git describe"
+alias gdscl="git describe --long"
+alias gllr="git log --left-right --graph --cherry-pick --oneline"
+alias glro="git log --right-only --no-merges --cherry-pick --oneline"
+alias gsp="git show -p"
+alias gsu="git submodule update"
+alias gsm="git ls-files -m"
+alias gsd="git ls-files -d"
 
 
 
- #alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0 -t screen-256color -c on"
- alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0"
- alias mc2="sudo minicom -C /tmp/minilog1 -D /dev/ttyUSB1 -t screen-256color -c on"
+#alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0 -t screen-256color -c on"
+alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0"
+alias mc2="sudo minicom -C /tmp/minilog1 -D /dev/ttyUSB1 -t screen-256color -c on"
 
- alias du="du -h --max-depth=1"
+alias du="du -h --max-depth=1"
 
 # docker aliases
 alias dka='docker kill $(docker ps -q)'
@@ -204,7 +204,7 @@ bindkey -M viins '^r' history-incremental-search-backward
 bindkey -M vicmd '^r' history-incremental-search-backward
 
 rn() {
-    for f in `fd $1`; do
+    for f in `fd -s $1`; do
         NEW=$(echo $f | sed "s/$1/$2/g")
         echo "$f -> $NEW"
         mv $f $NEW
@@ -238,11 +238,11 @@ r() {
     #print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | tr -s ' ' )
 }
 
-m() {
-    cd /home/will/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo
-    cmake -DCMAKE_BUILD_TYPE=Release -DCI_BUILD=ON && make -j4
-    -
-}
+#m() {
+#    cd /home/will/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo
+#    cmake -DCMAKE_BUILD_TYPE=Release -DCI_BUILD=ON && make -j4
+#    -
+#}
 
 k() {
     local pid
@@ -344,3 +344,11 @@ gprune() {
         fi
     done
 }
+
+# common searches
+fs() {
+	ag -l "struct $1 {"
+}
+
+alias qt1='fd -e qml -x sed -i "s/import QtQuick 2.6/import QtQuick 1.1/"'
+alias qt2='fd -e qml -x sed -i "s/import QtQuick 1.1/import QtQuick 2.6/"'

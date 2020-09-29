@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -ex
+
+qmk compile
+cd ~/dev-projects/qmk/
+sudo ./mdloader_linux --first --download qmk_firmware/massdrop_alt_willpnw.bin --restart
+

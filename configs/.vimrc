@@ -31,13 +31,14 @@ Plug 'tomasr/molokai'
 " improve use/readability/formatting
 " ==============================================================
 Plug 'Raimondi/delimitMate'
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'godlygeek/tabular'
 Plug 'kien/rainbow_parentheses.vim'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/syntastic'
+Plug 'preservim/nerdcommenter'
+let g:NERDCompactSexyComs = 0
+Plug 'vim-syntastic/syntastic'
 Plug 'vim-scripts/vim-auto-save'
 
 " ==============================================================
@@ -52,6 +53,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'kana/vim-submode'
 if has('nvim')
     "Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
     ""Plug 'deoplete-plugins/deoplete-clang'
@@ -71,7 +73,7 @@ endif
 Plug 'francoiscabrol/ranger.vim'
 Plug 'kablamo/vim-git-log'
 Plug 'majutsushi/tagbar'
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 'sjl/gundo.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'idanarye/vim-merginal'
@@ -154,22 +156,15 @@ set clipboard+=unnamedplus
 set hidden
 set autoindent
 set smartindent
-"set tabstop=2
-set shiftwidth=2
 set backspace=indent,eol,start
 set ignorecase
 set showcmd
 set incsearch
-"set expandtab
-set noexpandtab
 set scrolloff=8
-"set diffopt+=iwhite
 set invnumber
 set invrelativenumber
 set number
-"set ambiwidth=double
 set nowrap
-"set autochdir
 set t_ut=
 set noswapfile
 set nomodeline
@@ -187,7 +182,7 @@ nnoremap Q <nop>
 ":nnoremap sa :wa<CR>
 
 " Leader
-let mapleader=","
+let mapleader=" "
 
 "" CtrlP
 "let g:ctrlp_cmd = 'CtrlPMRU'
@@ -207,7 +202,9 @@ nnoremap Y v$hy
 " nnoremap < <<
 "
 " Ag
-vnoremap <leader>a "hy:Ag <C-r>h<CR>
+vnoremap <leader>ag "hy:Ag! <C-r>h<CR>
+vnoremap <leader>as "hy:Ag! "struct <C-r>h {"<CR>
+
 
 " Serach/Replace
 vnoremap <leader>r "hy:%Subvert?<C-r>h??gc<left><left><left>
@@ -222,7 +219,7 @@ vnoremap <leader>s :Subvert//g<left><left>
 :nnoremap <leader>sv :w<CR>:source $MYVIMRC<cr>
 
 " Remap default commands mode change commands
-nnoremap <space> :
+"nnoremap <space> :
 
 " JKLH Navigation
 nnoremap <Down> <C-W><C-J>
@@ -230,11 +227,11 @@ nnoremap <UP> <C-W><C-K>
 nnoremap <Right> <C-W><C-L>
 nnoremap <Left> <C-W><C-H>
 
-inoremap <C-j> <c-o>gj
-inoremap <C-j> <c-o>gj
-inoremap <C-k> <c-o>gk
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
+"inoremap <C-j> <c-o>gj
+"inoremap <C-j> <c-o>gj
+"inoremap <C-k> <c-o>gk
+"inoremap <C-h> <Left>
+"inoremap <C-l> <Right>
 
 
 " Make cw consistent with dw, yw, vw
@@ -374,9 +371,6 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=42
 "---------------------------------------
 "autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 
-" Shortcuts
-nnoremap <leader>l oconsole.log(JSON.stringify(, null, 2))<esc>2Bba
-vnoremap <leader>l yoconsole.log(JSON.stringify(, null, 2))<esc>F(;a"", <esc>2hPf(p
 
 nnoremap <leader>{ A<space>{<CR>}<esc>O
 
@@ -388,10 +382,10 @@ nnoremap [ic :set noignorecase<cr>
 nnoremap ]ic :set ignorecase<cr>
 nnoremap yic :set ignorecase!<cr>
 
-nnoremap <leader>k :bn<cr>
-nnoremap <leader>j :bp<cr>
-nnoremap <leader>K :bl<cr>
-nnoremap <leader>J :bf<cr>
+nnoremap <leader>l :bn<cr>
+nnoremap <leader>h :bp<cr>
+"nnoremap <leader>K :bl<cr>
+"nnoremap <leader>J :bf<cr>
 
 " filenames like *.xml, *.html, *.xhtml, ...
 " These are the file extensions where this plugin is enabled.
@@ -417,13 +411,6 @@ let g:closetag_shortcut = '>'
 " Add > at current position without closing the current tag, default is ''
 "
 let g:closetag_close_shortcut = '<leader>>'
-"---------------------------------------
-" vim-gitgutter
-"---------------------------------------
-nmap <Leader>ha <Plug>(GitGutterStageHunk)
-nmap <Leader>hr <Plug>(GitGutterUndoHunk)
-nmap <Leader>hn <Plug>(GitGutterNextHunk)
-nmap <Leader>hp <Plug>(GitGutterPrevHunk)
 
 nmap <Leader>gn :GundoToggle<CR>
 
@@ -503,7 +490,7 @@ filetype plugin indent on
 
 function! s:fzf_next(idx)
     "let commands = ['Files ~/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo', 'History', 'Buffers']
-    let commands = ['History', 'Files ~/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46', 'Buffers']
+    let commands = ['History', 'Files', 'Buffers']
     execute commands[a:idx]
     let next = (a:idx + 1) % len(commands)
     let previous = (a:idx - 1) % len(commands)
@@ -513,7 +500,8 @@ endfunction
 
 command! Cycle call <sid>fzf_next(0)
 nnoremap <c-p> :Cycle<CR>
-nnoremap <leader>y :Buffers<CR>
+"nnoremap <c-f> :Files<CR>
+"nnoremap <c-b> :Buffers<CR>
 
 if has("cscope")
 
@@ -561,15 +549,17 @@ endif
 noremap <leader>eq :let @q='<C-R><C-R>q'
 
 function MakeRailImage(platform)
+    execute 'wa'
     execute 'cd /home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46'
     execute 'make tablesafe_defconfig'
-    execute '!rm arch/arm/boot/dts/*.dtb'
+	execute '!rm arch/arm/boot/dts/*.dtb'
 	execute 'make tablesafe-rail_A' . a:platform . '.dtb'
-    execute 'make -j12'
+	execute 'make -j12'
 endfunction
 
 nnoremap <leader>0 :call MakeRailImage("10")<CR>
 nnoremap <leader>1 :call MakeRailImage("11")<CR>
+
 
 " make sonsosite
 "noremap <leader>m :cd /home/will/dev-projects/mturbo-linux-port<CR>:make -j4<cr>
@@ -626,13 +616,53 @@ nnoremap  <leader>si :call CscopeFind('i', expand('<cword>'))<CR>
 " ==============================================================
 " For debugging drivers
 " ==============================================================
-nnoremap  <leader>dbk :%s/^{$/{ printk("dbg: %s (%d) %s(...)\\n", __FILE__, __LINE__, __func__);/g
-nnoremap  <leader>dbf :%s/^{$/{ printf("dbg: %s (%d) %s(...)\\n", __FILE__, __LINE__, __func__);/g
+nnoremap <leader>dbk :%s/^{$/{ printk("dbg: %s (%d) %s(...)\\n", __FILE__, __LINE__, __func__);/g
+nnoremap <leader>dbf :%s/^{$/{ printf("dbg: %s (%d) %s(...)\\n", __FILE__, __LINE__, __func__);/g
 nnoremap <leader>pk oprintk("dbg: %s (%d) %s\n", __FILE__, __LINE__, __func__);<esc>
-vnoremap <leader>pk yoprintk("dbg: %s (%d) %s:  - (%d)\n", __FILE__, __LINE__, __func__, );<esc>6BhP$BP
+nnoremap <leader>pK Oprintk("dbg: %s (%d) %s\n", __FILE__, __LINE__, __func__);<esc>
+
+vnoremap <leader>pks yoprintk("dbg: %s:(%d) =%s\n", __func__, __LINE__, );<esc>4BP$BP
+vnoremap <leader>Pks yOprintk("dbg: %s:(%d) =%s\n", __func__, __LINE__, );<esc>4BP$BP
+vnoremap <leader>pkd yoprintk("dbg: %s:(%d) =%d\n", __func__, __LINE__, );<esc>4BP$BP
+vnoremap <leader>Pkd yOprintk("dbg: %s:(%d) =%d\n", __func__, __LINE__, );<esc>4BP$BP
+vnoremap <leader>pkx yoprintk("dbg: %s:(%d) =0x%x\n", __func__, __LINE__, );<esc>4BP$BP
+vnoremap <leader>Pkx yOprintk("dbg: %s:(%d) =0x%x\n", __func__, __LINE__, );<esc>4BP$BP
+
 nnoremap <leader>pf oprintf("dbg: %s (%d) %s\n", __FILE__, __LINE__, __func__);<esc>
-vnoremap <leader>pf yoprintf("dbg: %s (%d) %s:  - (%d)\n", __FILE__, __LINE__, __func__, );<esc>6BhP$BP
+nnoremap <leader>pF Oprintf("dbg: %s (%d) %s\n", __FILE__, __LINE__, __func__);<esc>
+vnoremap <leader>pfs yoprintf("dbg: %s:(%d) =%s\n", __func__, __LINE__, );<esc>4BP$BP
+vnoremap <leader>Pfs yOprintf("dbg: %s:(%d) =%s\n", __func__, __LINE__, );<esc>4BP$BP
+vnoremap <leader>pfd yoprintf("dbg: %s:(%d) =%d\n", __func__, __LINE__, );<esc>4BP$BP
+vnoremap <leader>Pfd yOprintf("dbg: %s:(%d) =%d\n", __func__, __LINE__, );<esc>4BP$BP
+vnoremap <leader>pfx yoprintf("dbg: %s:(%d) =0x%x\n", __func__, __LINE__, );<esc>4BP$BP
+vnoremap <leader>Pfx yOprintf("dbg: %s:(%d) =0x%x\n", __func__, __LINE__, );<esc>4BP$BP
 nnoremap <leader>dbd :%s/\s*print[kf]("dbg:.*//g
 
 
+" Shortcuts
+nnoremap <leader>pj oconsole.log("");<esc>bla
+vnoremap <leader>pj yoconsole.log(JSON.stringify(, null, 2))<esc>F(;a"", <esc>2hPf(p
+
+
+" submode
+call submode#enter_with('tab-nav', 'n', '', '<leader>j', ':bp<cr>')
+call submode#enter_with('tab-nav', 'n', '', '<leader>k', ':bn<cr>')
+call submode#map('tab-nav', 'n', '', 'j', ':bp<cr>')
+call submode#map('tab-nav', 'n', '', 'k', ':bn<cr>')
+"disable submode timeouts:
+let g:submode_timeout = 0
+" don't consume submode-leaving key
+let g:submode_keep_leaving_key = 1
+
+"set tabstop=4 shiftwidth=4 expandtab
 set noexpandtab
+
+"---------------------------------------
+" vim-gitgutter
+"---------------------------------------
+nmap <leader>gr <Plug>(GitGutterUndoHunk)
+nmap <leader>gn <Plug>(GitGutterNextHunk)
+nmap <leader>gp <Plug>(GitGutterPrevHunk)
+nmap <leader>xp <Plug>(GitGutterPreviewHunk)
+nmap <leader>xs <Plug>(GitGutterStageHunk)
+

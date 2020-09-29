@@ -1,17 +1,44 @@
 #!/bin/sh
 
-YOCTO_IMAGES_DIR=/home/will/dev-projects/tablesafe/rail-reve/ts-yocto/devops-rail/rail/yocto/build/tmp-glibc/deploy/images
+YOCTO_TMP_DIR=/home/will/dev-projects/tablesafe/rail-reve/ts-yocto/devops-rail/rail/yocto/build/tmp-glibc
+YOCTO_SOURCES_DIR=/home/will/dev-projects/tablesafe/rail-reve/ts-yocto/devops-rail/rail/yocto/build/workspace/sources
+YOCTO_IMAGES_DIR=${YOCTO_TMP_DIR}/deploy/images
+YOCTO_WORK_DIR=${YOCTO_TMP_DIR}/work/cortexa9t2hf-neon-oe-linux-gnueabi
 LINUX_BOOT_DIR=/home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46/arch/arm/boot
 TFTP_DIR=/srv/tftp
+HTTP_DIR=/srv/http
 
+rm /tmp/watches
 srcToDest() {
     /home/will/dotfiles/scripts/fileCopy ${1} ${2} &
+    echo "/home/will/dotfiles/scripts/fileCopy ${1} ${2}" >> /tmp/watches
 }
 
 srcToDest ${LINUX_BOOT_DIR}/zImage ${TFTP_DIR}/zImage
 #bcm958300k.dtb
 for dtb in tablesafe-rail_A10.dtb tablesafe-rail_A11.dtb; do
-    srcToDest ${LINUX_BOOT_DIR}/dts/${dtb} /srv/tftp/zImage.dtb &
+	srcToDest ${LINUX_BOOT_DIR}/dts/${dtb} /srv/tftp/zImage.dtb &
 done
 
 srcToDest ${YOCTO_IMAGES_DIR}/tablesafe-a10/u-boot-dtb.img ${TFTP_DIR}/uboot
+srcToDest ${YOCTO_IMAGES_DIR}/tablesafe-a10/bin.boot1-bcm958303k_pos_sa ${TFTP_DIR}/boot1
+
+srcToDest ${YOCTO_TMP_DIR}/deploy/images/tablesafe-a10/ota.tar.gz                   ${HTTP_DIR}/rail/ota/ota_01-08-00-000-0-A.tar.gz
+#srcToDest ${YOCTO_WORK_DIR}/provision/1.0-r0/build/provision                        ${HTTP_DIR}/provision
+#srcToDest ${YOCTO_WORK_DIR}/athena/1.0-r0/build/athena                              ${HTTP_DIR}/athena
+#srcToDest ${YOCTO_WORK_DIR}/qt-5.6.3-demo/1.0-r0/build/qt-5.6.3-demo                ${HTTP_DIR}/qt-5.6.3-demo
+#srcToDest ${YOCTO_WORK_DIR}/mesa/2_19.0.1-r0/build/lib/libEGL.so.1.0.0              ${HTTP_DIR}/libEGL.so.1.0.0
+#srcToDest ${YOCTO_WORK_DIR}/mesa/2_19.0.1-r0/sysroot-destdir/usr/lib/dri/vc4_dri.so ${HTTP_DIR}/vc4_dri.so
+#srcToDest ${YOCTO_WORK_DIR}/ota/1.0-r0/recipe-sysroot/ota/ota                       ${HTTP_DIR}/ota
+#srcToDest ${YOCTO_SOURCES_DIR}/ota/rail-ux/ota/ota/ota.sh                           ${HTTP_DIR}/ota.sh
+#srcToDest ${YOCTO_SOURCES_DIR}/ota/rail-ux/ota/ota/reve-map.json                    ${HTTP_DIR}/reve-map.json
+#srcToDest ${YOCTO_SOURCES_DIR}/ota/rail-ux/ota/ota/reve-utils.sh                    ${HTTP_DIR}/reve-utils.sh
+
+RAIL_UX_REVD_DIR=/home/will/dev-projects/tablesafe/rail-revd/rail/rail-ux
+srcToDest ${RAIL_UX_REVD_DIR}/build-ota-bcm-arm/ota         ${HTTP_DIR}/rail/ota/ota/
+srcToDest ${RAIL_UX_REVD_DIR}/ota/ota/files/ota.sh          ${HTTP_DIR}/rail/ota/ota/
+srcToDest ${RAIL_UX_REVD_DIR}/ota/ota/files/armv6l-map.json ${HTTP_DIR}/rail/ota/ota/
+srcToDest ${RAIL_UX_REVD_DIR}/ota/ota/files/armv6l-utils.sh ${HTTP_DIR}/rail/ota/ota/
+srcToDest ${RAIL_UX_REVD_DIR}/ota/ota/files/armv7l-map.json ${HTTP_DIR}/rail/ota/ota/
+srcToDest ${RAIL_UX_REVD_DIR}/ota/ota/files/armv7l-utils.sh ${HTTP_DIR}/rail/ota/ota/
+
