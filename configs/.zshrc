@@ -162,6 +162,7 @@ alias gdc="git diff --cached"
 alias gdt="git difftool -y"
 alias gmt="git mergetool -y"
 alias gdtc="git difftool -y --cached"
+alias gdth="git difftool -y HEAD^ HEAD"
 alias gl="git log"
 alias gstash="git stash"
 alias gclean="git clean -fd"
@@ -178,8 +179,9 @@ alias gsd="git ls-files -d"
 
 
 
-#alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0 -t screen-256color -c on"
-alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0"
+
+alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0 -t screen-256color -c on"
+#alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0"
 alias mc2="sudo minicom -C /tmp/minilog1 -D /dev/ttyUSB1 -t screen-256color -c on"
 
 alias du="du -h --max-depth=1"
@@ -326,11 +328,6 @@ cf() {
     done
 }
 
-work() {
-    xrandr --output DP1-2 --auto --right-of eDP1
-    xrandr --output DP1-1-8 --auto --right-of DP1-2
-}
-
 gprune() {
     for branch in $(git branch); do
         read -q "REPLY?Remove $branch ?"
@@ -350,5 +347,10 @@ fs() {
 	ag -l "struct $1 {"
 }
 
-alias qt1='fd -e qml -x sed -i "s/import QtQuick 2.6/import QtQuick 1.1/"'
-alias qt2='fd -e qml -x sed -i "s/import QtQuick 1.1/import QtQuick 2.6/"'
+#gitk() {
+#    gitk $@ &
+#}
+
+alias dgcc="sudo pacman -U /var/cache/pacman/pkg/{gcc-9.3.0-1-x86_64.pkg.tar.zst,gcc-libs-9.3.0-1-x86_64.pkg.tar.zst}"
+alias qt1='fd -e qml -x sed -i "s/^import QtQuick 2.6$/import QtQuick 1.1/"'
+alias qt2='fd -e qml -x sed -i "s/^import QtQuick 1.1$/$import QtQuick 2.6/"'

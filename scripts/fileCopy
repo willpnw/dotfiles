@@ -10,10 +10,10 @@ DEST=$2
 
 while true; do
 	if [ -f $SRC ]; then
-		if ! cmp -s $SRC $DEST; then
+		#if ! cmp -s $SRC $DEST; then
 			cp  $SRC $DEST
 			echo "[$(date "+%m/%d-%T")] cp $SRC -> $DEST"
-		fi
+		#fi
 	else
 		sleep 60
 	fi

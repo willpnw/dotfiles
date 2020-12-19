@@ -72,7 +72,7 @@ endif
 " ==============================================================
 Plug 'francoiscabrol/ranger.vim'
 Plug 'kablamo/vim-git-log'
-Plug 'majutsushi/tagbar'
+Plug 'preservim/tagbar'
 Plug 'preservim/nerdtree'
 Plug 'sjl/gundo.vim'
 Plug 'tpope/vim-fugitive'
@@ -191,7 +191,7 @@ let mapleader=" "
 nnoremap <leader>tb :TagbarToggle<CR>
 "nnoremap <leader>gt :!gentags<cr><cr>
 
-set tags=./tags,tags;
+"set tags=./tags,tags;
 " Y
 nnoremap Y v$hy
 
@@ -300,7 +300,8 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 "---------------------------------------
 " Tabular
 "---------------------------------------
-nnoremap <leader>t :Tab /
+nnoremap <leader>t<SPACE> :Tab / /l0<CR>
+nnoremap <leader>t :Tab //l0<left><left><left>
 nnoremap <leader>t: :Tab /:<CR>
 nnoremap <leader>t, :Tab /,\zs/l0c1<CR>
 nnoremap <leader>t( :Tab /(/l0c0<CR>
@@ -415,13 +416,13 @@ let g:closetag_close_shortcut = '<leader>>'
 nmap <Leader>gn :GundoToggle<CR>
 
 
-map s <Plug>Sneak_s
-map S <Plug>Sneak_S
-map f <Plug>Sneak_f
-map F <Plug>Sneak_F
-map t <Plug>Sneak_t
-map T <Plug>Sneak_T
-let g:sneak#label = 1
+map z <Plug>Sneak_s
+map Z <Plug>Sneak_S
+"noremap f <Plug>Sneak_f
+"noremap F <Plug>Sneak_F
+"noremap t <plug>sneak_t
+"noremap T <plug>sneak_T
+"let g:sneak#label = 1
 runtime macros/matchit.vim
 
 
@@ -440,7 +441,10 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 "let javaScript_fold=1 "activate folding by js syntax
 "set foldlevelstart=1 "start file with all folds opened
 "
-set wildignore+=**/node_modules/**
+"set foldmethod=indent
+"set foldlevel=3
+"set foldclose=all
+"set wildignore+=**/node_modules/**
 
 let g:yoinkIncludeDeleteOperations = 1
 
@@ -643,7 +647,6 @@ nnoremap <leader>dbd :%s/\s*print[kf]("dbg:.*//g
 nnoremap <leader>pj oconsole.log("");<esc>bla
 vnoremap <leader>pj yoconsole.log(JSON.stringify(, null, 2))<esc>F(;a"", <esc>2hPf(p
 
-
 " submode
 call submode#enter_with('tab-nav', 'n', '', '<leader>j', ':bp<cr>')
 call submode#enter_with('tab-nav', 'n', '', '<leader>k', ':bn<cr>')
@@ -654,8 +657,9 @@ let g:submode_timeout = 0
 " don't consume submode-leaving key
 let g:submode_keep_leaving_key = 1
 
-"set tabstop=4 shiftwidth=4 expandtab
-set noexpandtab
+set tabstop=4 shiftwidth=4 expandtab
+autocmd BufEnter *.h :setlocal filetype=c
+autocmd FileType c,dts setlocal noexpandtab
 
 "---------------------------------------
 " vim-gitgutter
@@ -666,3 +670,6 @@ nmap <leader>gp <Plug>(GitGutterPrevHunk)
 nmap <leader>xp <Plug>(GitGutterPreviewHunk)
 nmap <leader>xs <Plug>(GitGutterStageHunk)
 
+
+"enter without going into insert mode
+nnoremap <Enter> o<esc>

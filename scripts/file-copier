@@ -25,7 +25,9 @@ srcToDest ${YOCTO_IMAGES_DIR}/tablesafe-a10/bin.boot1-bcm958303k_pos_sa ${TFTP_D
 
 srcToDest ${YOCTO_TMP_DIR}/deploy/images/tablesafe-a10/ota.tar.gz                   ${HTTP_DIR}/rail/ota/ota_01-08-00-000-0-A.tar.gz
 #srcToDest ${YOCTO_WORK_DIR}/provision/1.0-r0/build/provision                        ${HTTP_DIR}/provision
-#srcToDest ${YOCTO_WORK_DIR}/athena/1.0-r0/build/athena                              ${HTTP_DIR}/athena
+srcToDest ${YOCTO_WORK_DIR}/athena/1.0-r0/package/usr/bin/athena                     ${HTTP_DIR}/athena
+srcToDest ${YOCTO_WORK_DIR}/msr-test/1.0-r0/msr-test-1.0/msr-test                    ${HTTP_DIR}/msr-test
+srcToDest ${YOCTO_WORK_DIR}/pin-entry-test/1.0-r0/pin-entry-test-1.0/pin-entry-test  ${HTTP_DIR}/pin-entry-test
 #srcToDest ${YOCTO_WORK_DIR}/qt-5.6.3-demo/1.0-r0/build/qt-5.6.3-demo                ${HTTP_DIR}/qt-5.6.3-demo
 #srcToDest ${YOCTO_WORK_DIR}/mesa/2_19.0.1-r0/build/lib/libEGL.so.1.0.0              ${HTTP_DIR}/libEGL.so.1.0.0
 #srcToDest ${YOCTO_WORK_DIR}/mesa/2_19.0.1-r0/sysroot-destdir/usr/lib/dri/vc4_dri.so ${HTTP_DIR}/vc4_dri.so

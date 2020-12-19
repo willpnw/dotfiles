@@ -8,17 +8,15 @@
   paste = <Control>v
 [profiles]
   [[default]]
-    background_color = "#2d2d2d"
-    background_darkness = 0.8
+    background_color = "#002240"
+    background_darkness = 0.9
     background_type = transparent
-    cursor_color = "#9fda9c"
-    font = Monospace 12
-    foreground_color = "#888a85"
+    cursor_color = "#708284"
+    foreground_color = "#ffffff"
     show_titlebar = False
     scrollbar_position = hidden
     scrollback_infinite = True
-    palette = "#000000:#729fcf:#8eb33b:#d0b03c:#72b3cc:#c8a0d1:#218693:#b0b0b0:#5d5d5d:#e09690:#cdee69:#ffe377:#9cd9f0:#fbb1f9:#77dfd8:#f7f7f7"
-    use_system_font = False
+    palette = "#002831:#d11c24:#8eb33b:#a57706:#2176c7:#c61c6f:#259286:#eae3cb:#001e27:#bd3613:#475b62:#536870:#708284:#5956ba:#819090:#fcf4dc"
   [[Belafonte Night]]
     background_color = "#20111b"
     background_darkness = 0.9
@@ -41,18 +39,6 @@
     scrollbar_position = hidden
     scrollback_infinite = True
     palette = "#000000:#ff0000:#38de21:#ffe50a:#1460d2:#ff005d:#00bbbb:#bbbbbb:#555555:#f40e17:#3bd01d:#edc809:#5555ff:#ff55ff:#6ae3fa:#ffffff"
-    use_system_font = False
-  [[Desert]]
-    background_color = "#333333"
-    background_darkness = 0.8
-    background_type = transparent
-    cursor_color = "#00ff00"
-    font = Monospace 10
-    foreground_color = "#ffffff"
-    show_titlebar = False
-    scrollbar_position = hidden
-    scrollback_infinite = True
-    palette = "#4d4d4d:#ff2b2b:#98fb98:#f0e68c:#729fcf:#ffdead:#ffa0a0:#f5deb3:#555555:#729fcf:#55ff55:#ffff55:#87ceff:#ff55ff:#ffd700:#ffffff"
     use_system_font = False
   [[Flat]]
     background_darkness = 0.83
@@ -90,7 +76,7 @@
     show_titlebar = False
     scrollbar_position = hidden
     scrollback_infinite = True
-    palette = "#002831:#d11c24:#738a05:#a57706:#2176c7:#c61c6f:#259286:#eae3cb:#001e27:#bd3613:#475b62:#536870:#708284:#5956ba:#819090:#fcf4dc"
+    palette = "#002831:#d11c24:#8eb33b:#a57706:#2176c7:#c61c6f:#259286:#eae3cb:#001e27:#bd3613:#475b62:#536870:#708284:#5956ba:#819090:#fcf4dc"
   [[VibrantInk]]
     background_darkness = 0.83
     background_type = transparent
@@ -207,7 +193,6 @@
   [[default]]
     [[[child1]]]
       parent = window0
-      profile = Desert
       type = Terminal
     [[[window0]]]
       parent = ""
