@@ -1,17 +1,17 @@
 #!/bin/sh
 
-YOCTO_TMP_DIR=/home/will/dev-projects/tablesafe/rail-reve/ts-yocto/devops-rail/rail/yocto/build/tmp-glibc
-YOCTO_SOURCES_DIR=/home/will/dev-projects/tablesafe/rail-reve/ts-yocto/devops-rail/rail/yocto/build/workspace/sources
+YOCTO_TMP_DIR=/home/willpnw/dev-projects/tablesafe/rail-reve/ts-yocto/devops-rail/rail/yocto/build/tmp-glibc
+YOCTO_SOURCES_DIR=/home/willpnw/dev-projects/tablesafe/rail-reve/ts-yocto/devops-rail/rail/yocto/build/workspace/sources
 YOCTO_IMAGES_DIR=${YOCTO_TMP_DIR}/deploy/images
 YOCTO_WORK_DIR=${YOCTO_TMP_DIR}/work/cortexa9t2hf-neon-oe-linux-gnueabi
-LINUX_BOOT_DIR=/home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46/arch/arm/boot
+LINUX_BOOT_DIR=/home/willpnw/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46/arch/arm/boot
 TFTP_DIR=/srv/tftp
 HTTP_DIR=/srv/http
 
 rm /tmp/watches
 srcToDest() {
-    /home/will/dotfiles/scripts/fileCopy ${1} ${2} &
-    echo "/home/will/dotfiles/scripts/fileCopy ${1} ${2}" >> /tmp/watches
+    /home/willpnw/dotfiles/scripts/fileCopy ${1} ${2} &
+    echo "/home/willpnw/dotfiles/scripts/fileCopy ${1} ${2}" >> /tmp/watches
 }
 
 srcToDest ${LINUX_BOOT_DIR}/zImage ${TFTP_DIR}/zImage
@@ -36,7 +36,7 @@ srcToDest ${YOCTO_WORK_DIR}/pin-entry-test/1.0-r0/pin-entry-test-1.0/pin-entry-t
 #srcToDest ${YOCTO_SOURCES_DIR}/ota/rail-ux/ota/ota/reve-map.json                    ${HTTP_DIR}/reve-map.json
 #srcToDest ${YOCTO_SOURCES_DIR}/ota/rail-ux/ota/ota/reve-utils.sh                    ${HTTP_DIR}/reve-utils.sh
 
-RAIL_UX_REVD_DIR=/home/will/dev-projects/tablesafe/rail-revd/rail/rail-ux
+RAIL_UX_REVD_DIR=/home/willpnw/dev-projects/tablesafe/rail-revd/rail/rail-ux
 srcToDest ${RAIL_UX_REVD_DIR}/build-ota-bcm-arm/ota         ${HTTP_DIR}/rail/ota/ota/
 srcToDest ${RAIL_UX_REVD_DIR}/ota/ota/files/ota.sh          ${HTTP_DIR}/rail/ota/ota/
 srcToDest ${RAIL_UX_REVD_DIR}/ota/ota/files/armv6l-map.json ${HTTP_DIR}/rail/ota/ota/

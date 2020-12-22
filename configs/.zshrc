@@ -7,8 +7,8 @@ case $(uname -s) in
         SED_INLINE="sed -i"
         alias udb="sudo updatedb"
         alias ls='ls --color=auto'
-        export ZSH=/home/will/.oh-my-zsh
-        case $(cat /etc/*-release | ack PRETTY_NAME | cut -d '"' -f2) in
+        export ZSH=/home/willpnw/.oh-my-zsh
+        case $(cat /etc/*-release | ag PRETTY_NAME | cut -d '"' -f2) in
             Fedora)
                 alias in="sudo dnf install -y"
                 alias vi="vimx"
@@ -316,7 +316,12 @@ agl() {
     [[ -n "$filepath" ]] && ${EDITOR:-vim} +${lineNumber} ${filepath}
 }
 
-source /etc/profile.d/autojump.zsh
+#source /etc/profile.d/autojump.zsh
+
+
+[[ -s /home/willpnw/.autojump/etc/profile.d/autojump.sh ]] && source /home/willpnw/.autojump/etc/profile.d/autojump.sh
+
+autoload -U compinit && compinit -u
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -354,3 +359,8 @@ fs() {
 alias dgcc="sudo pacman -U /var/cache/pacman/pkg/{gcc-9.3.0-1-x86_64.pkg.tar.zst,gcc-libs-9.3.0-1-x86_64.pkg.tar.zst}"
 alias qt1='fd -e qml -x sed -i "s/^import QtQuick 2.6$/import QtQuick 1.1/"'
 alias qt2='fd -e qml -x sed -i "s/^import QtQuick 1.1$/$import QtQuick 2.6/"'
+
+
+#if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#  exec tmux
+#fi

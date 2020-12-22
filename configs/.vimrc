@@ -19,7 +19,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " ==============================================================
 " tags
 " ==============================================================
-Plug 'brookhong/cscope.vim'
+"Plug 'brookhong/cscope.vim'
 
 " ==============================================================
 " themes
@@ -507,46 +507,46 @@ nnoremap <c-p> :Cycle<CR>
 "nnoremap <c-f> :Files<CR>
 "nnoremap <c-b> :Buffers<CR>
 
-if has("cscope")
+"if has("cscope")
 
-    """"""""""""" Standard cscope/vim boilerplate
+"    """"""""""""" Standard cscope/vim boilerplate
 
-    " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
-    "set cscopetag
+"    " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+"    "set cscopetag
 
-    " check cscope for definition of a symbol before checking ctags: set to 1
-    " if you want the reverse search order.
-    set csto=0
+"    " check cscope for definition of a symbol before checking ctags: set to 1
+"    " if you want the reverse search order.
+"    set csto=0
 
-    " add any cscope database in current directory
-    if filereadable("cscope.out")
-        cs add cscope.out
-        " else add the database pointed to by environment variable
-    elseif $CSCOPE_DB != ""
-        cs add $CSCOPE_DB
-    endif
+"    " add any cscope database in current directory
+"    if filereadable("cscope.out")
+"        cs add cscope.out
+"        " else add the database pointed to by environment variable
+"    elseif $CSCOPE_DB != ""
+"        cs add $CSCOPE_DB
+"    endif
 
-    " show msg when any other cscope db added
-    set cscopeverbose
+"    " show msg when any other cscope db added
+"    set cscopeverbose
 
-    " cscope maps
-    "   's'   symbol: find all references to the token under cursor
-    "   'g'   global: find global definition(s) of the token under cursor
-    "   'c'   calls:  find all calls to the function name under cursor
-    "   't'   text:   find all instances of the text under cursor
-    "   'e'   egrep:  egrep search for the word under cursor
-    "   'f'   file:   open the filename under cursor
-    "   'i'   includes: find files that include the filename under cursor
-    "   'd'   called: find functions that function under cursor calls
-    nnoremap <C-g>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <C-g>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <C-g>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <C-g>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <C-g>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-    nnoremap <C-g>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-    nnoremap <C-g>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nnoremap <C-g>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-endif
+"    " cscope maps
+"    "   's'   symbol: find all references to the token under cursor
+"    "   'g'   global: find global definition(s) of the token under cursor
+"    "   'c'   calls:  find all calls to the function name under cursor
+"    "   't'   text:   find all instances of the text under cursor
+"    "   'e'   egrep:  egrep search for the word under cursor
+"    "   'f'   file:   open the filename under cursor
+"    "   'i'   includes: find files that include the filename under cursor
+"    "   'd'   called: find functions that function under cursor calls
+"    nnoremap <C-g>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+"    nnoremap <C-g>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+"    nnoremap <C-g>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+"    nnoremap <C-g>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+"    nnoremap <C-g>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+"    nnoremap <C-g>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+"    nnoremap <C-g>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+"    nnoremap <C-g>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+"endif
 
 
 " edit q macro
@@ -554,7 +554,7 @@ noremap <leader>eq :let @q='<C-R><C-R>q'
 
 function MakeRailImage(platform)
     execute 'wa'
-    execute 'cd /home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46'
+    execute 'cd /home/willpnw/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46'
     execute 'make tablesafe_defconfig'
 	execute '!rm arch/arm/boot/dts/*.dtb'
 	execute 'make tablesafe-rail_A' . a:platform . '.dtb'
@@ -566,10 +566,10 @@ nnoremap <leader>1 :call MakeRailImage("11")<CR>
 
 
 " make sonsosite
-"noremap <leader>m :cd /home/will/dev-projects/mturbo-linux-port<CR>:make -j4<cr>
-"noremap <leader>z :cd /home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46<CR>:make tablesafe_defconfig<CR>:make -j12<CR>
-"noremap <leader>10 :cd /home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46<CR>:!rm arch/arm/boot/dts/*.dtb<CR>:make tablesafe-rail_A10.dtb<CR>
-"noremap <leader>11 :cd /home/will/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46<CR>:!rm arch/arm/boot/dts/*.dtb<CR>:make tablesafe-rail_A11.dtb<CR>
+"noremap <leader>m :cd /home/willpnw/dev-projects/mturbo-linux-port<CR>:make -j4<cr>
+"noremap <leader>z :cd /home/willpnw/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46<CR>:make tablesafe_defconfig<CR>:make -j12<CR>
+"noremap <leader>10 :cd /home/willpnw/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46<CR>:!rm arch/arm/boot/dts/*.dtb<CR>:make tablesafe-rail_A10.dtb<CR>
+"noremap <leader>11 :cd /home/willpnw/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46<CR>:!rm arch/arm/boot/dts/*.dtb<CR>:make tablesafe-rail_A11.dtb<CR>
 
 " ?
 autocmd QuickFixCmdPost [^l]* nested cwindow
@@ -583,7 +583,7 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 " deoplete variables
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so.8'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/8.0.1/include/'
-let g:deoplete#sources#clang#clang_complete_database = '/home/will/dev-projects/mturbo-linux-port'
+let g:deoplete#sources#clang#clang_complete_database = '/home/willpnw/dev-projects/mturbo-linux-port'
 
 call neomake#configure#automake('w')
 
@@ -595,7 +595,7 @@ nmap } ]v
 xmap } ]v
 
 " ==============================================================
-" csope mappings
+" cscope mappings
 " ==============================================================
 nnoremap <leader>sa :call CscopeFindInteractive(expand('<cword>'))<CR>
 nnoremap <leader>sl :call ToggleLocationList()<CR>
