@@ -39,7 +39,7 @@ case $(echo ${weather[1]##*,} | tr '[:upper:]' '[:lower:]') in
     condition=""
     ;;
 "partly cloudy")
-    condition=""
+    condition=""
     ;;
 "cloudy")
     condition=""
@@ -76,4 +76,4 @@ esac
 
 #echo $temp $condition
 
-echo -e "{\"text\":\""$temperature $condition"\", \"alt\":\""${weather[0]}"\", \"tooltip\":\""${weather[0]}: $temperature ${weather[1]}"\"}"
+echo -e "{\"text\":\""$condition $temperature"\", \"alt\":\""${weather[0]}"\", \"tooltip\":\""${weather[0]}: $temperature ${weather[1]}"\"}"
