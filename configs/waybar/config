@@ -3,7 +3,7 @@
         "position": "top",
         "height": 30,
 
-        "modules-left": ["sway/workspaces", "sway/mode", "custom/spotify"],
+        "modules-left": ["sway/workspaces", "sway/mode", "custom/spotify", "pulseaudio"],
         "modules-center": ["clock"],
         "modules-right": ["custom/weather", "custom/storage", "cpu", "memory", "network", "battery", "tray"],
         "sway/mode": {
@@ -82,5 +82,21 @@
         },
         "tray": {
             "icon-size": 18
+        },
+        "pulseaudio": {
+            "format": "{volume}% {icon}",
+            "format-bluetooth": "{volume}% {icon}",
+            "format-muted": "",
+            "format-icons": {
+                "headphone": "",
+                "hands-free": "",
+                "headset": "",
+                "phone": "",
+                "portable": "",
+                "car": "",
+                "default": ["", ""]
+            },
+            "scroll-step": 1,
+            "on-click": "pavucontrol"
         }
 }

@@ -51,7 +51,7 @@ window#waybar.solo {
 }
 
 #battery.warning {
-   color:       rgba(255, 210, 4, 1);
+    color:       rgba(255, 210, 4, 1);
 }
 
 #battery.critical {
@@ -62,10 +62,38 @@ window#waybar.solo {
     color:      rgba(217, 216, 216, 1);
 }
 
+#custom-storage {
+    color: #2ecc71;
+}
+
+#memory {
+    color: #9b59b6;
+}
+
+#network {
+    color: #2980b9;
+}
+
+#cpu {
+    color: #f1c40f;
+}
+
 #custom-storage.warning {
     color:      rgba(255, 210, 4, 1);
 }
 
 #custom-storage.critical {
     color:      rgba(238, 46, 36, 1);
+}
+
+#custom-spotify {
+    color: #66cc99;
+}
+
+#custom-weather {
+    color: #ffa000;
+}
+
+#pulseaudio {
+    color: #ffa000;
 }
