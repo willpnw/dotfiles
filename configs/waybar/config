@@ -5,7 +5,7 @@
 
         "modules-left": ["sway/workspaces", "sway/mode", "custom/spotify", "pulseaudio"],
         "modules-center": ["clock"],
-        "modules-right": ["custom/weather", "custom/storage", "cpu", "memory", "network", "battery", "tray"],
+        "modules-right": ["custom/ticker", "custom/weather", "custom/storage", "cpu", "memory", "network", "battery", "tray"],
         "sway/mode": {
             "format": " {}"
         },
@@ -48,6 +48,12 @@
             "return-type": "json",
             "interval": 60,
             "exec": "~/.config/waybar/modules/storage.sh"
+        },
+        "custom/ticker": {
+            "format": "{}",
+            "return-type": "json",
+            "interval": 60,
+            "exec": "~/.config/waybar/modules/ticker.sh"
         },
         "memory": {
             "interval": 30,
