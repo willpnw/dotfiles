@@ -24,7 +24,7 @@
 	default = current
 [core]
 	pager = less -F -X
-	excludesfile = /home/will/.gitignore_global
+	excludesFile = ~/dotfiles/configs/.gitignore
 [format]
 	pretty = format:%C(auto)%h %d%Creset %s%n%Cgreen%ad%Creset %aN <%aE>%n
 [color]

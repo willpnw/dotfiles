@@ -1,4 +1,4 @@
-" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+"Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 "call plug#begin('~/.local/share/nvim/plugged')
 call plug#begin('~/.vim/plugged')
 
@@ -19,7 +19,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " ==============================================================
 " tags
 " ==============================================================
-"Plug 'brookhong/cscope.vim'
+Plug 'brookhong/cscope.vim'
 
 " ==============================================================
 " themes
@@ -301,7 +301,7 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 " Tabular
 "---------------------------------------
 nnoremap <leader>t<SPACE> :Tab / /l0<CR>
-nnoremap <leader>t :Tab //l0<left><left><left>
+nnoremap <leader>t :Tab //l1<left><left><left>
 nnoremap <leader>t: :Tab /:<CR>
 nnoremap <leader>t, :Tab /,\zs/l0c1<CR>
 nnoremap <leader>t( :Tab /(/l0c0<CR>

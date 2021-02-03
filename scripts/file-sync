@@ -21,7 +21,7 @@ for dtb in tablesafe-rail_A10.dtb tablesafe-rail_A11.dtb; do
 done
 
 srcToDest ${YOCTO_IMAGES_DIR}/tablesafe-a10/u-boot-dtb.img ${TFTP_DIR}/uboot
-srcToDest ${YOCTO_IMAGES_DIR}/tablesafe-a10/bin.boot1-bcm958303k_pos_sa ${TFTP_DIR}/boot1
+srcToDest ${YOCTO_IMAGES_DIR}/tablesafe-a10/bin.boot1-tablesafe_rail-a10 ${TFTP_DIR}/boot1
 
 srcToDest ${YOCTO_TMP_DIR}/deploy/images/tablesafe-a10/ota.tar.gz                   ${HTTP_DIR}/rail/ota/ota_01-08-00-000-0-A.tar.gz
 #srcToDest ${YOCTO_WORK_DIR}/provision/1.0-r0/build/provision                        ${HTTP_DIR}/provision

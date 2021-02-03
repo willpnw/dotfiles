@@ -39,7 +39,7 @@ unalias vi
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export CSCOPE_EDITOR=vim
-export PATH=$PATH:~/.gem/ruby/2.6.0/bin:/home/will/dotfiles/scripts
+export PATH=$PATH:~/.gem/ruby/2.6.0/bin:/home/willpnw/dotfiles/scripts
 
 export ARCH=arm
 export CROSS_COMPILE=~/opt/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabi/bin/arm-linux-gnueabi-

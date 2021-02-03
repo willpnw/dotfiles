@@ -22,9 +22,23 @@ set $term terminator
 #set $menu "rofi -combi-modi window,drun,ssh,run -show combi -show-icons"
 set $menu "wofi --show run"
 
-default_border pixel 2
+default_border pixel 4
 smart_gaps on
-gaps inner 10
+gaps inner 8
+
+# Theme colors
+# class                 border  backgr. text    indic.   child_border
+client.focused          #268bd2 #268bd2 #80FFF9 #FDF6E3
+client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
+client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
+client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
+client.placeholder      #000000 #0c0c0c #ffffff #000000
+client.background       #ffffff
+
+workspace 1:slack   output DP-5
+workspace 2:dev     output HDMI-A-2
+workspace 3:spotify output eDP-1
+
 
 
 ### Output configuration
@@ -42,7 +56,16 @@ output * bg /usr/share/backgrounds/wave.jpeg fill
 #
 # Example configuration:
 #
-exec swayidle -w timeout 1200 'swaylock -f -c 000000' timeout 1210 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' before-sleep 'swaylock -f -c 000000'
+#exec swayidle -w timeout 1200 'swaylock -f -c 000000' timeout 1210 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' before-sleep 'swaylock -f -c 000000'
+exec swayidle -w \
+         timeout 1200 'swaylock -f -c 000000' \
+         timeout 1210 'swaymsg "output * dpms off"' \
+              resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f -c 000000' \
+         lock 'swaylock -f -c 000000'
+
+bindsym $mod+0 exec loginctl lock-session
+
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -128,7 +151,7 @@ exec swayidle -w timeout 1200 'swaylock -f -c 000000' timeout 1210 'swaymsg "out
     bindsym $mod+7 workspace number 7
     bindsym $mod+8 workspace number 8
     bindsym $mod+9 workspace number 9
-    bindsym $mod+0 workspace number 10
+    #bindsym $mod+0 workspace number 10
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
@@ -150,6 +173,7 @@ exec swayidle -w timeout 1200 'swaylock -f -c 000000' timeout 1210 'swaymsg "out
 # floating windwows
 #
 for_window [class="Gitk"] floating enable
+for_window [class="Bcompare"] floating enable
 
 #
 # Layout stuff:
@@ -220,7 +244,10 @@ input type:touchpad {
     natural_scroll enabled
 }
 
-#
+input type:pointer {
+    natural_scroll enabled
+}
+
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
