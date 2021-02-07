@@ -94,6 +94,14 @@ window#waybar.solo {
     color: #ffa000;
 }
 
+.stock-up {
+    color: #238823;
+}
+
+.stock-down {
+    color: #D2222D;
+}
+
 #pulseaudio {
     color: #ffa000;
 }
