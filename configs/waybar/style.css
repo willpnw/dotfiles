@@ -96,10 +96,12 @@ window#waybar.solo {
 
 .stock-up {
     color: #238823;
+    padding: 10px;
 }
 
 .stock-down {
     color: #D2222D;
+    padding: 10px;
 }
 
 #pulseaudio {

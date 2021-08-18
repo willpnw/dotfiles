@@ -14,6 +14,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
+#set $term terminator
 set $term terminator
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -38,6 +39,12 @@ client.background       #ffffff
 workspace 1:slack   output DP-5
 workspace 2:dev     output HDMI-A-2
 workspace 3:spotify output eDP-1
+
+input type:keyboard {
+  # Capslock key should work as escape key
+  # See /usr/share/X11/xkb/rules/xorg.lst for options
+  xkb_options caps:escape
+}
 
 
 
@@ -65,6 +72,9 @@ exec swayidle -w \
          lock 'swaylock -f -c 000000'
 
 bindsym $mod+0 exec loginctl lock-session
+
+
+bindsym $mod+p exec grim -g "$(slurp -d)" - | wl-copy
 
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off

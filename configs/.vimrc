@@ -26,6 +26,7 @@ Plug 'brookhong/cscope.vim'
 " ==============================================================
 Plug 'jacoborus/tender.vim'
 Plug 'tomasr/molokai'
+Plug 'morhetz/gruvbox'
 
 " ==============================================================
 " improve use/readability/formatting
@@ -207,7 +208,7 @@ vnoremap <leader>as "hy:Ag! "struct <C-r>h {"<CR>
 
 
 " Serach/Replace
-vnoremap <leader>r "hy:%Subvert?<C-r>h??gc<left><left><left>
+vnoremap <leader>r "hy:%Subvert/<C-r>h//gc<left><left><left>
 
 nnoremap <leader>r :Ranger<CR>
 
@@ -355,7 +356,7 @@ vnoremap ack "hy:Ack! -Qi "<C-r>h"
 set t_Co=256
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
-colorscheme tender
+colorscheme gruvbox
 
 "---------------------------------------
 " vim-indent-guides
@@ -415,9 +416,8 @@ let g:closetag_close_shortcut = '<leader>>'
 
 nmap <Leader>gn :GundoToggle<CR>
 
-
-map z <Plug>Sneak_s
-map Z <Plug>Sneak_S
+"map z <Plug>Sneak_s
+"map Z <Plug>Sneak_S
 "noremap f <Plug>Sneak_f
 "noremap F <Plug>Sneak_F
 "noremap t <plug>sneak_t
@@ -507,62 +507,62 @@ nnoremap <c-p> :Cycle<CR>
 "nnoremap <c-f> :Files<CR>
 "nnoremap <c-b> :Buffers<CR>
 
-"if has("cscope")
+if has("cscope")
 
-"    """"""""""""" Standard cscope/vim boilerplate
+    """"""""""""" Standard cscope/vim boilerplate
 
-"    " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
-"    "set cscopetag
+    " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
+    "set cscopetag
 
-"    " check cscope for definition of a symbol before checking ctags: set to 1
-"    " if you want the reverse search order.
-"    set csto=0
+    " check cscope for definition of a symbol before checking ctags: set to 1
+    " if you want the reverse search order.
+    set csto=0
 
-"    " add any cscope database in current directory
-"    if filereadable("cscope.out")
-"        cs add cscope.out
-"        " else add the database pointed to by environment variable
-"    elseif $CSCOPE_DB != ""
-"        cs add $CSCOPE_DB
-"    endif
+    " add any cscope database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+        " else add the database pointed to by environment variable
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
 
-"    " show msg when any other cscope db added
-"    set cscopeverbose
+    " show msg when any other cscope db added
+    set cscopeverbose
 
-"    " cscope maps
-"    "   's'   symbol: find all references to the token under cursor
-"    "   'g'   global: find global definition(s) of the token under cursor
-"    "   'c'   calls:  find all calls to the function name under cursor
-"    "   't'   text:   find all instances of the text under cursor
-"    "   'e'   egrep:  egrep search for the word under cursor
-"    "   'f'   file:   open the filename under cursor
-"    "   'i'   includes: find files that include the filename under cursor
-"    "   'd'   called: find functions that function under cursor calls
-"    nnoremap <C-g>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-"    nnoremap <C-g>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-"    nnoremap <C-g>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-"    nnoremap <C-g>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-"    nnoremap <C-g>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-"    nnoremap <C-g>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-"    nnoremap <C-g>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-"    nnoremap <C-g>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-"endif
+    " cscope maps
+    "   's'   symbol: find all references to the token under cursor
+    "   'g'   global: find global definition(s) of the token under cursor
+    "   'c'   calls:  find all calls to the function name under cursor
+    "   't'   text:   find all instances of the text under cursor
+    "   'e'   egrep:  egrep search for the word under cursor
+    "   'f'   file:   open the filename under cursor
+    "   'i'   includes: find files that include the filename under cursor
+    "   'd'   called: find functions that function under cursor calls
+    nnoremap <C-g>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-g>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-g>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-g>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-g>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <C-g>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    nnoremap <C-g>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nnoremap <C-g>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+endif
 
 
 " edit q macro
 noremap <leader>eq :let @q='<C-R><C-R>q'
 
-function MakeRailImage(platform)
-    execute 'wa'
-    execute 'cd /home/willpnw/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46'
-    execute 'make tablesafe_defconfig'
-	execute '!rm arch/arm/boot/dts/*.dtb'
-	execute 'make tablesafe-rail_A' . a:platform . '.dtb'
-	execute 'make -j12'
-endfunction
+"function MakeRailImage(platform)
+"    execute 'wa'
+"    execute 'cd /home/willpnw/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46'
+"    execute 'make tablesafe_defconfig'
+"    execute '!rm arch/arm/boot/dts/*.dtb'
+"    execute 'make tablesafe-rail_A' . a:platform . '.dtb'
+"    execute 'make -j12'
+"endfunction
 
-nnoremap <leader>0 :call MakeRailImage("10")<CR>
-nnoremap <leader>1 :call MakeRailImage("11")<CR>
+"nnoremap <leader>0 :call MakeRailImage("10")<CR>
+"nnoremap <leader>1 :call MakeRailImage("11")<CR>
 
 
 " make sonsosite

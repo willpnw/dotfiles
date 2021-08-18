@@ -1,0 +1,6 @@
+"custom/ticker": {
+    "format": "{}",
+    "return-type": "json",
+    "interval": 2,
+    "exec": "~/.config/waybar/modules/ticker.sh"
+}
