@@ -1,12 +1,13 @@
 #!/bin/sh
 
+HTTP_DIR=/srv/http
+
 #YOCTO_TMP_DIR=/home/willpnw/dev-projects/tablesafe/rail-reve/ts-yocto/devops-rail/rail/yocto/build/tmp-glibc
 #YOCTO_SOURCES_DIR=/home/willpnw/dev-projects/tablesafe/rail-reve/ts-yocto/devops-rail/rail/yocto/build/workspace/sources
 #YOCTO_IMAGES_DIR=${YOCTO_TMP_DIR}/deploy/images
 #YOCTO_WORK_DIR=${YOCTO_TMP_DIR}/work/cortexa9t2hf-neon-oe-linux-gnueabi
 #LINUX_BOOT_DIR=/home/willpnw/dev-projects/tablesafe/rail-reve/rail-linux-4.x/linux-4.9.46/arch/arm/boot
 #TFTP_DIR=/srv/tftp
-#HTTP_DIR=/srv/http
 
 rm /tmp/watches
 srcToDest() {
@@ -14,7 +15,7 @@ srcToDest() {
     echo "/home/willpnw/dotfiles/scripts/fileCopy ${1} ${2}" >> /tmp/watches
 }
 
-srcToDest /run/media/willpnw/0e2c99c8-efcc-40c3-a2da-c98791650611/schneider/buildroot/output/target/usr/bin/simple_opengl /srv/http/simple_opengl
+#srcToDest /run/media/willpnw/0e2c99c8-efcc-40c3-a2da-c98791650611/schneider/buildroot/output/target/usr/bin/simple_opengl /srv/http/simple_opengl
 
 #srcToDest ${LINUX_BOOT_DIR}/zImage ${TFTP_DIR}/zImage
 #bcm958300k.dtb
@@ -47,5 +48,9 @@ srcToDest /run/media/willpnw/0e2c99c8-efcc-40c3-a2da-c98791650611/schneider/buil
 #srcToDest ${RAIL_UX_REVD_DIR}/ota/ota/files/armv7l-map.json ${HTTP_DIR}/rail/ota/ota/
 #srcToDest ${RAIL_UX_REVD_DIR}/ota/ota/files/armv7l-utils.sh ${HTTP_DIR}/rail/ota/ota/
 
-srcToDest ${RAIL_UX_REVD_DIR}/ota/ota/files/armv7l-utils.sh ${HTTP_DIR}/rail/ota/ota/
+#srcToDest ${RAIL_UX_REVD_DIR}/ota/ota/files/armv7l-utils.sh ${HTTP_DIR}/rail/ota/ota/
+
+LEARY_KERNEL=/run/media/willpnw/c472ae24-dac4-4f3c-872b-0eacc8383e5d/leary/whl-dbe2/poky/build/tmp/deploy/images/whleary-64/bzImage
+srcToDest ${LEARY_KERNEL} ${HTTP_DIR}/vmlinuz
+
 

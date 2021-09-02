@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+cd /home/willpnw/dev-projects/tablesafe/rail-reve/ts-yocto/devops-rail/rail/yocto/build/tmp-glibc/deploy/images/tablesafe-a10
+
+gzip -c bin.boot1-tablesafe_rail-a10              | tee /srv/http/rail/sbi/sbi_01-08-00-000-0-A.gz       > /srv/http/rail/sbi/sbi_01-08-00-001-0-A.gz
+gzip -c u-boot-dtb.img                            | tee /srv/http/rail/uboot/uboot_01-08-00-000-0-A.gz   > /srv/http/rail/uboot/uboot_01-08-00-001-0-A.gz
+
+gzip -c tablesafe-system-image-tablesafe-a10.ext4 | tee /srv/http/rail/rootfs/rootfs_01-08-00-000-0-A.gz > /srv/http/rail/rootfs/rootfs_01-08-00-001-0-A.gz

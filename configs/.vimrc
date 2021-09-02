@@ -642,6 +642,9 @@ vnoremap <leader>pfx yoprintf("dbg: %s:(%d) =0x%x\n", __func__, __LINE__, );<esc
 vnoremap <leader>Pfx yOprintf("dbg: %s:(%d) =0x%x\n", __func__, __LINE__, );<esc>4BP$BP
 nnoremap <leader>dbd :%s/\s*print[kf]("dbg:.*//g
 
+vnoremap <leader>pp yoprint("dbg: =", )<esc>BP$P
+vnoremap <leader>Pp yOprint("dbg: =", )<esc>BP$P
+
 
 " Shortcuts
 nnoremap <leader>pj oconsole.log("");<esc>bla
