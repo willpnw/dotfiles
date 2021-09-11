@@ -20,6 +20,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " tags
 " ==============================================================
 Plug 'brookhong/cscope.vim'
+Plug 'ludovicchabant/vim-gutentags'
 
 " ==============================================================
 " themes
@@ -208,12 +209,12 @@ vnoremap <leader>as "hy:Ag! "struct <C-r>h {"<CR>
 
 
 " Serach/Replace
-vnoremap <leader>r "hy:%Subvert/<C-r>h//gc<left><left><left>
+vnoremap <leader>r "hy:%s/<C-r>h//gc<left><left><left>
 
 nnoremap <leader>r :Ranger<CR>
 
-nnoremap <leader>s :Subvert//g<left><left>
-vnoremap <leader>s :Subvert//g<left><left>
+nnoremap <leader>s :s//g<left><left>
+vnoremap <leader>s :s//g<left><left>
 
 " Edit/Source vimrc
 :nnoremap <leader>ev :vsplit ~/.vimrc<cr>
