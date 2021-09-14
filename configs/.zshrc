@@ -1,4 +1,5 @@
 # If you come from bash you might have to change your $PATH.
+#
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
@@ -7,7 +8,7 @@ case $(uname -s) in
         SED_INLINE="sed -i"
         alias udb="sudo updatedb"
         alias ls='ls --color=auto'
-        export ZSH=/home/willpnw/.oh-my-zsh
+        export ZSH=/home/will/.oh-my-zsh
         case $(cat /etc/*-release | ag PRETTY_NAME | cut -d '"' -f2) in
             Fedora)
                 alias in="sudo dnf install -y"
@@ -21,7 +22,7 @@ case $(uname -s) in
             "Arch Linux"|"Antergos Linux"|"Manjaro Linux")
                 alias vi="vim"
                 alias in="sudo pacman -Syu"
-                alias yay="yay -S"
+                #alias yay="yay -S"
                 ;;
         esac
         ;;
@@ -39,7 +40,7 @@ unalias vi
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export CSCOPE_EDITOR=vim
-export PATH=/home/willpnw/dotfiles/scripts:$PATH
+export PATH=/home/will/dotfiles/scripts:$PATH
 
 if which ruby >/dev/null && which gem >/dev/null; then
     export PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
@@ -323,7 +324,8 @@ agl() {
 #source /etc/profile.d/autojump.zsh
 
 
-[[ -s /home/willpnw/.autojump/etc/profile.d/autojump.sh ]] && source /home/willpnw/.autojump/etc/profile.d/autojump.sh
+[[ -s /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
+
 
 autoload -U compinit && compinit -u
 

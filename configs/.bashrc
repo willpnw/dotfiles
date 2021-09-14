@@ -174,3 +174,5 @@ gdbrail ()
 otaMgr () {
     cd /home/will/Downloads/otainstall && LD_LIBRARY_PATH=. ./otainstaller
 }
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
