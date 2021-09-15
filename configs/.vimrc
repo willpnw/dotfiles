@@ -48,25 +48,25 @@ Plug 'vim-scripts/vim-auto-save'
 " ==============================================================
 Plug 'alvan/vim-closetag'
 Plug 'mattn/emmet-vim'
-"Plug 'svermeulen/vim-cutlass'
-"Plug 'svermeulen/vim-subversive'
+Plug 'svermeulen/vim-cutlass'
+Plug 'svermeulen/vim-subversive'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'kana/vim-submode'
-"if has('nvim')
+if has('nvim')
     "Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
     ""Plug 'deoplete-plugins/deoplete-clang'
     "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'svermeulen/vim-yoink'
     "Plug 'rbgrouleff/bclose.vim'
-"else
+else
     "Plug 'Shougo/deoplete.nvim'
     "Plug 'roxma/nvim-yarp'
     "Plug 'roxma/vim-hug-neovim-rpc'
-"endif
+endif
 "let g:deoplete#enable_at_startup = 1
 
 " ==============================================================
@@ -110,7 +110,7 @@ Plug 'posva/vim-vue'
 " completion
 " ==============================================================
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-Plug 'ycm-core/youcompleteme',
+Plug 'ycm-core/youcompleteme', { 'do': 'TERM=xterm ./install.py --clangd-completer' }
     let g:ycm_show_diagnostics_ui=1
     let g:ycm_complete_in_comments=1
     let g:ycm_complete_in_strings=1

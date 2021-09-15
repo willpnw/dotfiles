@@ -8,7 +8,7 @@ case $(uname -s) in
         SED_INLINE="sed -i"
         alias udb="sudo updatedb"
         alias ls='ls --color=auto'
-        export ZSH=/home/will/.oh-my-zsh
+        export ZSH=~/.oh-my-zsh
         case $(cat /etc/*-release | ag PRETTY_NAME | cut -d '"' -f2) in
             Fedora)
                 alias in="sudo dnf install -y"
@@ -40,7 +40,7 @@ unalias vi
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export CSCOPE_EDITOR=vim
-export PATH=/home/will/dotfiles/scripts:$PATH
+export PATH=~/dotfiles/scripts:$PATH
 
 if which ruby >/dev/null && which gem >/dev/null; then
     export PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"

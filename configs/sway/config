@@ -65,11 +65,11 @@ output * bg /usr/share/backgrounds/wave.jpeg fill
 #
 #exec swayidle -w timeout 1200 'swaylock -f -c 000000' timeout 1210 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' before-sleep 'swaylock -f -c 000000'
 exec swayidle -w \
-         timeout 1200 'swaylock --grace 60 -f -i /home/will/.config/sway/swaylock.png' \
+         timeout 1200 'swaylock --grace 60 -f -i ~/.config/sway/swaylock.png' \
          timeout 1260 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -i /home/will/.config/sway/swaylock.png' \
-         lock 'swaylock -f -i /home/will/.config/sway/swaylock.png'
+         before-sleep 'swaylock -f -i ~/.config/sway/swaylock.png' \
+         lock 'swaylock -f -i ~/.config/sway/swaylock.png'
 
 bindsym $mod+0 exec loginctl lock-session
 
