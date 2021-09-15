@@ -80,9 +80,6 @@ Plug 'sjl/gundo.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'idanarye/vim-merginal'
 "Plug 'jeetsukumaran/vim-buffergator'
-Plug 'bsdelf/bufferhint'
-    nnoremap - :call bufferhint#Popup()<CR>
-    nnoremap \ :call bufferhint#LoadPrevious()<CR>
 
 " ==============================================================
 " status line
@@ -319,8 +316,8 @@ set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 set laststatus=2
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gl :Glog<CR>
-nnoremap <leader>gs :Gstatus<CR><C-w>15-
-nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gs :Git<CR><C-w>15-
+nnoremap <leader>gb :Git blame<CR>
 
 "---------------------------------------
 " Fugitive

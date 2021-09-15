@@ -370,3 +370,15 @@ alias qt2='fd -e qml -x sed -i "s/^import QtQuick 1.1$/$import QtQuick 2.6/"'
 #if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
 #  exec tmux
 #fi
+
+# repo git log right only
+rlr() {
+    if [ $# -ne 2 ]; then
+        echo "Usage: $0 ref1 ref2"
+        return 1
+    fi
+    ref1=$1
+    ref2=$2
+    export GIT_DELTA="git log --format=format:'%h(%an)[%s]' --right-only ${ref1}..${ref2}"
+    repo forall -p -c 'test $($GIT_DELTA | wc -l) -gt 0 && $GIT_DELTA' | tee /tmp/$(basename $ref1)..$(basename $ref2)
+}
