@@ -117,10 +117,12 @@
     "network#1": {
         "interface": "wlo1",
         "format-wifi": " {essid} {ipaddr} ({signalStrength}%)",
+        "format-disconnected": ""
     },
     "network#2": {
         "interface": "eno2",
         "format-ethernet": " {ipaddr}",
+        "format-disconnected": ""
     },
     "network": {
         "interface": "wlo1",

@@ -79,7 +79,6 @@ Plug 'preservim/nerdtree'
 Plug 'sjl/gundo.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'idanarye/vim-merginal'
-"Plug 'jeetsukumaran/vim-buffergator'
 
 " ==============================================================
 " status line
@@ -579,7 +578,7 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 " deoplete variables
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so.8'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/8.0.1/include/'
-let g:deoplete#sources#clang#clang_complete_database = '/home/willpnw/dev-projects/mturbo-linux-port'
+let g:deoplete#sources#clang#clang_omplete_database = '/home/willpnw/dev-projects/mturbo-linux-port'
 
 call neomake#configure#automake('w')
 

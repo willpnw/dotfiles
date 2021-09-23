@@ -1,3 +1,4 @@
 #!/bin/bash
-#echo "Scanning...10.2.$1.*"
-nmap -sP 192.168.10.* | grep -o "192.168.10.[0-9]*"  | sort -t . -k 3,3n -k 4,4n
+NETWORK=$1
+echo "Scanning...$NETWORK*"
+nmap -sP $NETWORK.* | grep -o "$NETWORK.[0-9]*"  | sort -t . -k 3,3n -k 4,4n

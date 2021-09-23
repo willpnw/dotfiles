@@ -36,9 +36,9 @@ client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
 client.placeholder      #000000 #0c0c0c #ffffff #000000
 client.background       #ffffff
 
-workspace 1:slack   output DP-6
+workspace 1:web   output DP-6
 workspace 2:dev     output DP-3
-workspace 3:spotify output eDP-1
+workspace 3:slack output eDP-1
 
 input type:keyboard {
   # Capslock key should work as escape key
@@ -119,7 +119,8 @@ bindsym $mod+p exec grim -g "$(slurp -d)" - | wl-copy
     bindsym $mod+Shift+r reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+    #bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e exit
 #
 # Moving around:
 #
