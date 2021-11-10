@@ -1,4 +1,4 @@
 #!/bin/bash
 NETWORK=$1
-echo "Scanning...$NETWORK*"
+echo "Scanning...$NETWORK*" > /dev/null
 nmap -sP $NETWORK.* | grep -o "$NETWORK.[0-9]*"  | sort -t . -k 3,3n -k 4,4n

@@ -136,8 +136,8 @@ source $ZSH/oh-my-zsh.sh
 # reload zshrc
 alias rerc="source ~/.zshrc"
 
-# directory jumps
-alias dev='cd ~/dev-projects'
+# helpers
+alias df='df -h'
 
 # commands
 alias c="clear"
@@ -182,12 +182,26 @@ alias gsu="git submodule update"
 alias gsm="git ls-files -m"
 alias gsd="git ls-files -d"
 
+mc() {
+    LS_USB=$(ls /dev/ttyUSB*) || return 1
+    NUM_USB=$(echo $LS_USB | wc -l)
+    case $NUM_USB in
+        0)
+            return 1
+            ;;
+        1)
+            NUM=$(echo $LS_USB | rev | cut -d 'B' -f1)
+            ;;
+        *)
+            ls /dev/ttyUSB*
+            read 'NUM?Enter num[default=0]: '
+            test -z "$NUM" && NUM=0
+            ;;
+    esac
 
-
-
-alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0 -t screen-256color -c on"
-#alias mc="sudo minicom -C /tmp/minilog0 -D /dev/ttyUSB0"
-alias mc2="sudo minicom -C /tmp/minilog1 -D /dev/ttyUSB1 -t screen-256color -c on"
+    echo "Using ttyUSB${NUM}"
+    sudo minicom -C /tmp/minilog${NUM} -D /dev/ttyUSB${NUM} -t screen-256color -c on
+}
 
 alias du="du -h --max-depth=1"
 
@@ -215,6 +229,14 @@ rn() {
         NEW=$(echo $f | sed "s/$1/$2/g")
         echo "$f -> $NEW"
         mv $f $NEW
+    done
+}
+
+srn() {
+    for f in `fd -s $1`; do
+        NEW=$(echo $f | sed "s/$1/$2/g")
+        echo "$f -> $NEW"
+        sudo mv $f $NEW
     done
 }
 
@@ -381,4 +403,10 @@ rlr() {
     ref2=$2
     export GIT_DELTA="git log --format=format:'%h(%an)[%s]' --right-only ${ref1}..${ref2}"
     repo forall -p -c 'test $($GIT_DELTA | wc -l) -gt 0 && $GIT_DELTA' | tee /tmp/$(basename $ref1)..$(basename $ref2)
+}
+
+forget() {
+    sudo sync; echo 1 | sudo tee /proc/sys/vm/drop_caches
+    sudo sync; echo 2 | sudo tee /proc/sys/vm/drop_caches
+    sudo sync; echo 3 | sudo tee /proc/sys/vm/drop_caches
 }

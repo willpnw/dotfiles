@@ -1,6 +1,6 @@
 [user]
-	email = wpatterson@witekio.com
-	name = Will Patterson
+	email = wpatterson@witkeio.com
+	name = will
 [pull]
 	rebase = true
 	default = current

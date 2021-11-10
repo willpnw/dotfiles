@@ -36,9 +36,9 @@ client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
 client.placeholder      #000000 #0c0c0c #ffffff #000000
 client.background       #ffffff
 
-workspace 1:web   output DP-6
-workspace 2:dev     output DP-3
-workspace 3:slack output eDP-1
+workspace 1:web   output 'Unknown 2757 AJNGA9A002910'
+workspace 2:dev   output 'Philips Consumer Electronics Company PHL 323E7 UHB1810003348'
+workspace 3:slack output 'Dell Inc. DELL U2415 CFV9N8AH2DLL'
 
 input type:keyboard {
   # Capslock key should work as escape key
@@ -51,13 +51,17 @@ input type:keyboard {
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
-output * bg /usr/share/backgrounds/wave.jpeg fill
+output * bg /usr/share/backgrounds/wallpaper.jpg fill
 #
 # Example configuration:
 #
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
+output eDP-1 disable
+output 'Unknown 2757 AJNGA9A002910'                                   resolution 1920x1080 DPMS on transform 270 position 0,0
+output 'Philips Consumer Electronics Company PHL 323E7 UHB1810003348' resolution 1920x1080 DPMS on transform 0   position 1080,100
+output 'Dell Inc. DELL U2415 CFV9N8AH2DLL'                            resolution 1920x1080 DPMS on               position 3000,0
 
 ### Idle configuration
 #
@@ -75,6 +79,17 @@ bindsym $mod+0 exec loginctl lock-session
 
 
 bindsym $mod+p exec grim -g "$(slurp -d)" - | wl-copy
+
+
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
 
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off

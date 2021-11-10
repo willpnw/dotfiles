@@ -4,9 +4,9 @@
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/media"],
+    "modules-left": ["sway/workspaces", "sway/mode", "custom/media", "pulseaudio"],
     "modules-center": ["clock"],
-    "modules-right": ["network#1", "network#2", "cpu", "memory", "battery", "battery#bat2", "tray"],
+    "modules-right": ["network#1", "network#2", "cpu", "memory", "disk", "battery", "battery#bat2", "tray"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -80,6 +80,11 @@
     "cpu": {
         "format": " {usage}%",
         "tooltip": false
+    },
+    "disk": {
+        "interval": 30,
+        "format": "🖴{percentage_used}%",
+        "path": "/"
     },
     "memory": {
         "format": " {}%"

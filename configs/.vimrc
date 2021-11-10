@@ -20,7 +20,7 @@ Plug 'christoomey/vim-tmux-navigator'
 " tags
 " ==============================================================
 Plug 'brookhong/cscope.vim'
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 
 " ==============================================================
 " themes
