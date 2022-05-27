@@ -113,7 +113,7 @@ get_space () {
   echo $SPACES
 }
 
-_1LEFT="$fg_bold[magenta][%M] $_PATH"
+_1LEFT="$fg_bold[green][%M] $_PATH"
 _1RIGHT="[%*] "
 
 bureau_precmd () {

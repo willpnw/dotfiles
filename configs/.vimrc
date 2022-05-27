@@ -1,4 +1,5 @@
 "Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+"
 "call plug#begin('~/.local/share/nvim/plugged')
 call plug#begin('~/.vim/plugged')
 
@@ -57,6 +58,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'kana/vim-submode'
 if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     "Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
     ""Plug 'deoplete-plugins/deoplete-clang'
     "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -67,7 +69,7 @@ else
     "Plug 'roxma/nvim-yarp'
     "Plug 'roxma/vim-hug-neovim-rpc'
 endif
-"let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 
 " ==============================================================
 " tools
@@ -79,6 +81,7 @@ Plug 'preservim/nerdtree'
 Plug 'sjl/gundo.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'idanarye/vim-merginal'
+Plug 'vim-scripts/a.vim'
 
 " ==============================================================
 " status line
@@ -108,34 +111,35 @@ Plug 'posva/vim-vue'
 " ==============================================================
 " completion
 " ==============================================================
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
-Plug 'ycm-core/youcompleteme', { 'do': 'TERM=xterm ./install.py --clangd-completer' }
-    let g:ycm_show_diagnostics_ui=1
-    let g:ycm_complete_in_comments=1
-    let g:ycm_complete_in_strings=1
-    let g:ycm_echo_current_diagnostic=0
-    let g:ycm_enable_diagnostic_highlighting=0
-    let g:ycm_enable_diagnostic_signs=0
-    let g:ycm_confirm_extra_conf=0
-    let g:ycm_auto_trigger=1
-    let g:ycm_keep_logfiles=0
-    let g:ycm_cache_omnifunc=1
-    let g:ycm_goto_buffer_command = 'new-or-existing-tab'
-    let g:ycm_open_loclist_on_ycm_diags = 1
-    let g:ycm_min_num_of_chars_for_completion = 1
-    let g:ycm_use_clangd = 1
-    let g:ycm_clangd_uses_ycmd_caching = 1
-    "let g:ycm_clangd_args = ['--background-index', '--all-scopes-completion', '--suggest-missing-includes']
+"Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+"Plug 'ycm-core/youcompleteme', { 'do': 'TERM=xterm ./install.py --clangd-completer' }
+"    let g:ycm_show_diagnostics_ui=1
+"    let g:ycm_complete_in_comments=1
+"    let g:ycm_complete_in_strings=1
+"    let g:ycm_echo_current_diagnostic=0
+"    let g:ycm_enable_diagnostic_highlighting=0
+"    let g:ycm_enable_diagnostic_signs=0
+"    let g:ycm_confirm_extra_conf=0
+"    let g:ycm_auto_trigger=1
+"    let g:ycm_keep_logfiles=0
+"    let g:ycm_cache_omnifunc=1
+"    let g:ycm_goto_buffer_command = 'new-or-existing-tab'
+"    let g:ycm_open_loclist_on_ycm_diags = 1
+"    let g:ycm_min_num_of_chars_for_completion = 1
+"    let g:ycm_use_clangd = 1
+"    let g:ycm_clangd_uses_ycmd_caching = 1
+"    "let g:ycm_clangd_args = ['--background-index', '--all-scopes-completion', '--suggest-missing-includes']
 
-    let g:ycm_key_list_select_completion = []
-    let g:ycm_key_list_previous_completion = []
+"    let g:ycm_key_list_select_completion = []
+"    let g:ycm_key_list_previous_completion = []
 
 " ==============================================================
 " fuzzy file finder
 " ==============================================================
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'pbogut/fzf-mru.vim'
+"Plug 'junegunn/fzf', { 'tag': '0.20.0', 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim', {'commit': '76669c3c1d675833f9d89f6496f16a7accc0f40e' }
+"Plug 'pbogut/fzf-mru.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -149,6 +153,20 @@ set path+=**
 " ==============================================================
 "set clipboard=unnamed
 set clipboard+=unnamedplus
+
+
+let g:clipboard = {
+          \   'name': 'win32yank-wsl',
+          \   'copy': {
+          \      '+': 'win32yank.exe -i --crlf',
+          \      '*': 'win32yank.exe -i --crlf',
+          \    },
+          \   'paste': {
+          \      '+': 'win32yank.exe -o --lf',
+          \      '*': 'win32yank.exe -o --lf',
+          \   },
+          \   'cache_enabled': 0,
+          \ }
 set hidden
 set autoindent
 set smartindent
@@ -282,12 +300,12 @@ let NERDTreeDirArrows = 1
 
 autocmd StdinReadPre * let s:std_in=1
 
-function! MaybeFiles()
-    :if argc() == 0
-    :    call <sid>fzf_next(0)
-    :endif
-endfunction
-au VimEnter * call MaybeFiles()
+"function! MaybeFiles()
+"    :if argc() == 0
+"    :    call <sid>fzf_next(0)
+"    :endif
+"endfunction
+"au VimEnter * call MaybeFiles()
 
 let g:NERDTreeWinSize=30
 let g:NERDTreeDirArrowExpandable = '▸'
@@ -487,18 +505,18 @@ au BufRead,BufNewFile *.xaml setfiletype xml
 
 filetype plugin indent on
 
-function! s:fzf_next(idx)
-    "let commands = ['Files ~/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo', 'History', 'Buffers']
-    let commands = ['History', 'Files', 'Buffers']
-    execute commands[a:idx]
-    let next = (a:idx + 1) % len(commands)
-    let previous = (a:idx - 1) % len(commands)
-    execute 'tnoremap <buffer> <silent> <c-f> <c-\><c-n>:close<cr>:sleep 100m<cr>:call <sid>fzf_next('.next.')<cr>'
-    execute 'tnoremap <buffer> <silent> <c-b> <c-\><c-n>:close<cr>:sleep 100m<cr>:call <sid>fzf_next('.previous.')<cr>'
-endfunction
+"function! s:fzf_next(idx)
+"    "let commands = ['Files ~/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo', 'History', 'Buffers']
+"    let commands = ['History', 'Files', 'Buffers']
+"    execute commands[a:idx]
+"    let next = (a:idx + 1) % len(commands)
+"    let previous = (a:idx - 1) % len(commands)
+"    execute 'tnoremap <buffer> <silent> <c-f> <c-\><c-n>:close<cr>:sleep 100m<cr>:call <sid>fzf_next('.next.')<cr>'
+"    execute 'tnoremap <buffer> <silent> <c-b> <c-\><c-n>:close<cr>:sleep 100m<cr>:call <sid>fzf_next('.previous.')<cr>'
+"endfunction
 
-command! Cycle call <sid>fzf_next(0)
-nnoremap <c-p> :Cycle<CR>
+"command! Cycle call <sid>fzf_next(0)
+"nnoremap <c-p> :Cycle<CR>
 "nnoremap <c-f> :Files<CR>
 "nnoremap <c-b> :Buffers<CR>
 
@@ -671,3 +689,8 @@ nmap <leader>xs <Plug>(GitGutterStageHunk)
 
 "enter without going into insert mode
 nnoremap <Enter> o<esc>
+
+
+:set fileformats=unix,dos
+:set fileformat=unix
+:set ff=dos

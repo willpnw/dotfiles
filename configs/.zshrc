@@ -9,7 +9,7 @@ case $(uname -s) in
         alias udb="sudo updatedb"
         alias ls='ls --color=auto'
         export ZSH=~/.oh-my-zsh
-        case $(cat /etc/*-release | ag PRETTY_NAME | cut -d '"' -f2) in
+        case $(cat /etc/*-release | ag PRETTY_NAME | cut -d '"' -f2 | cut -d ' ' -f1) in
             Fedora)
                 alias in="sudo dnf install -y"
                 alias vi="vimx"
@@ -35,8 +35,10 @@ case $(uname -s) in
 esac
 export QT_AUTO_SCREEN_SCALE_FACTOR=1.5
 
+ZSH_TMUX_AUTOSTART=true
 
-unalias vi
+
+#unalias vi
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export CSCOPE_EDITOR=vim
@@ -102,8 +104,7 @@ ZSH_THEME="willpnw"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
-    z
-    history
+    tmux
 )
 
 source $ZSH/oh-my-zsh.sh

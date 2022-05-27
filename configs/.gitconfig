@@ -25,6 +25,8 @@
 [core]
 	pager = less -F -X
 	excludesFile = ~/dotfiles/configs/.gitignore
+	autocrlf = true
+	whitespace = cr-at-eol
 [format]
 	pretty = format:%C(auto)%h %d%Creset %s%n%Cgreen%ad%Creset %aN <%aE>%n
 [color]
