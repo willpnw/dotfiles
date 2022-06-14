@@ -6,7 +6,7 @@
 	default = current
 [diff]
     prompt = false
-	tool = bc3
+	tool = bcompare
 	guitool = bcompare
 [merge]
     prompt = false
@@ -14,12 +14,10 @@
 	guitool = bcompare
 [difftool "bcompare"]
     prompt = false
-    path = "bcompare"
-	cmd = "bcompare" "$LOCAL" "$REMOTE"
+    cmd = \"/mnt/c/Program Files/Beyond Compare 4/BCompare.exe\" \"$(wslpath -aw $LOCAL)\" \"$(wslpath -aw $REMOTE)\"
 [mergetool "bcompare"]
     prompt = false
-    path = "bcompare"
-	cmd = "bcompare" "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+    cmd = \"/mnt/c/Program Files/Beyond Compare 4/BCompare.exe\" \"$(wslpath -aw $LOCAL)\" \"$(wslpath -aw $REMOTE)\" \"$(wslpath -aw $BASE)\" \"$(wslpath -aw $MERGED)\"
 [push]
 	default = current
 [core]

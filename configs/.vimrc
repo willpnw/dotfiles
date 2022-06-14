@@ -136,10 +136,10 @@ Plug 'posva/vim-vue'
 " ==============================================================
 " fuzzy file finder
 " ==============================================================
-"Plug 'junegunn/fzf', { 'tag': '0.20.0', 'dir': '~/.fzf', 'do': './install --all' }
-"Plug 'junegunn/fzf.vim', {'commit': '76669c3c1d675833f9d89f6496f16a7accc0f40e' }
-"Plug 'pbogut/fzf-mru.vim'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'tag': '0.20.0', 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim', {'commit': '76669c3c1d675833f9d89f6496f16a7accc0f40e' }
+Plug 'pbogut/fzf-mru.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -300,12 +300,12 @@ let NERDTreeDirArrows = 1
 
 autocmd StdinReadPre * let s:std_in=1
 
-"function! MaybeFiles()
-"    :if argc() == 0
-"    :    call <sid>fzf_next(0)
-"    :endif
-"endfunction
-"au VimEnter * call MaybeFiles()
+function! MaybeFiles()
+    :if argc() == 0
+    :    call <sid>fzf_next(0)
+    :endif
+endfunction
+au VimEnter * call MaybeFiles()
 
 let g:NERDTreeWinSize=30
 let g:NERDTreeDirArrowExpandable = '▸'
@@ -505,20 +505,19 @@ au BufRead,BufNewFile *.xaml setfiletype xml
 
 filetype plugin indent on
 
-"function! s:fzf_next(idx)
-"    "let commands = ['Files ~/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo', 'History', 'Buffers']
-"    let commands = ['History', 'Files', 'Buffers']
-"    execute commands[a:idx]
-"    let next = (a:idx + 1) % len(commands)
-"    let previous = (a:idx - 1) % len(commands)
-"    execute 'tnoremap <buffer> <silent> <c-f> <c-\><c-n>:close<cr>:sleep 100m<cr>:call <sid>fzf_next('.next.')<cr>'
-"    execute 'tnoremap <buffer> <silent> <c-b> <c-\><c-n>:close<cr>:sleep 100m<cr>:call <sid>fzf_next('.previous.')<cr>'
-"endfunction
+function! s:fzf_next(idx)
+    let commands = ['History', 'Files', 'Buffers']
+    execute commands[a:idx]
+    let next = (a:idx + 1) % len(commands)
+    let previous = (a:idx - 1) % len(commands)
+    execute 'tnoremap <buffer> <silent> <c-f> <c-\><c-n>:close<cr>:sleep 100m<cr>:call <sid>fzf_next('.next.')<cr>'
+    execute 'tnoremap <buffer> <silent> <c-b> <c-\><c-n>:close<cr>:sleep 100m<cr>:call <sid>fzf_next('.previous.')<cr>'
+endfunction
 
-"command! Cycle call <sid>fzf_next(0)
-"nnoremap <c-p> :Cycle<CR>
-"nnoremap <c-f> :Files<CR>
-"nnoremap <c-b> :Buffers<CR>
+command! Cycle call <sid>fzf_next(0)
+nnoremap <c-p> :Cycle<CR>
+nnoremap <c-f> :Files<CR>
+nnoremap <c-b> :Buffers<CR>
 
 if has("cscope")
 

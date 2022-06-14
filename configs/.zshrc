@@ -16,7 +16,7 @@ case $(uname -s) in
                 ;;
             Ubuntu)
                 alias ack="ack-grep"
-                alias in="sudo apt-get install -y"
+                alias in="echo 'nameserver 8.8.8.8'| sudo tee /etc/resolv.conf; sudo apt-get install -y"
                 alias vi="/usr/bin/vim.gtk"
                 ;;
             "Arch Linux"|"Antergos Linux"|"Manjaro Linux")
@@ -36,6 +36,7 @@ esac
 export QT_AUTO_SCREEN_SCALE_FACTOR=1.5
 
 ZSH_TMUX_AUTOSTART=true
+DISABLE_AUTO_UPDATE=true
 
 
 #unalias vi
@@ -233,14 +234,6 @@ rn() {
     done
 }
 
-srn() {
-    for f in `fd -s $1`; do
-        NEW=$(echo $f | sed "s/$1/$2/g")
-        echo "$f -> $NEW"
-        sudo mv $f $NEW
-    done
-}
-
 fr() {
     for f in `ag -sl $1`; do
         echo $f
@@ -248,14 +241,14 @@ fr() {
     done
 }
 
+frn() {
+    fr $1 $2
+    rn $1 $2
+}
+
 # FZF
 export FZF_DEFAULT_OPTS='--bind tab:down,shift-tab:up'
 export FZF_DEFAULT_COMMAND='fd --type f'
-
-#j() {
-#    [ $# -gt 0 ] && _z "$*" && return
-#    cd "$(_z -l 2>&1 | fzf --height 20% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
-#}
 
 e() {
     local files
@@ -268,12 +261,6 @@ r() {
     #print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | tr -s ' ' )
 }
 
-#m() {
-#    cd /home/will/dev-projects/sonosite/yocto/build/workspace/sources/controlio-turbo
-#    cmake -DCMAKE_BUILD_TYPE=Release -DCI_BUILD=ON && make -j4
-#    -
-#}
-
 k() {
     local pid
     pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
@@ -282,19 +269,6 @@ k() {
     then
         echo $pid | xargs kill -${1:-9}
     fi
-}
-
-dstop() {
-    local cid
-    cid=$(docker ps | sed 1d | fzf -q "$1" | awk '{print $1}')
-    [ -n "$cid" ] && docker stop "$cid"
-}
-
-dstart() {
-    local cid
-    cid=$(docker ps -a | sed 1d | fzf -1 -q "$1" | awk '{print $1}')
-
-    [ -n "$cid" ] && docker start "$cid" && docker attach "$cid"
 }
 
 alist() {
@@ -322,16 +296,6 @@ loce() {
     [[ -n "$filepath" ]] && ${EDITOR:-vim} "${filepath}"
 }
 
-killL() {
-    local pid
-    sudo whoami > /dev/null
-    pid=$(sudo netstat -ltnp  | grep tcp | awk '{print $4, $7}' | sed 's|.*:\(.*\) \(.*\)/\(.*\)|\3 \1 \2|' | column -t | fzf | awk '{print $3}')
-    if [ "x$pid" != "x" ]
-    then
-        echo $pid | xargs kill -${1:-9}
-    fi
-}
-
 agl() {
     if [ $# -ne 1 ]; then
         echo "Need one arg, got $#"
@@ -344,23 +308,11 @@ agl() {
     [[ -n "$filepath" ]] && ${EDITOR:-vim} +${lineNumber} ${filepath}
 }
 
-#source /etc/profile.d/autojump.zsh
-
-
 [[ -s /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
 
-
-autoload -U compinit && compinit -u
+#autoload -U compinit && compinit -u
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# clang format
-cf() {
-    cd /home/will/dev-projects/sonosite-x-porte-app
-    for f in $(fd . iomanager/ui/qt -e cpp -e h); do
-        clang-format $f > tmp && mv tmp $f
-    done
-}
 
 gprune() {
     for branch in $(git branch); do
@@ -376,24 +328,6 @@ gprune() {
     done
 }
 
-# common searches
-fs() {
-	ag -l "struct $1 {"
-}
-
-#gitk() {
-#    gitk $@ &
-#}
-
-alias dgcc="sudo pacman -U /var/cache/pacman/pkg/{gcc-9.3.0-1-x86_64.pkg.tar.zst,gcc-libs-9.3.0-1-x86_64.pkg.tar.zst}"
-alias qt1='fd -e qml -x sed -i "s/^import QtQuick 2.6$/import QtQuick 1.1/"'
-alias qt2='fd -e qml -x sed -i "s/^import QtQuick 1.1$/$import QtQuick 2.6/"'
-
-
-#if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-#  exec tmux
-#fi
-
 # repo git log right only
 rlr() {
     if [ $# -ne 2 ]; then
@@ -404,10 +338,4 @@ rlr() {
     ref2=$2
     export GIT_DELTA="git log --format=format:'%h(%an)[%s]' --right-only ${ref1}..${ref2}"
     repo forall -p -c 'test $($GIT_DELTA | wc -l) -gt 0 && $GIT_DELTA' | tee /tmp/$(basename $ref1)..$(basename $ref2)
-}
-
-forget() {
-    sudo sync; echo 1 | sudo tee /proc/sys/vm/drop_caches
-    sudo sync; echo 2 | sudo tee /proc/sys/vm/drop_caches
-    sudo sync; echo 3 | sudo tee /proc/sys/vm/drop_caches
 }
