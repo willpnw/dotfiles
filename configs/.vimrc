@@ -58,7 +58,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'kana/vim-submode'
 if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     "Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
     ""Plug 'deoplete-plugins/deoplete-clang'
     "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -69,7 +69,7 @@ else
     "Plug 'roxma/nvim-yarp'
     "Plug 'roxma/vim-hug-neovim-rpc'
 endif
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
 
 " ==============================================================
 " tools
@@ -132,6 +132,7 @@ Plug 'posva/vim-vue'
 
 "    let g:ycm_key_list_select_completion = []
 "    let g:ycm_key_list_previous_completion = []
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " ==============================================================
 " fuzzy file finder
@@ -593,9 +594,9 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 :set cscopequickfix=""
 
 " deoplete variables
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so.8'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/8.0.1/include/'
-let g:deoplete#sources#clang#clang_omplete_database = '/home/willpnw/dev-projects/mturbo-linux-port'
+"let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so.8'
+"let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/8.0.1/include/'
+"let g:deoplete#sources#clang#clang_omplete_database = '/home/willpnw/dev-projects/mturbo-linux-port'
 
 call neomake#configure#automake('w')
 
@@ -693,3 +694,10 @@ nnoremap <Enter> o<esc>
 :set fileformats=unix,dos
 :set fileformat=unix
 :set ff=dos
+
+
+
+
+" generate definition from declaration
+
+nmap <leader>gf ^yt;<c-C>G<enter><enter>pA {<enter>}<esc>kf(Bi

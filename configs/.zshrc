@@ -43,7 +43,9 @@ DISABLE_AUTO_UPDATE=true
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export CSCOPE_EDITOR=vim
-export PATH=~/dotfiles/scripts:$PATH
+export PATH=$HOME/.local/bin:~/dotfiles/scripts:$PATH
+
+export WH=/mnt/c/Users/x6xrkm/
 
 if which ruby >/dev/null && which gem >/dev/null; then
     export PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
@@ -338,4 +340,9 @@ rlr() {
     ref2=$2
     export GIT_DELTA="git log --format=format:'%h(%an)[%s]' --right-only ${ref1}..${ref2}"
     repo forall -p -c 'test $($GIT_DELTA | wc -l) -gt 0 && $GIT_DELTA' | tee /tmp/$(basename $ref1)..$(basename $ref2)
+}
+
+d2u() {
+    dos2unix ~/dotfiles/configs/.vimrc
+    fd -tf . /home/will/.vim | xargs dos2unix
 }
