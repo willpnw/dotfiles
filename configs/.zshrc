@@ -16,7 +16,7 @@ case $(uname -s) in
                 ;;
             Ubuntu)
                 alias ack="ack-grep"
-                alias in="echo 'nameserver 8.8.8.8'| sudo tee /etc/resolv.conf; sudo apt-get install -y"
+                alias in="sudo apt-get install -y"
                 alias vi="/usr/bin/vim.gtk"
                 ;;
             "Arch Linux"|"Antergos Linux"|"Manjaro Linux")
@@ -185,6 +185,9 @@ alias gsp="git show -p"
 alias gsu="git submodule update"
 alias gsm="git ls-files -m"
 alias gsd="git ls-files -d"
+
+alias gitk="/mnt/c/Program\ Files/Git/cmd/gitk.exe"
+alias bcompare="/mnt/c/Program\ Files/Beyond\ Compare\ 4/BCompare.exe"
 
 mc() {
     LS_USB=$(ls /dev/ttyUSB*) || return 1

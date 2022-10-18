@@ -46,7 +46,7 @@ nmap <leader>xs <Plug>(GitGutterStageHunk)
 
 Plug 'ntpeters/vim-better-whitespace'
 let g:better_whitespace_ctermcolor='blue'
-nnoremap <leader>f :StripWhitespace<CR>
+nnoremap <leader>f :StripWhitespace<CR>gg=G
 
 Plug 'godlygeek/tabular'
 nnoremap <leader>t<SPACE> :Tab / /l0<CR>
@@ -97,7 +97,6 @@ xmap p <plug>(SubversiveSubstitute)
 xmap P <plug>(SubversiveSubstitute)
 
 Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
@@ -139,6 +138,8 @@ autocmd QuickFixCmdPost *log* cwindow
 Plug 'vim-scripts/a.vim'
 nnoremap <C-c> :A<CR>
 
+Plug 'schickling/vim-bufonly'
+
 " ==============================================================
 " status line
 " ==============================================================
@@ -167,6 +168,17 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " ==============================================================
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" ==============================================================
+" snippets
+" ==============================================================
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger="<c-s>"
+let g:UltiSnipsJumpForwardTrigger="<c-n>"
+let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 
 " ==============================================================
 " fuzzy file finder
@@ -191,8 +203,7 @@ au VimEnter * call MaybeFiles()
 
 command! Cycle call <sid>fzf_next(0)
 nnoremap <c-p> :Cycle<CR>
-nnoremap <c-f> :Files<CR>
-nnoremap <c-b> :Buffers<CR>
+nnoremap <leader>b :Buffers<CR>
 
 " Initialize plugin system
 call plug#end()
@@ -206,17 +217,17 @@ set path+=**
 " ==============================================================
 set clipboard+=unnamedplus
 let g:clipboard = {
-          \   'name': 'win32yank-wsl',
-          \   'copy': {
-          \      '+': 'win32yank.exe -i --crlf',
-          \      '*': 'win32yank.exe -i --crlf',
-          \    },
-          \   'paste': {
-          \      '+': 'win32yank.exe -o --lf',
-          \      '*': 'win32yank.exe -o --lf',
-          \   },
-          \   'cache_enabled': 0,
-          \ }
+            \   'name': 'win32yank-wsl',
+            \   'copy': {
+            \      '+': 'win32yank.exe -i --crlf',
+            \      '*': 'win32yank.exe -i --crlf',
+            \    },
+            \   'paste': {
+            \      '+': 'win32yank.exe -o --lf',
+            \      '*': 'win32yank.exe -o --lf',
+            \   },
+            \   'cache_enabled': 0,
+            \ }
 set hidden
 set autoindent
 set smartindent
@@ -246,6 +257,8 @@ nnoremap Y v$hy
 vnoremap <leader>r "hy:%s/<C-r>h//gc<left><left><left>
 nnoremap <leader>s :s//g<left><left>
 vnoremap <leader>s :s//g<left><left>
+nnoremap <leader>S :%Subvert//g<left><left>
+vnoremap <leader>S "hy:%Subvert/<C-r>h//gc<left><left><left>
 
 " Edit/Source vimrc
 :nnoremap <leader>ev :vsplit ~/.vimrc<cr>
@@ -312,11 +325,14 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 :set mouse=a
 
 set tabstop=4 shiftwidth=4 expandtab
-autocmd BufEnter *.h :setlocal filetype=c
-autocmd FileType c,dts setlocal noexpandtab
+"autocmd BufEnter *.h :setlocal filetype=c
+"autocmd FileType c,dts setlocal noexpandtab
 
 "enter without going into insert mode
 nnoremap <Enter> o<esc>
 
 " generate definition from declaration
-nmap <leader>gf ^yt;<c-C>G<enter><enter>pA {<enter>}<esc>kf(Bi
+nmap <leader>gf ^yt;?class<cr>w"aye<c-C>G<enter><enter>pA {<enter>}<esc>kf(B"aPa::<esc>
+
+" don't create backupfiles
+set nobackup nowritebackup
