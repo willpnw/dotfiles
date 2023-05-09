@@ -2,8 +2,6 @@
 let mapleader=" "
 
 "Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
-"
-"call plug#begin('~/.local/share/nvim/plugged')
 call plug#begin('~/.vim/plugged')
 
 " ==============================================================
@@ -11,7 +9,9 @@ call plug#begin('~/.vim/plugged')
 " ==============================================================
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'justinmk/vim-sneak'
-Plug 'psliwka/vim-smoothie'
+if has('nvim')
+    Plug 'psliwka/vim-smoothie'
+endif
 Plug 'vim-utils/vim-vertical-move'
 nmap } ]v
 xmap } ]v
@@ -25,6 +25,16 @@ Plug 'ludovicchabant/vim-gutentags'
 " themes
 " ==============================================================
 Plug 'morhetz/gruvbox'
+Plug 'gosukiwi/vim-atom-dark'
+Plug 'tomasr/molokai'
+Plug 'sonph/onehalf'
+Plug 'jacoborus/tender.vim'
+Plug 'sainnhe/everforest'
+Plug 'nanotech/jellybeans.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
+
+let g:molokai_original = 1
+let g:rehash256 = 1
 
 " ==============================================================
 " improve use/readability/formatting
@@ -36,6 +46,7 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=1
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=42
+autocmd BufNewFile,BufRead *.qss   set syntax=css
 
 Plug 'airblade/vim-gitgutter'
 nmap <leader>gr <Plug>(GitGutterUndoHunk)
@@ -56,29 +67,9 @@ nnoremap <leader>t, :Tab /,\zs/l0c1<CR>
 nnoremap <leader>t( :Tab /(/l0c0<CR>
 nnoremap <leader>t= :Tab /\(=\)\@<!=\([>=]\)\@!<CR>
 
-Plug 'kien/rainbow_parentheses.vim'
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-let g:rbpt_colorpairs = [
-            \ ['brown',   'RoyalBlue3'],
-            \ ['blue',    'SeaGreen3'],
-            \ ['gray',    'Orchid3'],
-            \ ['green',   'firebrick3'],
-            \ ['cyan',    'RoyalBlue3'],
-            \ ['red',     'SeaGreen3'],
-            \ ['magenta', 'Orchid3'],
-            \ ['brown',   'firebrick3'],
-            \ ['gray',    'RoyalBlue3'],
-            \ ['green',   'SeaGreen3'],
-            \ ['magenta', 'Orchid3'],
-            \ ['blue',    'firebrick3'],
-            \ ['green',   'RoyalBlue3'],
-            \ ['cyan',    'SeaGreen3'],
-            \ ['red',     'Orchid3'],
-            \ ['white',     'firebrick3'],
-            \ ]
+Plug 'junegunn/rainbow_parentheses.vim'
+au VimEnter * RainbowParentheses
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}'], ['<', '>']]
 
 Plug 'preservim/nerdcommenter'
 let g:NERDCompactSexyComs = 0
@@ -86,6 +77,8 @@ let g:NERDCompactSexyComs = 0
 Plug 'vim-syntastic/syntastic'
 Plug 'vim-scripts/vim-auto-save'
 let g:auto_save = 1
+
+Plug 'kshenoy/vim-signature'
 
 " ==============================================================
 " handy mappings
@@ -166,7 +159,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " ==============================================================
 " completion
 " ==============================================================
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'tag': 'v0.0.81'}
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
             \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -204,6 +197,7 @@ au VimEnter * call MaybeFiles()
 command! Cycle call <sid>fzf_next(0)
 nnoremap <c-p> :Cycle<CR>
 nnoremap <leader>b :Buffers<CR>
+vnoremap <leader>a y:Ag <c-r>0<CR>
 
 " Initialize plugin system
 call plug#end()
@@ -215,19 +209,34 @@ set path+=**
 " ==============================================================
 " sets
 " ==============================================================
-set clipboard+=unnamedplus
-let g:clipboard = {
-            \   'name': 'win32yank-wsl',
-            \   'copy': {
-            \      '+': 'win32yank.exe -i --crlf',
-            \      '*': 'win32yank.exe -i --crlf',
-            \    },
-            \   'paste': {
-            \      '+': 'win32yank.exe -o --lf',
-            \      '*': 'win32yank.exe -o --lf',
-            \   },
-            \   'cache_enabled': 0,
-            \ }
+"set clipboard+=unnamedplus
+"let g:clipboard = {
+"        \   'name': 'win32yank-wsl',
+"        \   'copy': {
+"        \      '+': 'win32yank.exe -i --crlf',
+"        \      '*': 'win32yank.exe -i --crlf',
+"        \    },
+"        \   'paste': {
+"        \      '+': 'win32yank.exe -o --lf',
+"        \      '*': 'win32yank.exe -o --lf',
+"        \   },
+"        \   'cache_enabled': 0,
+"        \ }
+"set clipboard+=unnamedplus
+"let g:clipboard = {
+"  \   'name': 'WslClipboard',
+"  \   'copy': {
+"  \      '+': 'clip.exe',
+"  \      '*': 'clip.exe',
+"  \    },
+"  \   'paste': {
+"  \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+"  \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+"  \   },
+"  \   'cache_enabled': 0,
+"  \ }
+
+
 set hidden
 set autoindent
 set smartindent
@@ -289,6 +298,7 @@ set t_Co=256
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
 colorscheme gruvbox
+set background=dark
 
 nnoremap <leader>l :bn<cr>
 nnoremap <leader>h :bp<cr>
@@ -317,6 +327,7 @@ filetype plugin indent on
 
 " edit q macro
 noremap <leader>eq :let @q='<C-R><C-R>q'
+noremap <leader>ea :let @a='<C-R><C-R>a'
 
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 :set cscopequickfix=""
@@ -324,7 +335,7 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 " enable mouse support
 :set mouse=a
 
-set tabstop=4 shiftwidth=4 expandtab
+set tabstop=3 shiftwidth=3 noexpandtab
 "autocmd BufEnter *.h :setlocal filetype=c
 "autocmd FileType c,dts setlocal noexpandtab
 
@@ -332,7 +343,8 @@ set tabstop=4 shiftwidth=4 expandtab
 nnoremap <Enter> o<esc>
 
 " generate definition from declaration
-nmap <leader>gf ^yt;?class<cr>w"aye<c-C>G<enter><enter>pA {<enter>}<esc>kf(B"aPa::<esc>
+"nmap <leader>gf m,^yt;?class<cr>w"aye<c-C>G<enter><enter>pA {<enter>}<esc>kf(B"aPa::<esc><C-C>[`m-
+nmap <leader>gf m,^"ayt;?class<cr>w"bye<c-C>G<enter><enter>"apA {<enter>}<esc>kf(B"bPa::<esc><C-C>[`m-
 
 " don't create backupfiles
 set nobackup nowritebackup

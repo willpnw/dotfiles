@@ -29,3 +29,5 @@
 	pretty = format:%C(auto)%h %d%Creset %s%n%Cgreen%ad%Creset %aN <%aE>%n
 [color]
 	ui = auto
+[http]
+	 sslVerify = false

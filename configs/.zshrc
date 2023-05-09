@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 #
+#
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
@@ -43,7 +44,7 @@ DISABLE_AUTO_UPDATE=true
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export CSCOPE_EDITOR=vim
-export PATH=$HOME/.local/bin:~/dotfiles/scripts:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:~/dotfiles/scripts:$PATH
 
 export WH=/mnt/c/Users/x6xrkm/
 
@@ -140,6 +141,9 @@ source $ZSH/oh-my-zsh.sh
 # reload zshrc
 alias rerc="source ~/.zshrc"
 
+# trigger qss reload
+alias qss="touch DDClient.qrc"
+
 # helpers
 alias df='df -h'
 
@@ -147,6 +151,7 @@ alias df='df -h'
 alias c="clear"
 alias x="exit"
 alias n="nvim"
+alias agl="ag -l"
 
 alias d="docker"
 
@@ -163,7 +168,7 @@ alias gpush="git push"
 alias gpf="git push -f"
 alias grs="git reset"
 alias grs1="git reset HEAD~1"
-alias gb="git branch"
+alias gb="git branch --sort=-committerdate"
 alias gau="git add -u"
 alias gaa="git add --all"
 alias gd="clear; git diff -w"
@@ -172,7 +177,8 @@ alias gdt="git difftool -y"
 alias gmt="git mergetool -y"
 alias gdtc="git difftool -y --cached"
 alias gdth="git difftool -y HEAD^ HEAD"
-alias gl="git log"
+#alias gl='git log --oneline --decorate -n 15'
+alias gl='git log --oneline'
 alias gstash="git stash"
 alias gclean="git clean -fd"
 alias gshow="git difftool HEAD~1 HEAD"
@@ -185,6 +191,17 @@ alias gsp="git show -p"
 alias gsu="git submodule update"
 alias gsm="git ls-files -m"
 alias gsd="git ls-files -d"
+alias gsdt="gdt @~..@"
+alias gdts="gdt stash"
+
+unalias gst
+gst() {
+    gdt HEAD~1 $@
+}
+
+grsn() {
+    git reset HEAD~$1
+}
 
 alias gitk="/mnt/c/Program\ Files/Git/cmd/gitk.exe"
 alias bcompare="/mnt/c/Program\ Files/Beyond\ Compare\ 4/BCompare.exe"
@@ -301,18 +318,6 @@ loce() {
     [[ -n "$filepath" ]] && ${EDITOR:-vim} "${filepath}"
 }
 
-agl() {
-    if [ $# -ne 1 ]; then
-        echo "Need one arg, got $#"
-        return 1
-    fi
-    echo "looking for $1"
-    local res=$(ag $1 | fzf)
-    local filepath=$(echo $res | cut -d ':' -f1)
-    local lineNumber=$(echo $res | cut -d ':' -f2)
-    [[ -n "$filepath" ]] && ${EDITOR:-vim} +${lineNumber} ${filepath}
-}
-
 [[ -s /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
 
 #autoload -U compinit && compinit -u
@@ -348,4 +353,18 @@ rlr() {
 d2u() {
     dos2unix ~/dotfiles/configs/.vimrc
     fd -tf . /home/will/.vim | xargs dos2unix
+    # if dos2unix doesn't work on certain files, manually replace new lines
+    #for f in $(grep -lr $'\r' * | ag -v .gif\|.png\|.pyc); do
+    #    sed $'s/\r//' -i $f
+    #done
 }
+
+r() {
+	for repo in Server/GServer Client/GClient Client/BBClientRCMA Public Common Talon Drone/DDClient  Drone/TalonClient; do
+		echo "> $repo"
+		git -C /mnt/d/Current/Guardian/Development/Source/$repo $@
+		echo ""
+	done
+}
+
+alias rco="r checkout"

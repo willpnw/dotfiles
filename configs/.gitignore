@@ -4,3 +4,8 @@ Release/
 x64/
 GeneratedFiles/
 *~
+ipch/
+*.user
+*.opensdf
+*.sdf
+*.suo
