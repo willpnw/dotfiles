@@ -18,7 +18,7 @@ icon=$iconName.png
 # move over the default icon and remove it from qrc
 cp $icon icons/default
 mv $icon icons/windows10
-sed -i "/$icon/d" GClient.qrc
+sed -i "/>$icon/d" GClient.qrc
 
 # copy over the themed icons
 for dir in light dark; do

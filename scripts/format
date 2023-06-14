@@ -1,0 +1,41 @@
+#!/usr/bin/bash
+
+FILE=$1
+
+# run clang format
+clang-format -i $FILE
+
+# add one new line before next function
+perl -i -0pe 's/(}\n)(\w)/\1\n\2/gms' $FILE
+
+# fix enums
+perl -i -0pe 's/(enum \w*)\r?\n\s*/\1 /gms' $FILE
+
+# delete empty destructors
+if [ "${FILE##*.}" = "cpp" ]; then
+    CLASSNAME=${FILE%.*}
+    HEADER=$CLASSNAME.h
+    public=1
+    while read p; do
+        if echo $p | grep -q public:; then
+            public=0
+        elif echo $p | grep -q "private:\|protected:"; then
+            public=1
+        elif echo $p | grep -q "~$CLASSNAME();$"; then
+            if [ $public -eq 0 ]; then
+                REGEX="^$CLASSNAME::~$CLASSNAME\(\) {\r?\n}\r?\n"
+                TMP_FILE=/tmp/$FILE
+                cp $FILE $TMP_FILE
+                perl -i -0pe "s/$REGEX//gms" $FILE
+                if ! diff $FILE $TMP_FILE > /dev/null; then
+                    sed -i "/~$CLASSNAME();$/d" $HEADER
+                fi
+                rm $TMP_FILE
+            fi
+            break
+        fi
+    done <$HEADER
+fi
+
+# replace any unnessecary keywords
+sed -i 's/(void)/()/g' $FILE

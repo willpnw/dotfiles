@@ -335,7 +335,7 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 " enable mouse support
 :set mouse=a
 
-set tabstop=3 shiftwidth=3 noexpandtab
+set tabstop=4 shiftwidth=4 expandtab
 "autocmd BufEnter *.h :setlocal filetype=c
 "autocmd FileType c,dts setlocal noexpandtab
 

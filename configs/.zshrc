@@ -206,6 +206,8 @@ grsn() {
 alias gitk="/mnt/c/Program\ Files/Git/cmd/gitk.exe"
 alias bcompare="/mnt/c/Program\ Files/Beyond\ Compare\ 4/BCompare.exe"
 
+alias cf="clang-format -i"
+
 mc() {
     LS_USB=$(ls /dev/ttyUSB*) || return 1
     NUM_USB=$(echo $LS_USB | wc -l)
@@ -360,7 +362,7 @@ d2u() {
 }
 
 r() {
-	for repo in Server/GServer Client/GClient Client/BBClientRCMA Public Common Talon Drone/DDClient  Drone/TalonClient; do
+	for repo in Server/GServer Client/GClient Client/BBClientRCMA Public Common Talon Drone/DDClient Drone/TalonClient "Shared Components"; do
 		echo "> $repo"
 		git -C /mnt/d/Current/Guardian/Development/Source/$repo $@
 		echo ""
@@ -368,3 +370,14 @@ r() {
 }
 
 alias rco="r checkout"
+alias rcam='r commit -a -m'
+alias rlro="r log --right-only --no-merges --cherry-pick --oneline"
+alias rs="r status"
+alias rd="r diff"
+alias rdt="r difftool -y"
+alias rmerge="r merge"
+
+rb() {
+	r branch $1
+	rco $1
+}
