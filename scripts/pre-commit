@@ -1,0 +1,32 @@
+#!/bin/bash
+
+exec < /dev/tty
+
+files=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(c|cc|cpp|h|hpp)$')
+cp $files /home/will/dotfiles/configs/.clang-format /tmp/
+for f in $files; do
+    tmpfile=/tmp/$f
+    format $tmpfile
+    if ! diff $f $tmpfile > /dev/null; then
+        echo "$f is not formatted"
+        read -p "Press q to quit, f to format, s to skip all, any key to continue: " input
+        case $input in
+            q)
+                exit 1
+                ;;
+            f)
+                format $f
+                ;;
+            s)
+                exit 0
+                ;;
+        esac
+    fi
+    rm $tmpfile
+done
+
+test "$input" == ""  || exit 1
+
+echo ""
+echo "Format looks good!"
+echo ""

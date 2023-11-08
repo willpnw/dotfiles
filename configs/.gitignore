@@ -2,10 +2,12 @@ tags*
 Debug/
 Release/
 x64/
+Win32/
 GeneratedFiles/
 *~
 ipch/
-*.user
+.vs/
 *.opensdf
 *.sdf
 *.suo
+*.user

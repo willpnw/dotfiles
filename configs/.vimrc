@@ -209,7 +209,7 @@ set path+=**
 " ==============================================================
 " sets
 " ==============================================================
-"set clipboard+=unnamedplus
+set clipboard+=unnamedplus
 "let g:clipboard = {
 "        \   'name': 'win32yank-wsl',
 "        \   'copy': {
@@ -348,3 +348,10 @@ nmap <leader>gf m,^"ayt;?class<cr>w"bye<c-C>G<enter><enter>"apA {<enter>}<esc>kf
 
 " don't create backupfiles
 set nobackup nowritebackup
+
+function! AddPrints()
+  %s/^{\n/{printf("X6XRKM: %s, %d\\n", __FUNCTION__, __LINE__);\r/g
+  %s/\(^\w.*{\)/\1\rprintf("X6XRKM: %s, %d\\n", __FUNCTION__, __LINE__);/g
+endfunction
+
+nnoremap <leader>d :call AddPrints()<CR>

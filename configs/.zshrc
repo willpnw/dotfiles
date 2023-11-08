@@ -194,10 +194,10 @@ alias gsd="git ls-files -d"
 alias gsdt="gdt @~..@"
 alias gdts="gdt stash"
 
-unalias gst
-gst() {
-    gdt HEAD~1 $@
-}
+alias aga="ag --unrestricted"
+alias fda="fd --no-ignore"
+
+alias trans="trans :uk -b"
 
 grsn() {
     git reset HEAD~$1
@@ -362,10 +362,10 @@ d2u() {
 }
 
 r() {
-	for repo in Server/GServer Client/GClient Client/BBClientRCMA Public Common Talon Drone/DDClient Drone/TalonClient "Shared Components"; do
+	for repo in Server/BBServer_T070{0,1,2,3} Server/GServer ../Source Client/GClient Client/GeoServices Client/BBSchema Client/BBClientRCMA Client/BBApiClient Public Common Talon Drone Drone/DDStudio Drone/DDServer Drone/DDClient Drone/Common Drone/DDProcessor Drone/TalonClient "Shared Components" Utils/SmtpClient; do
 		echo "> $repo"
 		git -C /mnt/d/Current/Guardian/Development/Source/$repo $@
-		echo ""
+        echo ""
 	done
 }
 
@@ -376,6 +376,7 @@ alias rs="r status"
 alias rd="r diff"
 alias rdt="r difftool -y"
 alias rmerge="r merge"
+alias rca!='r commit -v -a --amend'
 
 rb() {
 	r branch $1
