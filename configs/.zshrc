@@ -141,9 +141,6 @@ source $ZSH/oh-my-zsh.sh
 # reload zshrc
 alias rerc="source ~/.zshrc"
 
-# trigger qss reload
-alias qss="touch DDClient.qrc"
-
 # helpers
 alias df='df -h'
 
@@ -159,7 +156,7 @@ alias d="docker"
 alias gc="git commit"
 alias gco="git checkout"
 alias gcm="git commit -m"
-alias gca="git commit --amend --no-edit"
+alias gca="git commit -a --amend --no-edit"
 alias gss="git status -s"
 alias gs="git status"
 alias gsno="git status --untracked-files=no"
@@ -177,8 +174,8 @@ alias gdt="git difftool -y"
 alias gmt="git mergetool -y"
 alias gdtc="git difftool -y --cached"
 alias gdth="git difftool -y HEAD^ HEAD"
-#alias gl='git log --oneline --decorate -n 15'
-alias gl='git log --oneline'
+alias gl='git log --oneline -n10'
+alias gla='git log --oneline -n10'
 alias gstash="git stash"
 alias gclean="git clean -fd"
 alias gshow="git difftool HEAD~1 HEAD"
@@ -197,14 +194,12 @@ alias gdts="gdt stash"
 alias aga="ag --unrestricted"
 alias fda="fd --no-ignore"
 
-alias trans="trans :uk -b"
-
 grsn() {
     git reset HEAD~$1
 }
 
 alias gitk="/mnt/c/Program\ Files/Git/cmd/gitk.exe"
-alias bcompare="/mnt/c/Program\ Files/Beyond\ Compare\ 4/BCompare.exe"
+alias bc="/mnt/c/Program\ Files/Beyond\ Compare\ 5/BCompare.exe"
 
 alias cf="clang-format -i"
 
@@ -251,17 +246,17 @@ bindkey -M viins '^r' history-incremental-search-backward
 bindkey -M vicmd '^r' history-incremental-search-backward
 
 rn() {
-    for f in `fd -s $1`; do
+    fd -s $1 | while IFS= read -r f; do
         NEW=$(echo $f | sed "s/$1/$2/g")
         echo "$f -> $NEW"
-        mv $f $NEW
+        mv "$f" "$NEW"
     done
 }
 
 fr() {
-    for f in `ag -sl $1`; do
-        echo $f
-        eval $SED_INLINE "s/$1/$2/g" $f
+    ag -sl $1 | while IFS= read -r f; do
+        echo "$f"
+        sed -i "s/$1/$2/g" "$f"
     done
 }
 
@@ -381,4 +376,16 @@ alias rca!='r commit -v -a --amend'
 rb() {
 	r branch $1
 	rco $1
+}
+
+alias gcini="n /mnt/c/ProgramData/TCI/Blackbird/BBClient/Client.ini"
+
+fl() {
+    echo "Searching for $1..."
+    for lib in `fd -e lib`; do
+        if dumpbin.exe /symbols $lib | ag $1; then
+            echo $lib
+        fi
+    done
+    echo "$1 Not found"
 }

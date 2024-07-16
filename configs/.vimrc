@@ -20,10 +20,11 @@ xmap } ]v
 " tags
 " ==============================================================
 Plug 'ludovicchabant/vim-gutentags'
+set tags=./tags,tags;
 
-" ==============================================================
-" themes
-" ==============================================================
+"" ==============================================================
+"" themes
+"" ==============================================================
 Plug 'morhetz/gruvbox'
 Plug 'gosukiwi/vim-atom-dark'
 Plug 'tomasr/molokai'
@@ -95,6 +96,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 if has('nvim')
     Plug 'svermeulen/vim-yoink'
+    let g:yoinkChangeTickThreshold  = 1
     let g:yoinkIncludeDeleteOperations = 1
     nmap <c-n> <plug>(YoinkPostPasteSwapBack)
     nmap <c-m> <plug>(YoinkPostPasteSwapForward)
@@ -109,8 +111,8 @@ endif
 " ==============================================================
 " tools
 " ==============================================================
-Plug 'preservim/tagbar'
-nnoremap <leader>tb :TagbarToggle<CR>
+"Plug 'preservim/tagbar'
+"nnoremap <leader>tb :TagbarToggle<CR>
 
 Plug 'preservim/nerdtree'
 nnoremap <leader>n :NERDTreeFind<CR>
@@ -127,6 +129,10 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 Plug 'tpope/vim-fugitive'
 autocmd QuickFixCmdPost *grep* cwindow
 autocmd QuickFixCmdPost *log* cwindow
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gl :Glog<CR>
+nnoremap <leader>gs :Git<CR><C-w>15-
+nnoremap <leader>gb :Git blame<CR>
 
 Plug 'vim-scripts/a.vim'
 nnoremap <C-c> :A<CR>
@@ -140,15 +146,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme='base16_gruvbox_dark_hard'
 let g:airline_powerline_fonts = 1
-set guifont=Sauce_Code_Powerline:h9:cANSI
-set encoding=utf-8
-let g:airline#extensions#tabline#enabled = 1
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-set laststatus=2
-nnoremap <leader>gd :Gdiff<CR>
-nnoremap <leader>gl :Glog<CR>
-nnoremap <leader>gs :Git<CR><C-w>15-
-nnoremap <leader>gb :Git blame<CR>
+let g:airline_extensions = [ "tabline" ]
 
 " ==============================================================
 " Syntax highlighting
@@ -198,6 +196,9 @@ command! Cycle call <sid>fzf_next(0)
 nnoremap <c-p> :Cycle<CR>
 nnoremap <leader>b :Buffers<CR>
 vnoremap <leader>a y:Ag <c-r>0<CR>
+
+" Use FZF for tag jumping with the current tag
+nnoremap <C-]> ye:Tags<CR>
 
 " Initialize plugin system
 call plug#end()
@@ -268,6 +269,7 @@ nnoremap <leader>s :s//g<left><left>
 vnoremap <leader>s :s//g<left><left>
 nnoremap <leader>S :%Subvert//g<left><left>
 vnoremap <leader>S "hy:%Subvert/<C-r>h//gc<left><left><left>
+nnoremap <leader>m :%s/\r//g<cr>
 
 " Edit/Source vimrc
 :nnoremap <leader>ev :vsplit ~/.vimrc<cr>
@@ -350,8 +352,8 @@ nmap <leader>gf m,^"ayt;?class<cr>w"bye<c-C>G<enter><enter>"apA {<enter>}<esc>kf
 set nobackup nowritebackup
 
 function! AddPrints()
-  %s/^{\n/{printf("X6XRKM: %s, %d\\n", __FUNCTION__, __LINE__);\r/g
-  %s/\(^\w.*{\)/\1\rprintf("X6XRKM: %s, %d\\n", __FUNCTION__, __LINE__);/g
+  %s/^{\n/{qDebug() << __FUNCTION__ << __LINE__;\r/g
+  %s/\(^\w.*{\)/\1\rqDebug() << __FUNCTION__ << __LINE__;/g
 endfunction
 
 nnoremap <leader>d :call AddPrints()<CR>

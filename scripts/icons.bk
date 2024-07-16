@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+ag png DDClient.vcxproj | cut -d '"' -f2 | ag -v Images | sed 's?\\?/?g' | sed 's?../../Common/theme/??g' | sort -u > vcxproj
+
+fd png > present
+pushd /mnt/d/Current/Guardian/Development/Source/Common/theme/icons
+fd  -tf >> present
+popd
+cat present | sort -u > tmp; mv tmp present
+cat DDClient.qrc /mnt/d/Current/Guardian/Development/Source/Common/theme/GTheme.qrc | ag file | ag ">" | cut -d '>' -f2 | cut -d '<' -f1 | sort -u | ag -v lay$\|wav$\|ico$ >  qrc
