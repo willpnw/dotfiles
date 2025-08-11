@@ -149,6 +149,7 @@ alias c="clear"
 alias x="exit"
 alias n="nvim"
 alias agl="ag -l"
+alias agv="ag -v"
 
 alias d="docker"
 
@@ -157,7 +158,6 @@ alias gc="git commit"
 alias gco="git checkout"
 alias gcm="git commit -m"
 alias gca="git commit -a --amend --no-edit"
-alias gss="git status -s"
 alias gs="git status"
 alias gsno="git status --untracked-files=no"
 alias gpull="git pull"
@@ -176,7 +176,6 @@ alias gdtc="git difftool -y --cached"
 alias gdth="git difftool -y HEAD^ HEAD"
 alias gl='git log --oneline -n10'
 alias gla='git log --oneline -n10'
-alias gstash="git stash"
 alias gclean="git clean -fd"
 alias gshow="git difftool HEAD~1 HEAD"
 alias gbdr="git push origin --delete"
@@ -189,13 +188,29 @@ alias gsu="git submodule update"
 alias gsm="git ls-files -m"
 alias gsd="git ls-files -d"
 alias gsdt="gdt @~..@"
-alias gdts="gdt stash"
 
 alias aga="ag --unrestricted"
 alias fda="fd --no-ignore"
 
+
+# stash aliases
+alias gstash="git stash"
+alias gdts="gdt stash"
+alias gds="gd stash"
+alias gss="gstash show -p stash@{0}"
+
 grsn() {
     git reset HEAD~$1
+}
+
+garchive() {
+    if [ $# -ne 1 ]; then
+        echo "Usage: $0 branch"
+        return 1
+    fi
+    local branch=$1
+    git tag archive/$branch $branch
+    git branch -D $branch
 }
 
 alias gitk="/mnt/c/Program\ Files/Git/cmd/gitk.exe"
@@ -388,4 +403,8 @@ fl() {
         fi
     done
     echo "$1 Not found"
+}
+
+diag() {
+    agl $1 | agv ts$\|vcxp\|ui$
 }

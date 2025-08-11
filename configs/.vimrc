@@ -16,6 +16,33 @@ Plug 'vim-utils/vim-vertical-move'
 nmap } ]v
 xmap } ]v
 
+"  mx           Toggle mark 'x' and display it in the leftmost column
+"  dmx          Remove mark 'x' where x is a-zA-Z
+"
+"  m,           Place the next available mark
+"  m.           If no mark on line, place the next available mark. Otherwise, remove (first) existing mark.
+"  m-           Delete all marks from the current line
+"  m<Space>     Delete all marks from the current buffer
+"  ]`           Jump to next mark
+"  [`           Jump to prev mark
+"  ]'           Jump to start of next line containing a mark
+"  ['           Jump to start of prev line containing a mark
+"  `]           Jump by alphabetical order to next mark
+"  `[           Jump by alphabetical order to prev mark
+"  ']           Jump by alphabetical order to start of next line having a mark
+"  '[           Jump by alphabetical order to start of prev line having a mark
+"  m/           Open location list and display marks from current buffer
+"
+"  m[0-9]       Toggle the corresponding marker !@#$%^&*()
+"  m<S-[0-9]>   Remove all markers of the same type
+"  ]-           Jump to next line having a marker of the same type
+"  [-           Jump to prev line having a marker of the same type
+"  ]=           Jump to next line having a marker of any type
+"  [=           Jump to prev line having a marker of any type
+"  m?           Open location list and display markers from current buffer
+"  m<BS>        Remove all markers
+Plug 'kshenoy/vim-signature'
+
 " ==============================================================
 " tags
 " ==============================================================
@@ -42,6 +69,7 @@ let g:rehash256 = 1
 " ==============================================================
 Plug 'Raimondi/delimitMate'
 Plug 'Yggdroot/indentLine'
+autocmd Filetype json let g:indentLine_setConceal = 0
 set ts=4 sw=4 et
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
@@ -79,8 +107,6 @@ Plug 'vim-syntastic/syntastic'
 Plug 'vim-scripts/vim-auto-save'
 let g:auto_save = 1
 
-Plug 'kshenoy/vim-signature'
-
 " ==============================================================
 " handy mappings
 " ==============================================================
@@ -111,8 +137,8 @@ endif
 " ==============================================================
 " tools
 " ==============================================================
-"Plug 'preservim/tagbar'
-"nnoremap <leader>tb :TagbarToggle<CR>
+Plug 'preservim/tagbar'
+nnoremap <leader>tb :TagbarToggle<CR>
 
 Plug 'preservim/nerdtree'
 nnoremap <leader>n :NERDTreeFind<CR>
@@ -146,7 +172,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme='base16_gruvbox_dark_hard'
 let g:airline_powerline_fonts = 1
-let g:airline_extensions = [ "tabline" ]
+"let g:airline_extensions = [ "tabline" ]
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 
 " ==============================================================
 " Syntax highlighting
@@ -345,7 +373,6 @@ set tabstop=4 shiftwidth=4 expandtab
 nnoremap <Enter> o<esc>
 
 " generate definition from declaration
-"nmap <leader>gf m,^yt;?class<cr>w"aye<c-C>G<enter><enter>pA {<enter>}<esc>kf(B"aPa::<esc><C-C>[`m-
 nmap <leader>gf m,^"ayt;?class<cr>w"bye<c-C>G<enter><enter>"apA {<enter>}<esc>kf(B"bPa::<esc><C-C>[`m-
 
 " don't create backupfiles
